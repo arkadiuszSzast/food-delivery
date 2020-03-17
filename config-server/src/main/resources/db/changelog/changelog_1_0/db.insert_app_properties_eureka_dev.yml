@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1_0_2
+      author: arkadiusz.szast
+      changes:
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: eureka.client.register-with-eureka
+              - column:
+                  name: value
+                  value: false
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: server.port
+              - column:
+                  name: value
+                  value: 8761
+              - column:
+                  name: label
+                  value: master

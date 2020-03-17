@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1_0_3
+      author: arkadiusz.szast
+      changes:
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: gateway
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: spring.cloudspring.cloud.gateway.discovery.locator.enabled
+              - column:
+                  name: value
+                  value: true
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: gateway
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: server.port
+              - column:
+                  name: value
+                  value: 8060
+              - column:
+                  name: label
+                  value: master

@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - include:
+      file: db.create_app_properties.yml
+      relativeToChangelogFile: true
+  - include:
+      file: db.insert_app_properties_eureka_dev.yml
+      relativeToChangelogFile: true
+  - include:
+      file: db.insert_app_properties_gateway_dev.yml
+      relativeToChangelogFile: true

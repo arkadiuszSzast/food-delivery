@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1_0_1
+      author: arkadiusz.szast
+      changes:
+        - createTable:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  type: varchar(255)
+              - column:
+                  name: profile
+                  type: varchar(255)
+              - column:
+                  name: label
+                  type: varchar(255)
+              - column:
+                  name: KEY
+                  type: varchar(255)
+              - column:
+                  name: value
+                  type: varchar(255)
