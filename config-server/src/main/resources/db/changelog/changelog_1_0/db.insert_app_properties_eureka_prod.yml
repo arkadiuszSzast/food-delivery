@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1_0_2
+      id: 1_0_4
       author: arkadiusz.szast
       changes:
         - insert:
@@ -11,7 +11,7 @@ databaseChangeLog:
                   value: eureka
               - column:
                   name: profile
-                  value: dev
+                  value: prod
               - column:
                   name: KEY
                   value: eureka.client.register-with-eureka
@@ -29,7 +29,7 @@ databaseChangeLog:
                   value: eureka
               - column:
                   name: profile
-                  value: dev
+                  value: prod
               - column:
                   name: KEY
                   value: server.port
@@ -47,7 +47,7 @@ databaseChangeLog:
                   value: eureka
               - column:
                   name: profile
-                  value: dev
+                  value: prod
               - column:
                   name: KEY
                   value: eureka.client.register-with-eureka
@@ -65,7 +65,7 @@ databaseChangeLog:
                   value: eureka
               - column:
                   name: profile
-                  value: dev
+                  value: prod
               - column:
                   name: KEY
                   value: eureka.client.fetch-registry

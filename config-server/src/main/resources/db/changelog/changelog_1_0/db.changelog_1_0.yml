@@ -8,3 +8,9 @@ databaseChangeLog:
   - include:
       file: db.insert_app_properties_gateway_dev.yml
       relativeToChangelogFile: true
+  - include:
+      file: db.insert_app_properties_eureka_prod.yml
+      relativeToChangelogFile: true
+  - include:
+      file: db.insert_app_properties_gateway_prod.yml
+      relativeToChangelogFile: true

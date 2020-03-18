@@ -1,0 +1,66 @@
+version: '3.7'
+
+services:
+
+  config-server-db:
+    image: config-server-db
+    container_name: config-server-db
+    ports:
+      - 5432:5432
+    networks:
+      samplenet:
+        aliases:
+          - "config-server-db"
+
+  config-server:
+    image: config-server
+    container_name: config-server
+    environment:
+        - CONFIG_DB_URI=jdbc:postgresql://config-server-db:5432/application-properties
+    ports:
+      - 8888:8888
+    depends_on:
+      - config-server-db
+    networks:
+      samplenet:
+        aliases:
+          - "config-server"
+
+
+  server-discovery:
+    image: server-discovery
+    container_name: server-discovery
+    environment:
+        - CONFIG_URI=http://config-server:8888
+        - ENV=dev
+    ports:
+      - 8761:8761
+    depends_on:
+      - config-server
+    networks:
+      samplenet:
+        aliases:
+          - "server-discovery"
+
+  gateway:
+    image: gateway
+    container_name: gateway
+    environment:
+        - CONFIG_URI=http://config-server:8888
+        - EUREKA_URL=http://server-discovery:8761/eureka/
+        - ENV=dev
+    ports:
+      - 8060:8060
+    depends_on:
+      - config-server
+    networks:
+      samplenet:
+        aliases:
+          - "gateway"
+
+networks:
+  samplenet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16

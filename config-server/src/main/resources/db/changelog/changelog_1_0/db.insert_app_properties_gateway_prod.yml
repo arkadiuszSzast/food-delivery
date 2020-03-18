@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1_0_2
+      id: 1_0_5
       author: arkadiusz.szast
       changes:
         - insert:
@@ -8,16 +8,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: eureka
+                  value: gateway
               - column:
                   name: profile
-                  value: dev
+                  value: prod
               - column:
                   name: KEY
-                  value: eureka.client.register-with-eureka
+                  value: spring.cloudspring.cloud.gateway.discovery.locator.enabled
               - column:
                   name: value
-                  value: false
+                  value: true
               - column:
                   name: label
                   value: master
@@ -26,16 +26,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: eureka
+                  value: gateway
               - column:
                   name: profile
-                  value: dev
+                  value: prod
               - column:
                   name: KEY
                   value: server.port
               - column:
                   name: value
-                  value: 8761
+                  value: 8060
               - column:
                   name: label
                   value: master
@@ -44,16 +44,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: eureka
+                  value: gateway
               - column:
                   name: profile
-                  value: dev
+                  value: prod
               - column:
                   name: KEY
-                  value: eureka.client.register-with-eureka
+                  value: eureka.instance.prefer-ip-address
               - column:
                   name: value
-                  value: false
+                  value: true
               - column:
                   name: label
                   value: master
@@ -62,16 +62,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: eureka
+                  value: gateway
               - column:
                   name: profile
-                  value: dev
+                  value: prod
               - column:
                   name: KEY
-                  value: eureka.client.fetch-registry
+                  value: eureka.client.service-url.defaultZone
               - column:
                   name: value
-                  value: false
+                  value: ${EUREKA_URL}
               - column:
                   name: label
                   value: master

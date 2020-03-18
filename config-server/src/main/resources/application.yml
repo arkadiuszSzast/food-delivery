@@ -1,9 +1,8 @@
-
 server:
   port: 8888
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/config-server-db
+    url: ${CONFIG_DB_URI:jdbc:postgresql://localhost:5432/application-properties}
     driver-class-name: org.postgresql.Driver
     username: config_user
     password: z8BFsHAQ4dGrm8R12SQCoTvG
