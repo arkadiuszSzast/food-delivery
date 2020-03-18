@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   config-server-db:
-    image: config-server-db
+    image: szastarek/food-delivery-config-server-db
     container_name: config-server-db
     ports:
       - 5432:5432
@@ -13,7 +13,7 @@ services:
           - "config-server-db"
 
   config-server:
-    image: config-server
+    image: szastarek/food-delivery-config-server
     container_name: config-server
     environment:
         - CONFIG_DB_URI=jdbc:postgresql://config-server-db:5432/application-properties
@@ -28,7 +28,7 @@ services:
 
 
   server-discovery:
-    image: server-discovery
+    image: szastarek/food-delivery-server-discovery
     container_name: server-discovery
     environment:
         - CONFIG_URI=http://config-server:8888
@@ -43,7 +43,7 @@ services:
           - "server-discovery"
 
   gateway:
-    image: gateway
+    image: szastarek/food-delivery-gateway
     container_name: gateway
     environment:
         - CONFIG_URI=http://config-server:8888
