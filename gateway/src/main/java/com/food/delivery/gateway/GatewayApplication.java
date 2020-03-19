@@ -2,23 +2,27 @@ package com.food.delivery.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.security.oauth2.gateway.TokenRelayGatewayFilterFactory;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication
 @EnableEurekaClient
+@SpringBootApplication
 public class GatewayApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(GatewayApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(GatewayApplication.class, args);
+	}
 
-    @Bean
-    public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
-        return builder.routes()
-                .build();
-    }
+	@Bean
+	public RouteLocator customRouteLocator(RouteLocatorBuilder builder,
+										   TokenRelayGatewayFilterFactory filterFactory) {
+		return builder.routes()
+				.route("account-service", r -> r.path("/test/account")
+						.filters(f -> f.filter(filterFactory.apply()))
+						.uri("lb://account-service"))
+				.build();
+	}
 }

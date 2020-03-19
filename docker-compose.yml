@@ -12,8 +12,18 @@ services:
         aliases:
           - "config-server-db"
 
+  account-service-db:
+    image: szastarek/food-delivery-account-service-db
+    container_name: account-service-db
+    ports:
+      - 27017:27017
+    networks:
+      samplenet:
+        aliases:
+          - "account-service-db"
+
   config-server:
-    image: szastarek/food-delivery-config-server
+    image: szastarek/food-delivery-config-server:${TAG}
     container_name: config-server
     environment:
         - CONFIG_DB_URI=jdbc:postgresql://config-server-db:5432/application-properties
@@ -28,7 +38,7 @@ services:
 
 
   server-discovery:
-    image: szastarek/food-delivery-server-discovery
+    image: szastarek/food-delivery-server-discovery:${TAG}
     container_name: server-discovery
     environment:
         - CONFIG_URI=http://config-server:8888
@@ -43,12 +53,15 @@ services:
           - "server-discovery"
 
   gateway:
-    image: szastarek/food-delivery-gateway
+    image: szastarek/food-delivery-gateway:${TAG}
     container_name: gateway
     environment:
         - CONFIG_URI=http://config-server:8888
         - EUREKA_URL=http://server-discovery:8761/eureka/
         - ENV=dev
+        - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
+        - OKTA_CLIENT_SECRET=*
+        - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
     ports:
       - 8060:8060
     depends_on:
@@ -57,6 +70,25 @@ services:
       samplenet:
         aliases:
           - "gateway"
+
+  account-service:
+    image: szastarek/food-delivery-account-service:${TAG}
+    container_name: account-service
+    environment:
+      - CONFIG_URI=http://config-server:8888
+      - EUREKA_URL=http://server-discovery:8761/eureka/
+      - ENV=dev
+      - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
+      - OKTA_CLIENT_SECRET=*
+      - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
+      - DATABASE_URI=mongodb://mongoadmin:secret@account-service-db:27017/account?authSource=admin
+    depends_on:
+      - config-server
+      - account-service-db
+    networks:
+      samplenet:
+        aliases:
+          - "account-service"
 
 networks:
   samplenet:
