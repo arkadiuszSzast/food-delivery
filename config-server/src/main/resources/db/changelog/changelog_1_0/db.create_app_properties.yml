@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1_0_1
+      id: 96fdd2fc-bec2-43e8-b9dc-a020a47ca951
       author: arkadiusz.szast
       changes:
         - createTable:

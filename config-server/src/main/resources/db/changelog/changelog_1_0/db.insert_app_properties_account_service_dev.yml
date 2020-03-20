@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 44ec4b6e-1ff5-4f54-a67a-d918e9c8458e
+      id: 6631ffec-c441-4eba-8124-5cf4c25ccf93
       author: arkadiusz.szast
       changes:
         - insert:
@@ -8,25 +8,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: gateway
-              - column:
-                  name: profile
-                  value: dev
-              - column:
-                  name: KEY
-                  value: spring.cloudspring.cloud.gateway.discovery.locator.enabled
-              - column:
-                  name: value
-                  value: true
-              - column:
-                  name: label
-                  value: master
-        - insert:
-            tableName: properties
-            columns:
-              - column:
-                  name: application
-                  value: gateway
+                  value: account-service
               - column:
                   name: profile
                   value: dev
@@ -35,7 +17,7 @@ databaseChangeLog:
                   value: server.port
               - column:
                   name: value
-                  value: 8060
+                  value: 0
               - column:
                   name: label
                   value: master
@@ -44,25 +26,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: gateway
-              - column:
-                  name: profile
-                  value: dev
-              - column:
-                  name: KEY
-                  value: eureka.instance.prefer-ip-address
-              - column:
-                  name: value
-                  value: true
-              - column:
-                  name: label
-                  value: master
-        - insert:
-            tableName: properties
-            columns:
-              - column:
-                  name: application
-                  value: gateway
+                  value: account-service
               - column:
                   name: profile
                   value: dev
@@ -80,7 +44,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: gateway
+                  value: account-service
               - column:
                   name: profile
                   value: dev
@@ -98,7 +62,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: gateway
+                  value: account-service
               - column:
                   name: profile
                   value: dev
@@ -116,7 +80,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: gateway
+                  value: account-service
               - column:
                   name: profile
                   value: dev
@@ -129,3 +93,22 @@ databaseChangeLog:
               - column:
                   name: label
                   value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: account-service
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: spring.data.mongodb.uri
+              - column:
+                  name: value
+                  value: ${DATABASE_URI:mongodb://mongoadmin:secret@localhost:27017/account?authSource=admin}
+              - column:
+                  name: label
+                  value: master
+

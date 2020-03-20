@@ -1,4 +1,3 @@
 FROM adoptopenjdk/openjdk13
-ADD server-discovery-* app.jar
-EXPOSE 8761
+ADD account-service-* app.jar
 ENTRYPOINT ["java","-Dspring.profiles.active=${ENV}","-jar","/app.jar"]
