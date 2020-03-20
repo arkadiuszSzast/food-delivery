@@ -5,8 +5,6 @@ services:
   config-server-db:
     image: szastarek/food-delivery-config-server-db
     container_name: config-server-db
-    ports:
-      - 5432:5432
     networks:
       samplenet:
         aliases:
@@ -15,8 +13,6 @@ services:
   account-service-db:
     image: szastarek/food-delivery-account-service-db
     container_name: account-service-db
-    ports:
-      - 27017:27017
     networks:
       samplenet:
         aliases:
@@ -27,8 +23,6 @@ services:
     container_name: config-server
     environment:
         - CONFIG_DB_URI=jdbc:postgresql://config-server-db:5432/application-properties
-    ports:
-      - 8888:8888
     depends_on:
       - config-server-db
     networks:
