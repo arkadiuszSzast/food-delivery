@@ -20,7 +20,7 @@ public class GatewayApplication {
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder,
 										   TokenRelayGatewayFilterFactory filterFactory) {
 		return builder.routes()
-				.route("account-service", r -> r.path("/test/account")
+				.route("account-service", r -> r.path("/account")
 						.filters(f -> f.filter(filterFactory.apply()))
 						.uri("lb://account-service"))
 				.build();
