@@ -1,6 +1,10 @@
 server:
   port: 8888
+
 spring:
+  application:
+    name: config-server
+
   datasource:
     url: ${CONFIG_DB_URI:jdbc:postgresql://localhost:5432/application-properties}
     driver-class-name: org.postgresql.Driver
@@ -12,3 +16,8 @@ spring:
   profiles:
     active:
       - jdbc
+
+logging:
+  logstash:
+    enabled: true
+    url: logstash:5000
