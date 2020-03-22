@@ -75,3 +75,75 @@ databaseChangeLog:
               - column:
                   name: label
                   value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: logging.logstash.enabled
+              - column:
+                  name: value
+                  value: true
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: logging.logstash.url
+              - column:
+                  name: value
+                  value: logstash:5000
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: logging.logstash.ignorePatterns
+              - column:
+                  name: value
+                  value: /(actuator|swagger|webjars).*
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: logging.logstash.logHeaders
+              - column:
+                  name: value
+                  value: true
+              - column:
+                  name: label
+                  value: master
