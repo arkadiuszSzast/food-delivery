@@ -30,13 +30,13 @@ public class SecurityConfiguration {
 
 	@Bean
 	CorsWebFilter corsWebFilter() {
-		CorsConfiguration corsConfig = new CorsConfiguration();
+		var corsConfig = new CorsConfiguration();
 		corsConfig.setAllowedOrigins(List.of("*"));
 		corsConfig.setMaxAge(3600L);
 		corsConfig.addAllowedMethod("*");
 		corsConfig.addAllowedHeader("*");
 
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		var source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", corsConfig);
 
 		return new CorsWebFilter(source);

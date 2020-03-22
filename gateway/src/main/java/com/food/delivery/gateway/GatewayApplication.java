@@ -23,6 +23,9 @@ public class GatewayApplication {
 				.route("account-service", r -> r.path("/account")
 						.filters(f -> f.filter(filterFactory.apply()))
 						.uri("lb://account-service"))
+				.route("account-service", r -> r.path("/account-service/v2/api-docs")
+						.filters(f -> f.rewritePath("/account-service/v2/api-docs", "/v2/api-docs"))
+						.uri("lb://account-service"))
 				.build();
 	}
 }
