@@ -1,5 +1,5 @@
 language: java
 jdk: openjdk13
 install: true
-script: 
-	- ./buildAllGradleProjects.sh
+script:
+	- bash buildAllGradleProjects.sh
