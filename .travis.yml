@@ -1,5 +1,4 @@
 language: java
 jdk: openjdk13
 install: true
-script:
-  "server-discovery/gradlew build -p server-discovery && gateway/gradlew build -p gateway && config-server/gradlew build -p config-server &&  account-service/gradlew build -p account-service"
+script: "for d in */; do if [[ -f "$d/gradlew" ]]; then $d/gradlew build -p $d; fi; done"
