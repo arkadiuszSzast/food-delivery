@@ -2,6 +2,37 @@ version: '3.7'
 
 services:
 
+  elasticsearch:
+    image: szastarek/food-delivery-elasticsearch
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      food-delivery-net:
+        aliases:
+          - "elasticsearch"
+
+  logstash:
+    image: szastarek/food-delivery-logstash
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      food-delivery-net:
+        aliases:
+          - logstash
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    image: szastarek/food-delivery-kibana
+    ports:
+      - "5601:5601"
+    networks:
+      food-delivery-net:
+        aliases:
+          - "kibana"
+    depends_on:
+      - elasticsearch
+
   config-server-db:
     image: szastarek/food-delivery-config-server-db
     container_name: config-server-db
@@ -30,7 +61,6 @@ services:
         aliases:
           - "config-server"
 
-
   server-discovery:
     image: szastarek/food-delivery-server-discovery:${TAG}
     container_name: server-discovery
@@ -54,7 +84,7 @@ services:
         - EUREKA_URL=http://server-discovery:8761/eureka/
         - ENV=prod
         - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
-        - OKTA_CLIENT_SECRET=*
+        - OKTA_CLIENT_SECRET=${OKTA_CLIENT_SECRET}
         - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
     ports:
       - 8060:8060
@@ -73,7 +103,7 @@ services:
       - EUREKA_URL=http://server-discovery:8761/eureka/
       - ENV=prod
       - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
-      - OKTA_CLIENT_SECRET=*
+      - OKTA_CLIENT_SECRET=${OKTA_CLIENT_SECRET}
       - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
       - DATABASE_URI=mongodb://mongoadmin:secret@account-service-db:27017/account?authSource=admin
     depends_on:
