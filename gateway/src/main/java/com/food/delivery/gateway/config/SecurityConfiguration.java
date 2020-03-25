@@ -1,5 +1,6 @@
 package com.food.delivery.gateway.config;
 
+import com.okta.spring.boot.oauth.Okta;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -17,14 +18,12 @@ public class SecurityConfiguration {
 
 	@Bean
 	public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+		Okta.configureResourceServer401ResponseBody(http);
 		http
-				.authorizeExchange()
-				.anyExchange().authenticated()
+				.csrf().disable()
+				.authorizeExchange().anyExchange().authenticated()
 				.and()
-				.oauth2Login()
-				.and()
-				.oauth2ResourceServer()
-				.jwt();
+				.oauth2ResourceServer().jwt();
 		return http.build();
 	}
 
