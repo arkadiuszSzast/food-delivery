@@ -201,3 +201,21 @@ databaseChangeLog:
               - column:
                   name: label
                   value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: gateway
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: management.endpoints.web.exposure.include
+              - column:
+                  name: value
+                  value: gateway
+              - column:
+                  name: label
+                  value: master
