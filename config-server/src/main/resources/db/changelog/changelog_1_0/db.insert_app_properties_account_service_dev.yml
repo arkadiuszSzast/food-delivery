@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 6631ffec-c441-4eba-8124-5cf4c25ccf93
+      id: insert_app_properties_account_service_dev
       author: arkadiusz.szast
       changes:
         - insert:
@@ -50,6 +50,24 @@ databaseChangeLog:
                   value: dev
               - column:
                   name: KEY
+                  value: eureka.instance.prefer-ip-address
+              - column:
+                  name: value
+                  value: true
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: account-service
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
                   value: okta.oauth2.issuer
               - column:
                   name: value
@@ -72,24 +90,6 @@ databaseChangeLog:
               - column:
                   name: value
                   value: ${OKTA_CLIENT_ID}
-              - column:
-                  name: label
-                  value: master
-        - insert:
-            tableName: properties
-            columns:
-              - column:
-                  name: application
-                  value: account-service
-              - column:
-                  name: profile
-                  value: dev
-              - column:
-                  name: KEY
-                  value: okta.oauth2.client-secret
-              - column:
-                  name: value
-                  value: ${OKTA_CLIENT_SECRET}
               - column:
                   name: label
                   value: master

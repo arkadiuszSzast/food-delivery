@@ -20,12 +20,12 @@ public class GatewayApplication {
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder,
 										   TokenRelayGatewayFilterFactory filterFactory) {
 		return builder.routes()
-				.route("account-service", r -> r.path("/account")
-						.filters(f -> f.filter(filterFactory.apply()))
-						.uri("lb://account-service"))
-				.route("account-service", r -> r.path("/account-service/v2/api-docs")
+				.route("account-service-swagger", r -> r.path("/account-service/v2/api-docs")
 						.filters(f -> f.rewritePath("/account-service/v2/api-docs", "/v2/api-docs"))
 						.uri("lb://account-service"))
+				.route("company-service-swagger", r -> r.path("/company-service/v2/api-docs")
+						.filters(f -> f.rewritePath("/company-service/v2/api-docs", "/v2/api-docs"))
+						.uri("lb://company-service"))
 				.build();
 	}
 }

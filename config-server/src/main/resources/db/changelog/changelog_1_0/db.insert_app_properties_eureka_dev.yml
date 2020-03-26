@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 278b0756-2361-4da3-a1ce-c428be1a9287
+      id: insert_app_properties_eureka_dev
       author: arkadiusz.szast
       changes:
         - insert:

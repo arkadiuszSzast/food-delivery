@@ -53,6 +53,16 @@ services:
         aliases:
           - "account-service-db"
 
+  company-service-db:
+    image: szastarek/food-delivery-company-service-db
+    container_name: company-service-db
+    ports:
+      - 27016:27017
+    networks:
+      food-delivery-net:
+        aliases:
+          - "company-service-db"
+
   config-server:
     image: szastarek/food-delivery-config-server:${TAG}
     container_name: config-server
@@ -89,9 +99,8 @@ services:
     environment:
         - CONFIG_URI=http://config-server:8888
         - EUREKA_URL=http://server-discovery:8761/eureka/
-        - ENV=dev
+        - ENV=dev,swagger
         - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
-        - OKTA_CLIENT_SECRET=${OKTA_CLIENT_SECRET}
         - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
     ports:
       - 8060:8060
@@ -108,9 +117,8 @@ services:
     environment:
       - CONFIG_URI=http://config-server:8888
       - EUREKA_URL=http://server-discovery:8761/eureka/
-      - ENV=dev
+      - ENV=dev,swagger
       - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
-      - OKTA_CLIENT_SECRET=${OKTA_CLIENT_SECRET}
       - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
       - DATABASE_URI=mongodb://mongoadmin:secret@account-service-db:27017/account?authSource=admin
     depends_on:
@@ -120,6 +128,24 @@ services:
       food-delivery-net:
         aliases:
           - "account-service"
+
+  company-service:
+    image: szastarek/food-delivery-company-service:${TAG}
+    container_name: company-service
+    environment:
+      - CONFIG_URI=http://config-server:8888
+      - EUREKA_URL=http://server-discovery:8761/eureka/
+      - ENV=dev,swagger
+      - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
+      - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
+      - DATABASE_URI=mongodb://mongoadmin:secret@company-service-db:27017/company?authSource=admin
+    depends_on:
+      - config-server
+      - company-service-db
+    networks:
+      food-delivery-net:
+        aliases:
+          - "company-service"
 
 networks:
   food-delivery-net:

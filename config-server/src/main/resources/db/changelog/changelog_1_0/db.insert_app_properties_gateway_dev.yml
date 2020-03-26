@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 44ec4b6e-1ff5-4f54-a67a-d918e9c8458e
+      id: insert_app_properties_gateway_dev
       author: arkadiusz.szast
       changes:
         - insert:

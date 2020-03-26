@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 255ccca6-011e-41ad-a3e5-a2ab4438f5a2
+      id: insert_app_properties_gateway_prod
       author: arkadiusz.szast
       changes:
         - insert:
