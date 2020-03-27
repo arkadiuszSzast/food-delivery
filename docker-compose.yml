@@ -46,6 +46,10 @@ services:
   account-service-db:
     image: szastarek/food-delivery-account-service-db
     container_name: account-service-db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=account_user
+      - MONGO_INITDB_ROOT_PASSWORD=EtQ43076pyyuaY9rBRtc3opV
+      - MONGO_INITDB_DATABASE=account
     ports:
       - 27017:27017
     networks:
@@ -56,6 +60,10 @@ services:
   company-service-db:
     image: szastarek/food-delivery-company-service-db
     container_name: company-service-db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=company_user
+      - MONGO_INITDB_ROOT_PASSWORD=cmP53UKav16xYxK9Jx2J9Q9U
+      - MONGO_INITDB_DATABASE=company
     ports:
       - 27016:27017
     networks:
@@ -67,7 +75,15 @@ services:
     image: szastarek/food-delivery-config-server:${TAG}
     container_name: config-server
     environment:
-        - CONFIG_DB_URI=jdbc:postgresql://config-server-db:5432/application-properties
+      - ENV=prod,jdbc
+      - logging.logstash.enabled=true
+      - logging.logstash.url=logstash:5000
+      - spring.datasource.hikari.connection-timeout=5000
+      - spring.datasource.hikari.maximum-pool-size=10
+      - spring.datasource.driver-class-name=org.postgresql.Driver
+      - spring.datasource.url=jdbc:postgresql://config-server-db:5432/application-properties
+      - spring.datasource.username=config_user
+      - spring.datasource.password=z8BFsHAQ4dGrm8R12SQCoTvG
     ports:
       - 8888:8888
     depends_on:

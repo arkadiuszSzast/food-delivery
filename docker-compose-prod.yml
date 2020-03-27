@@ -61,7 +61,15 @@ services:
     image: szastarek/food-delivery-config-server:${TAG}
     container_name: config-server
     environment:
-        - CONFIG_DB_URI=jdbc:postgresql://config-server-db:5432/application-properties
+      - ENV=prod,jdbc
+      - logging.logstash.enabled=true
+      - logging.logstash.url=logstash:5000
+      - spring.datasource.hikari.maximum-pool-size=10
+      - spring.datasource.hikari.connection-timeout=5000
+      - spring.datasource.driver-class-name=org.postgresql.Driver
+      - spring.datasource.url=jdbc:postgresql://config-server-db:5432/application-properties
+      - spring.datasource.username=config_user
+      - spring.datasource.password=z8BFsHAQ4dGrm8R12SQCoTvG
     depends_on:
       - config-server-db
     networks:
@@ -136,7 +144,6 @@ services:
       food-delivery-net:
         aliases:
           - "company-service"
-
 
 networks:
   samplenet:
