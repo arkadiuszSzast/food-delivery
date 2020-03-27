@@ -119,7 +119,7 @@ services:
       - ENV=prod
       - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
       - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
-      - DATABASE_URI=mongodb://mongoadmin:secret@account-service-db:27017/account?authSource=admin
+      - DATABASE_URI=mongodb://account_user:EtQ43076pyyuaY9rBRtc3opV@account-service-db:27017/account?authSource=admin
     depends_on:
       - config-server
       - account-service-db
@@ -136,7 +136,7 @@ services:
       - EUREKA_URL=http://server-discovery:8761/eureka/
       - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
       - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
-      - DATABASE_URI=mongodb://mongoadmin:secret@company-service-db:27017/company?authSource=admin
+      - DATABASE_URI=mongodb://company_user:cmP53UKav16xYxK9Jx2J9Q9U@company-service-db:27017/company?authSource=admin
     depends_on:
       - config-server
       - company-service-db
