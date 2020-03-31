@@ -35,7 +35,7 @@ spec:
         - name: spring.datasource.url
           value: jdbc:postgresql://config-server-db:5432/application-properties
         - name: spring.datasource.username
-          value: config_user
+          value: "vault:secret/data/config-server#POSTGRES_USER"
         - name: spring.datasource.password
           value: "vault:secret/data/config-server#POSTGRES_PASSWORD"
         image: 'szastarek/food-delivery-config-server:0.0.1-SNAPSHOT'
