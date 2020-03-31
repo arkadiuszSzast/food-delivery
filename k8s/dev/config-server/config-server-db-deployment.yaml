@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: config-server-db
+  name: config-server-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: config-server-db
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        vault.security.banzaicloud.io/vault-addr: "https://vault:8200"
+        vault.security.banzaicloud.io/vault-tls-secret: "vault-tls"
+      labels:
+        io.kompose.service: config-server-db
+    spec:
+      containers:
+      - env:
+          - name: POSTGRES_DB
+            value: "vault:secret/data/config-server#POSTGRES_DB"
+          - name: POSTGRES_USER
+            value: "vault:secret/data/config-server#POSTGRES_USER"
+          - name: POSTGRES_PASSWORD
+            value: "vault:secret/data/config-server#POSTGRES_PASSWORD"
+        image: szastarek/food-delivery-config-server-db
+        imagePullPolicy: ""
+        name: config-server-db
+        ports:
+        - containerPort: 5432
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""

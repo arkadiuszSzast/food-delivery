@@ -36,6 +36,10 @@ services:
   config-server-db:
     image: szastarek/food-delivery-config-server-db
     container_name: config-server-db
+    environment:
+      - POSTGRES_DB=application-properties
+      - POSTGRES_USER=config_user
+      - POSTGRES_PASSWORD=z8BFsHAQ4dGrm8R12SQCoTvG
     ports:
       - 5432:5432
     networks:
@@ -47,9 +51,9 @@ services:
     image: szastarek/food-delivery-account-service-db
     container_name: account-service-db
     environment:
+      - MONGO_INITDB_DATABASE=account
       - MONGO_INITDB_ROOT_USERNAME=account_user
       - MONGO_INITDB_ROOT_PASSWORD=EtQ43076pyyuaY9rBRtc3opV
-      - MONGO_INITDB_DATABASE=account
     ports:
       - 27017:27017
     networks:

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: server-discovery
+  name: server-discovery
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: server-discovery
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: server-discovery
+    spec:
+      containers:
+      - env:
+        - name: CONFIG_URI
+          value: http://config-server:8888
+        - name: ENV
+          value: dev
+        image: 'szastarek/food-delivery-server-discovery:0.0.1-SNAPSHOT'
+        imagePullPolicy: ""
+        name: server-discovery
+        ports:
+        - containerPort: 8761
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""

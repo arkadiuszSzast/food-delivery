@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: config-server
+  name: config-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: config-server
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        vault.security.banzaicloud.io/vault-addr: "https://vault:8200"
+        vault.security.banzaicloud.io/vault-tls-secret: "vault-tls"
+      labels:
+        io.kompose.service: config-server
+    spec:
+      containers:
+      - env:
+        - name: ENV
+          value: prod,jdbc
+        - name: logging.logstash.enabled
+          value: "true"
+        - name: logging.logstash.url
+          value: logstash:5000
+        - name: spring.datasource.driver-class-name
+          value: org.postgresql.Driver
+        - name: spring.datasource.hikari.connection-timeout
+          value: "5000"
+        - name: spring.datasource.hikari.maximum-pool-size
+          value: "10"
+        - name: spring.datasource.url
+          value: jdbc:postgresql://config-server-db:5432/application-properties
+        - name: spring.datasource.username
+          value: config_user
+        - name: spring.datasource.password
+          value: "vault:secret/data/config-server#POSTGRES_PASSWORD"
+        image: 'szastarek/food-delivery-config-server:0.0.1-SNAPSHOT'
+        imagePullPolicy: ""
+        name: config-server
+        ports:
+        - containerPort: 8888
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
