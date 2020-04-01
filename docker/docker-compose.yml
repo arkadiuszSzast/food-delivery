@@ -36,22 +36,40 @@ services:
   config-server-db:
     image: szastarek/food-delivery-config-server-db
     container_name: config-server-db
+    environment:
+      - POSTGRES_DB=application-properties
+      - POSTGRES_USER=config_user
+      - POSTGRES_PASSWORD=z8BFsHAQ4dGrm8R12SQCoTvG
+    ports:
+      - 5432:5432
     networks:
-      samplenet:
+      food-delivery-net:
         aliases:
           - "config-server-db"
 
   account-service-db:
     image: szastarek/food-delivery-account-service-db
     container_name: account-service-db
+    environment:
+      - MONGO_INITDB_DATABASE=account
+      - MONGO_INITDB_ROOT_USERNAME=account_user
+      - MONGO_INITDB_ROOT_PASSWORD=EtQ43076pyyuaY9rBRtc3opV
+    ports:
+      - 27017:27017
     networks:
-      samplenet:
+      food-delivery-net:
         aliases:
           - "account-service-db"
 
   company-service-db:
     image: szastarek/food-delivery-company-service-db
     container_name: company-service-db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=company_user
+      - MONGO_INITDB_ROOT_PASSWORD=cmP53UKav16xYxK9Jx2J9Q9U
+      - MONGO_INITDB_DATABASE=company
+    ports:
+      - 27016:27017
     networks:
       food-delivery-net:
         aliases:
@@ -64,31 +82,34 @@ services:
       - ENV=prod,jdbc
       - logging.logstash.enabled=true
       - logging.logstash.url=logstash:5000
-      - spring.datasource.hikari.maximum-pool-size=10
       - spring.datasource.hikari.connection-timeout=5000
+      - spring.datasource.hikari.maximum-pool-size=10
       - spring.datasource.driver-class-name=org.postgresql.Driver
       - spring.datasource.url=jdbc:postgresql://config-server-db:5432/application-properties
       - spring.datasource.username=config_user
       - spring.datasource.password=z8BFsHAQ4dGrm8R12SQCoTvG
+    ports:
+      - 8888:8888
     depends_on:
       - config-server-db
     networks:
-      samplenet:
+      food-delivery-net:
         aliases:
           - "config-server"
+
 
   server-discovery:
     image: szastarek/food-delivery-server-discovery:${TAG}
     container_name: server-discovery
     environment:
-        - CONFIG_URI=http://config-server:8888
-        - ENV=prod
+      - CONFIG_URI=http://config-server:8888
+      - ENV=dev
     ports:
       - 8761:8761
     depends_on:
       - config-server
     networks:
-      samplenet:
+      food-delivery-net:
         aliases:
           - "server-discovery"
 
@@ -96,17 +117,17 @@ services:
     image: szastarek/food-delivery-gateway:${TAG}
     container_name: gateway
     environment:
-        - CONFIG_URI=http://config-server:8888
-        - EUREKA_URL=http://server-discovery:8761/eureka/
-        - ENV=prod
-        - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
-        - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
+      - CONFIG_URI=http://config-server:8888
+      - EUREKA_URL=http://server-discovery:8761/eureka/
+      - ENV=dev,swagger
+      - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
+      - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
     ports:
       - 8060:8060
     depends_on:
       - config-server
     networks:
-      samplenet:
+      food-delivery-net:
         aliases:
           - "gateway"
 
@@ -116,7 +137,7 @@ services:
     environment:
       - CONFIG_URI=http://config-server:8888
       - EUREKA_URL=http://server-discovery:8761/eureka/
-      - ENV=prod
+      - ENV=dev,swagger
       - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
       - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
       - DATABASE_URI=mongodb://account_user:EtQ43076pyyuaY9rBRtc3opV@account-service-db:27017/account?authSource=admin
@@ -124,7 +145,7 @@ services:
       - config-server
       - account-service-db
     networks:
-      samplenet:
+      food-delivery-net:
         aliases:
           - "account-service"
 
@@ -134,6 +155,7 @@ services:
     environment:
       - CONFIG_URI=http://config-server:8888
       - EUREKA_URL=http://server-discovery:8761/eureka/
+      - ENV=dev,swagger
       - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
       - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
       - DATABASE_URI=mongodb://company_user:cmP53UKav16xYxK9Jx2J9Q9U@company-service-db:27017/company?authSource=admin
@@ -146,7 +168,7 @@ services:
           - "company-service"
 
 networks:
-  samplenet:
+  food-delivery-net:
     driver: bridge
     ipam:
       config:
