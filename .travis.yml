@@ -1,5 +1,5 @@
 language: java
-jdk: openjdk14
+jdk: openjdk13
 install: true
 script: "bash buildAllGradleProjects.sh"
 before_cache:
