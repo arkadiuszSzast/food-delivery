@@ -107,7 +107,7 @@ databaseChangeLog:
                   value: spring.data.mongodb.uri
               - column:
                   name: value
-                  value: ${DATABASE_URI:mongodb://mongoadmin:secret@localhost:27017/account?authSource=admin}
+                  value: ${DATABASE_URI:mongodb://account_user:EtQ43076pyyuaY9rBRtc3opV@localhost:27017/account?authSource=admin}
               - column:
                   name: label
                   value: master

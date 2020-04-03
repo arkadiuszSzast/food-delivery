@@ -1,4 +1,4 @@
-package com.food.delivery.accountservice.utils;
+package com.food.delivery.companyservice.support;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,12 +12,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @MockBean(ReactiveJwtDecoder.class)
-public @interface AccountServiceIntegrationTest {
+public @interface CompanyServiceIntegrationTest {
 }

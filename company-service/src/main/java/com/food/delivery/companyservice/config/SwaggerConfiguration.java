@@ -15,7 +15,7 @@ import java.util.function.Predicate;
 @Profile("swagger")
 @Configuration
 @EnableSwagger2WebFlux
-public class SwaggerConfig {
+public class SwaggerConfiguration {
 
 	@Bean
 	public Docket api() {

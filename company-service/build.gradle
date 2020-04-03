@@ -57,6 +57,9 @@ dependencies {
 	implementation 'org.springframework.retry:spring-retry'
 	implementation 'com.github.piomin:reactive-logstash-logging-spring-boot-starter:1.0.0.RELEASE'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+	implementation 'com.playtika.reactivefeign:feign-reactor-spring-configuration:2.0.2'
+	implementation 'com.playtika.reactivefeign:feign-reactor-webclient:2.0.2'
+	implementation 'com.playtika.reactivefeign:feign-reactor-cloud:2.0.2'
 	implementation 'io.springfox:springfox-swagger2:3.0.0-SNAPSHOT'
 	implementation 'io.springfox:springfox-swagger-ui:3.0.0-SNAPSHOT'
 	implementation 'io.springfox:springfox-spring-webflux:3.0.0-SNAPSHOT'
@@ -66,6 +69,7 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	testImplementation 'org.junit.jupiter:junit-jupiter-api'
 	testImplementation 'io.projectreactor:reactor-test'
 }
 
