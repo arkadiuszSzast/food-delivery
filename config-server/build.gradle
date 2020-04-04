@@ -6,6 +6,10 @@ plugins {
 	id 'java'
 }
 
+group = 'com.food.delivery'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '13'
+
 sonarqube {
 	properties {
 		property "sonar.projectKey", "arkadiuszSzast_food-delivery_config_server"
@@ -15,18 +19,14 @@ sonarqube {
 	}
 }
 
-group = 'com.food.delivery'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '13'
-
-repositories {
-	mavenCentral()
-}
-
 docker {
 	name "${project.name}:${project.version}"
 	files "build/libs/${project.name}-${project.version}.jar"
 	tag 'DockerHub', "szastarek/food-delivery-${project.name}:${project.version}"
+}
+
+repositories {
+	mavenCentral()
 }
 
 task cleanBuildDockerPush(type: GradleBuild) {

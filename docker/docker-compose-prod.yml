@@ -145,6 +145,24 @@ services:
         aliases:
           - "company-service"
 
+  okta-adapter:
+    image: szastarek/food-delivery-okta-adapter:${TAG}
+    container_name: okta-adapter
+    environment:
+      - CONFIG_URI=http://config-server:8888
+      - EUREKA_URL=http://server-discovery:8761/eureka/
+      - ENV=dev
+      - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
+      - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
+      - OKTA_DOMAIN_URL=https://dev-826281.oktapreview.com/
+      - OKTA_API_TOKEN=00-huO9jqNlI-jRAwgSjhvTMI_4Og17V07fvnHjehO
+    depends_on:
+      - config-server
+    networks:
+      food-delivery-net:
+        aliases:
+          - "okta-adapter"
+
 networks:
   samplenet:
     driver: bridge

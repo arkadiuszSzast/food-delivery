@@ -12,10 +12,10 @@ sourceCompatibility = '13'
 
 sonarqube {
 	properties {
-		property "sonar.projectKey", "arkadiuszSzast_food-delivery_server_discovery"
+		property "sonar.projectKey", "arkadiuszSzast_food-delivery_okta_adapter"
 		property "sonar.organization", "arkadiuszszast"
 		property "sonar.host.url", "https://sonarcloud.io"
-		property "sonar.login", "d290c4c73e30bd1282a752611d874e23279fad62"
+		property "sonar.login", "c50fea7fecaee7511b3cc7b318aaf79bf3cfe010"
 	}
 }
 
@@ -23,6 +23,16 @@ docker {
 	name "${project.name}:${project.version}"
 	files "build/libs/${project.name}-${project.version}.jar"
 	tag 'DockerHub', "szastarek/food-delivery-${project.name}:${project.version}"
+}
+
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
 }
 
 repositories {
@@ -38,14 +48,23 @@ ext {
 }
 
 dependencies {
-	implementation 'org.springframework.cloud:spring-cloud-starter-config'
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
-	implementation 'org.springframework.retry:spring-retry'
-	implementation 'com.github.piomin:logstash-logging-spring-boot-starter:1.2.2.RELEASE'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'com.okta.spring:okta-spring-boot-starter:1.4.0'
+	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+	implementation 'org.springframework.retry:spring-retry'
+	implementation 'com.github.piomin:reactive-logstash-logging-spring-boot-starter:1.0.0.RELEASE'
+	implementation 'com.okta.sdk:okta-sdk-api:1.5.4'
+	implementation 'com.okta.sdk:okta-sdk-impl:1.5.4'
+	runtime 'com.okta.sdk:okta-sdk-httpclient:1.5.4'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	testImplementation 'io.projectreactor:reactor-test'
 }
 
 dependencyManagement {

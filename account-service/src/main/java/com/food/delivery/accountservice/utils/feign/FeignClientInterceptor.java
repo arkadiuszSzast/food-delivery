@@ -1,4 +1,4 @@
-package com.food.delivery.companyservice.config;
+package com.food.delivery.accountservice.utils.feign;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
