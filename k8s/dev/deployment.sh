@@ -21,3 +21,5 @@ kubectl apply -f ./account-service/account-service-deployment.yaml
 kubectl apply -f ./company-service/company-service-db-deployment.yaml
 kubectl apply -f ./company-service/company-service-db-service.yaml
 kubectl apply -f ./company-service/company-service-deployment.yaml
+
+kubectl apply -f ./okta-adapter/okta-adapter-deployment.yaml

@@ -187,6 +187,11 @@ spec:
             MONGO_INITDB_ROOT_USERNAME: company_user
             MONGO_INITDB_ROOT_PASSWORD: cmP53UKav16xYxK9Jx2J9Q9U
             DATABASE_URI: mongodb://company_user:cmP53UKav16xYxK9Jx2J9Q9U@company-service-db:27017/company?authSource=admin
+      - type: kv
+        path: secret/data/okta-adapter
+        data:
+          data:
+            OKTA_API_TOKEN: 00-huO9jqNlI-jRAwgSjhvTMI_4Og17V07fvnHjehO
 
   vaultEnvsConfig:
     - name: VAULT_LOG_LEVEL

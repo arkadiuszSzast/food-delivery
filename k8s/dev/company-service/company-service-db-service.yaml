@@ -6,8 +6,8 @@ metadata:
   name: company-service-db
 spec:
   ports:
-  - name: "27016"
-    port: 27016
-    targetPort: 27017
+    - name: "27017"
+      port: 27017
+      targetPort: 27017
   selector:
     io.kompose.service: company-service-db
