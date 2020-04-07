@@ -16,8 +16,27 @@ spring:
   profiles:
     active:
       - jdbc
+      -
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 logging:
   logstash:
     enabled: true
     url: logstash:5000
+
+actuator:
+  username: account_actuator
+  password: ${ACTUATOR_PASSWORD}
+  authority: ACTUATOR
+  path: /actuator/**

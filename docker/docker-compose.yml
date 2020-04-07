@@ -33,6 +33,40 @@ services:
     depends_on:
       - elasticsearch
 
+  prometheus:
+    image: szastarek/food-delivery-prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/usr/share/prometheus/console_libraries"
+      - "--web.console.templates=/usr/share/prometheus/consoles"
+    networks:
+      food-delivery-net:
+        aliases:
+          - "prometheus"
+
+  blackbox-exporter:
+    image: prom/blackbox-exporter
+    ports:
+      - 9115:9115
+    networks:
+      food-delivery-net:
+        aliases:
+          - "blackbox-exporter"
+
+  grafana:
+    image: szastarek/food-delivery-grafana
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    networks:
+      food-delivery-net:
+        aliases:
+          - "grafana"
+
   config-server-db:
     image: szastarek/food-delivery-config-server-db
     container_name: config-server-db
@@ -79,7 +113,7 @@ services:
     image: szastarek/food-delivery-config-server:${TAG}
     container_name: config-server
     environment:
-      - ENV=prod,jdbc
+      - EUREKA_URL=http://server-discovery:8761/eureka/
       - logging.logstash.enabled=true
       - logging.logstash.url=logstash:5000
       - spring.datasource.hikari.connection-timeout=5000
@@ -88,6 +122,8 @@ services:
       - spring.datasource.url=jdbc:postgresql://config-server-db:5432/application-properties
       - spring.datasource.username=config_user
       - spring.datasource.password=z8BFsHAQ4dGrm8R12SQCoTvG
+      - ACTUATOR_PASSWORD=iN09KtaW59dqeRylgZFV4aSZ
+      - ENV=prod,jdbc
     ports:
       - 8888:8888
     depends_on:
@@ -103,6 +139,7 @@ services:
     container_name: server-discovery
     environment:
       - CONFIG_URI=http://config-server:8888
+      - ACTUATOR_PASSWORD=iN09KtaW59dqeRylgZFV4aSZ
       - ENV=dev
     ports:
       - 8761:8761
@@ -119,9 +156,10 @@ services:
     environment:
       - CONFIG_URI=http://config-server:8888
       - EUREKA_URL=http://server-discovery:8761/eureka/
-      - ENV=dev,swagger
       - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
       - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
+      - ACTUATOR_PASSWORD=iN09KtaW59dqeRylgZFV4aSZ
+      - ENV=dev,swagger
     ports:
       - 8060:8060
     depends_on:
@@ -137,10 +175,11 @@ services:
     environment:
       - CONFIG_URI=http://config-server:8888
       - EUREKA_URL=http://server-discovery:8761/eureka/
-      - ENV=dev,swagger
       - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
       - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
       - DATABASE_URI=mongodb://account_user:EtQ43076pyyuaY9rBRtc3opV@account-service-db:27017/account?authSource=admin
+      - ACTUATOR_PASSWORD=iN09KtaW59dqeRylgZFV4aSZ
+      - ENV=dev,swagger
     depends_on:
       - config-server
       - account-service-db
@@ -155,10 +194,11 @@ services:
     environment:
       - CONFIG_URI=http://config-server:8888
       - EUREKA_URL=http://server-discovery:8761/eureka/
-      - ENV=dev,swagger
       - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
       - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
       - DATABASE_URI=mongodb://company_user:cmP53UKav16xYxK9Jx2J9Q9U@company-service-db:27017/company?authSource=admin
+      - ACTUATOR_PASSWORD=iN09KtaW59dqeRylgZFV4aSZ
+      - ENV=dev,swagger
     depends_on:
       - config-server
       - company-service-db
@@ -173,11 +213,12 @@ services:
     environment:
       - CONFIG_URI=http://config-server:8888
       - EUREKA_URL=http://server-discovery:8761/eureka/
-      - ENV=dev
       - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
       - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
       - OKTA_DOMAIN_URL=https://dev-826281.oktapreview.com/
       - OKTA_API_TOKEN=00-huO9jqNlI-jRAwgSjhvTMI_4Og17V07fvnHjehO
+      - ACTUATOR_PASSWORD=iN09KtaW59dqeRylgZFV4aSZ
+      - ENV=dev
     depends_on:
       - config-server
     networks:

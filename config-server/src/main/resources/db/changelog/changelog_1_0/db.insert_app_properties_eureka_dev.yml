@@ -14,46 +14,10 @@ databaseChangeLog:
                   value: dev
               - column:
                   name: KEY
-                  value: eureka.client.register-with-eureka
-              - column:
-                  name: value
-                  value: false
-              - column:
-                  name: label
-                  value: master
-        - insert:
-            tableName: properties
-            columns:
-              - column:
-                  name: application
-                  value: eureka
-              - column:
-                  name: profile
-                  value: dev
-              - column:
-                  name: KEY
                   value: server.port
               - column:
                   name: value
                   value: 8761
-              - column:
-                  name: label
-                  value: master
-        - insert:
-            tableName: properties
-            columns:
-              - column:
-                  name: application
-                  value: eureka
-              - column:
-                  name: profile
-                  value: dev
-              - column:
-                  name: KEY
-                  value: eureka.client.register-with-eureka
-              - column:
-                  name: value
-                  value: false
               - column:
                   name: label
                   value: master
@@ -147,3 +111,94 @@ databaseChangeLog:
               - column:
                   name: label
                   value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: management.endpoints.web.exposure.include
+              - column:
+                  name: value
+                  value: "*"
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: actuator.path
+              - column:
+                  name: value
+                  value: /actuator/**
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: actuator.username
+              - column:
+                  name: value
+                  value: account_actuator
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: actuator.password
+              - column:
+                  name: value
+                  value: ${ACTUATOR_PASSWORD}
+              - column:
+                  name: label
+            value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: actuator.authority
+              - column:
+                  name: value
+                  value: ACTUATOR
+              - column:
+                  name: label
+                  value: master
+

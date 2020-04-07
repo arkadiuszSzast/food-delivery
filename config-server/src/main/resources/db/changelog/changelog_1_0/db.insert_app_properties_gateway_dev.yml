@@ -197,7 +197,7 @@ databaseChangeLog:
                   value: management.endpoints.web.exposure.include
               - column:
                   name: value
-                  value: gateway
+                  value: "*"
               - column:
                   name: label
                   value: master
@@ -212,10 +212,64 @@ databaseChangeLog:
                   value: dev
               - column:
                   name: KEY
-                  value: management.endpoints.web.exposure.include
+                  value: actuator.path
               - column:
                   name: value
+                  value: /actuator/**
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
                   value: gateway
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: actuator.username
+              - column:
+                  name: value
+                  value: account_actuator
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: gateway
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: actuator.password
+              - column:
+                  name: value
+                  value: ${ACTUATOR_PASSWORD}
+              - column:
+                  name: label
+            value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: gateway
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: actuator.authority
+              - column:
+                  name: value
+                  value: ACTUATOR
               - column:
                   name: label
                   value: master
