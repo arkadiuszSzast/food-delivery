@@ -71,7 +71,7 @@ databaseChangeLog:
                   value: eureka.client.service-url.defaultZone
               - column:
                   name: value
-                  value: ${EUREKA_URL:http://localhost:8761/eureka/}
+                  value: ${EUREKA_URL:http://account_eureka:password@localhost:8761/eureka/}
               - column:
                   name: label
                   value: master

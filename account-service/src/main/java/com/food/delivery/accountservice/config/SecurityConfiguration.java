@@ -21,7 +21,8 @@ public class SecurityConfiguration {
 	@Bean
 	public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
 
-		http.securityMatcher(ServerWebExchangeMatchers.pathMatchers(actuatorProperties.getPath()))
+		http
+				.securityMatcher(ServerWebExchangeMatchers.pathMatchers(actuatorProperties.getPath()))
 				.authorizeExchange()
 				.pathMatchers(actuatorProperties.getPath())
 				.hasAuthority(actuatorProperties.getAuthorityName())
@@ -29,6 +30,8 @@ public class SecurityConfiguration {
 				.httpBasic();
 
 		http
+				.securityMatcher(ServerWebExchangeMatchers.pathMatchers("/**"))
+				.csrf().disable()
 				.authorizeExchange()
 				.pathMatchers("/v2/api-docs",
 						"/configuration/ui",
@@ -38,7 +41,7 @@ public class SecurityConfiguration {
 						"/swagger-ui.html",
 						"/webjars/**")
 				.permitAll()
-				.anyExchange().authenticated()
+				.anyExchange().hasAuthority("USER")
 				.and()
 				.oauth2ResourceServer()
 				.jwt();

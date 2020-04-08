@@ -12,8 +12,8 @@ import java.util.List;
 
 @Getter
 @Setter
-@ConfigurationProperties("actuator")
-public class ActuatorProperties implements CredentialProperties, PathProperties, AuthorityProperties {
+@ConfigurationProperties("eureka")
+public class EurekaProperties implements CredentialProperties, PathProperties, AuthorityProperties {
 
 	private String path;
 	private String username;

@@ -86,6 +86,24 @@ databaseChangeLog:
                   value: prod
               - column:
                   name: KEY
+                  value: eureka.client.service-url.defaultZone
+              - column:
+                  name: value
+                  value: ${EUREKA_URL:http://account_eureka:password@localhost:8761/eureka/}
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: gateway
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
                   value: okta.oauth2.issuer
               - column:
                   name: value

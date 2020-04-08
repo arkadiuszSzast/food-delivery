@@ -11,3 +11,5 @@ spring:
         maxInterval: 5000
         maxAttempts: 20
       uri: ${CONFIG_URI:http://localhost:8888}
+      username: account_actuator
+      password: ${ACTUATOR_PASSWORD}

@@ -18,7 +18,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers(actuatorProperties.getPath())
 				.hasAuthority(actuatorProperties.getAuthorityName())
-				.anyRequest().permitAll()
+				.anyRequest().authenticated()
 				.and()
 				.httpBasic();
 	}

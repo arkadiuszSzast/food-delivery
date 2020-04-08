@@ -3,6 +3,7 @@ package com.food.delivery.configserver.utils.security;
 import com.food.delivery.configserver.utils.properties.ActuatorProperties;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,6 @@ public class ActuatorAuthenticationManager implements AuthenticationManager {
 			return new UsernamePasswordAuthenticationToken(principal, credentials, authorities);
 		}
 
-		return authentication;
+		throw new BadCredentialsException("Authentication failed for " + principal);
 	}
 }

@@ -4,6 +4,7 @@ services:
 
   elasticsearch:
     image: szastarek/food-delivery-elasticsearch
+    container_name: elasticsearch
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
@@ -13,6 +14,7 @@ services:
 
   logstash:
     image: szastarek/food-delivery-logstash
+    container_name: logstash
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
@@ -24,6 +26,7 @@ services:
 
   kibana:
     image: szastarek/food-delivery-kibana
+    container_name: kibana
     ports:
       - "5601:5601"
     networks:
@@ -35,6 +38,7 @@ services:
 
   prometheus:
     image: szastarek/food-delivery-prometheus
+    container_name: prometheus
     ports:
       - "9090:9090"
     command:
@@ -49,6 +53,7 @@ services:
 
   blackbox-exporter:
     image: prom/blackbox-exporter
+    container_name: black-exporter
     ports:
       - 9115:9115
     networks:
@@ -58,10 +63,11 @@ services:
 
   grafana:
     image: szastarek/food-delivery-grafana
+    container_name: grafana
     depends_on:
       - prometheus
     ports:
-      - 3000:3000
+      - 3030:3000
     networks:
       food-delivery-net:
         aliases:
@@ -113,7 +119,7 @@ services:
     image: szastarek/food-delivery-config-server:${TAG}
     container_name: config-server
     environment:
-      - EUREKA_URL=http://server-discovery:8761/eureka/
+      - EUREKA_URL=http://account_eureka:password@server-discovery:8761/eureka/
       - logging.logstash.enabled=true
       - logging.logstash.url=logstash:5000
       - spring.datasource.hikari.connection-timeout=5000
@@ -133,13 +139,15 @@ services:
         aliases:
           - "config-server"
 
-
   server-discovery:
     image: szastarek/food-delivery-server-discovery:${TAG}
     container_name: server-discovery
     environment:
+      - EUREKA_URL=http://account_eureka:password@server-discovery:8761/eureka/
       - CONFIG_URI=http://config-server:8888
       - ACTUATOR_PASSWORD=iN09KtaW59dqeRylgZFV4aSZ
+      - DASHBOARD_PASSWORD=password
+      - EUREKA_PASSWORD=password
       - ENV=dev
     ports:
       - 8761:8761
@@ -155,7 +163,7 @@ services:
     container_name: gateway
     environment:
       - CONFIG_URI=http://config-server:8888
-      - EUREKA_URL=http://server-discovery:8761/eureka/
+      - EUREKA_URL=http://account_eureka:password@server-discovery:8761/eureka/
       - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
       - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
       - ACTUATOR_PASSWORD=iN09KtaW59dqeRylgZFV4aSZ
@@ -174,7 +182,7 @@ services:
     container_name: account-service
     environment:
       - CONFIG_URI=http://config-server:8888
-      - EUREKA_URL=http://server-discovery:8761/eureka/
+      - EUREKA_URL=http://account_eureka:password@server-discovery:8761/eureka/
       - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
       - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
       - DATABASE_URI=mongodb://account_user:EtQ43076pyyuaY9rBRtc3opV@account-service-db:27017/account?authSource=admin
@@ -193,7 +201,7 @@ services:
     container_name: company-service
     environment:
       - CONFIG_URI=http://config-server:8888
-      - EUREKA_URL=http://server-discovery:8761/eureka/
+      - EUREKA_URL=http://account_eureka:password@server-discovery:8761/eureka/
       - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
       - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
       - DATABASE_URI=mongodb://company_user:cmP53UKav16xYxK9Jx2J9Q9U@company-service-db:27017/company?authSource=admin
@@ -212,7 +220,7 @@ services:
     container_name: okta-adapter
     environment:
       - CONFIG_URI=http://config-server:8888
-      - EUREKA_URL=http://server-discovery:8761/eureka/
+      - EUREKA_URL=http://account_eureka:password@server-discovery:8761/eureka/
       - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
       - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
       - OKTA_DOMAIN_URL=https://dev-826281.oktapreview.com/

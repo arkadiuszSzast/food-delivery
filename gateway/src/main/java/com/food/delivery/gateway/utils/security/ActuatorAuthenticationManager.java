@@ -2,6 +2,7 @@ package com.food.delivery.gateway.utils.security;
 
 import com.food.delivery.gateway.utils.properties.ActuatorProperties;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,6 +29,6 @@ public class ActuatorAuthenticationManager implements ReactiveAuthenticationMana
 			return Mono.just(authenticationToken);
 		}
 
-		return Mono.just(authentication);
+		throw new BadCredentialsException("Authentication failed for " + principal);
 	}
 }
