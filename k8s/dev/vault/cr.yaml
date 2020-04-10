@@ -172,6 +172,18 @@ spec:
             POSTGRES_USER: config_user
             POSTGRES_PASSWORD: RNCY8Q6hsy9OWl0a7V37fNR2
       - type: kv
+        path: secret/data/server-discovery
+        data:
+          data:
+            EUREKA_URL: http://account_eureka:M8egvEsFfBg7W5Qt83a2isqT@server-discovery:8761/eureka/
+            EUREKA_PASSWORD: M8egvEsFfBg7W5Qt83a2isqT
+            DASHBOARD_PASSWORD: xqn3QyCV2g7idbi3LdkFLGtk
+      - type: kv
+        path: secret/data/actuator
+        data:
+          data:
+            ACTUATOR_PASSWORD: dJ9Zri4W6GdwyX8A8QA33uNX
+      - type: kv
         path: secret/data/account-service
         data:
           data:

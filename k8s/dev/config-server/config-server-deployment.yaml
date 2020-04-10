@@ -38,6 +38,10 @@ spec:
           value: "vault:secret/data/config-server#POSTGRES_USER"
         - name: spring.datasource.password
           value: "vault:secret/data/config-server#POSTGRES_PASSWORD"
+        - name: EUREKA_URL
+          value: "vault:secret/data/server-discovery#EUREKA_URL"
+        - name: ACTUATOR_PASSWORD
+          value: "vault:secret/data/actuator#ACTUATOR_PASSWORD"
         image: 'szastarek/food-delivery-config-server:0.0.1-SNAPSHOT'
         imagePullPolicy: ""
         name: config-server

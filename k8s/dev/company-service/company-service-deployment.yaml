@@ -24,14 +24,16 @@ spec:
           value: http://config-server:8888
         - name: DATABASE_URI
           value: "vault:secret/data/company-service#DATABASE_URI"
-        - name: ENV
-          value: dev,swagger
         - name: EUREKA_URL
-          value: http://server-discovery:8761/eureka/
+          value: "vault:secret/data/server-discovery#EUREKA_URL"
+        - name: ACTUATOR_PASSWORD
+          value: "vault:secret/data/actuator#ACTUATOR_PASSWORD"
         - name: OKTA_CLIENT_ID
           value: 0oaqf5gc3jy2DHcYI0h7
         - name: OKTA_ISSUER
           value: https://dev-826281.oktapreview.com/oauth2/default
+        - name: ENV
+          value: dev,swagger
         image: 'szastarek/food-delivery-company-service:0.0.1-SNAPSHOT'
         imagePullPolicy: ""
         name: company-service

@@ -25,9 +25,11 @@ spec:
             - name: ENV
               value: dev,swagger
             - name: EUREKA_URL
-              value: http://server-discovery:8761/eureka/
+              value: "vault:secret/data/server-discovery#EUREKA_URL"
             - name: OKTA_DOMAIN_URL
               value: https://dev-826281.oktapreview.com/
+            - name: ACTUATOR_PASSWORD
+              value: "vault:secret/data/actuator#ACTUATOR_PASSWORD"
             - name: OKTA_API_TOKEN
               value: "vault:secret/data/okta-adapter#OKTA_API_TOKEN"
             - name: OKTA_CLIENT_ID

@@ -12,6 +12,9 @@ spec:
   strategy: {}
   template:
     metadata:
+      annotations:
+        vault.security.banzaicloud.io/vault-addr: "https://vault:8200"
+        vault.security.banzaicloud.io/vault-tls-secret: "vault-tls"
       labels:
         io.kompose.service: server-discovery
     spec:
@@ -19,6 +22,14 @@ spec:
       - env:
         - name: CONFIG_URI
           value: http://config-server:8888
+        - name: ACTUATOR_PASSWORD
+          value: "vault:secret/data/actuator#ACTUATOR_PASSWORD"
+        - name: EUREKA_URL
+          value: "vault:secret/data/server-discovery#EUREKA_URL"
+        - name: DASHBOARD_PASSWORD
+          value: "vault:secret/data/server-discovery#DASHBOARD_PASSWORD"
+        - name: EUREKA_PASSWORD
+          value: "vault:secret/data/server-discovery#EUREKA_PASSWORD"
         - name: ENV
           value: dev
         image: 'szastarek/food-delivery-server-discovery:0.0.1-SNAPSHOT'
