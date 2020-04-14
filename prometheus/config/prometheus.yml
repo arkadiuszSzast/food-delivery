@@ -13,7 +13,7 @@ scrape_configs:
 - job_name: eureka-discovery
   basic_auth:
     username: account_actuator
-    password: iN09KtaW59dqeRylgZFV4aSZ
+    password_file: /etc/prometheus/actuator_password
   scrape_interval: 15s
   scrape_timeout: 15s
   metrics_path: /actuator/prometheus

@@ -12,20 +12,26 @@ spec:
   strategy: {}
   template:
     metadata:
+      annotations:
+        vault.security.banzaicloud.io/vault-addr: "https://vault:8200"
+        vault.security.banzaicloud.io/vault-tls-secret: "vault-tls"
       labels:
         io.kompose.service: prometheus
     spec:
       containers:
       - args:
-        - --config.file=/etc/prometheus/prometheus.yml
-        - --storage.tsdb.path=/prometheus
-        - --web.console.libraries=/usr/share/prometheus/console_libraries
-        - --web.console.templates=/usr/share/prometheus/consoles
+          - --config.file=/etc/prometheus/prometheus.yml
+          - --storage.tsdb.path=/prometheus
+          - --web.console.libraries=/usr/share/prometheus/console_libraries
+          - --web.console.templates=/usr/share/prometheus/consoles
+        env:
+          - name: ACTUATOR_PASSWORD
+            value: "vault:secret/data/actuator#ACTUATOR_PASSWORD"
         image: szastarek/food-delivery-prometheus
         imagePullPolicy: ""
         name: prometheus
         ports:
-        - containerPort: 9090
+          - containerPort: 9090
         resources: {}
       restartPolicy: Always
       serviceAccountName: ""

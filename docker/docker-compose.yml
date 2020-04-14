@@ -39,6 +39,8 @@ services:
   prometheus:
     image: szastarek/food-delivery-prometheus
     container_name: prometheus
+    environment:
+      - ACTUATOR_PASSWORD=iN09KtaW59dqeRylgZFV4aSZ
     ports:
       - "9090:9090"
     command:

@@ -50,6 +50,24 @@ databaseChangeLog:
                   value: prod
               - column:
                   name: KEY
+                  value: spring.mvc.async.request-timeout
+              - column:
+                  name: value
+                  value: 40s
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
                   value: eureka.client.fetch-registry
               - column:
                   name: value
