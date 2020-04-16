@@ -38,13 +38,18 @@ ext {
 }
 
 dependencies {
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.cloud:spring-cloud-config-server'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.liquibase:liquibase-core'
 	implementation 'com.github.piomin:logstash-logging-spring-boot-starter:1.2.2.RELEASE'
 	implementation 'com.fasterxml.jackson.module:jackson-module-jaxb-annotations'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'io.micrometer:micrometer-registry-prometheus'
+	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

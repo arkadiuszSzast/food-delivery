@@ -23,3 +23,13 @@ kubectl apply -f ./company-service/company-service-db-service.yaml
 kubectl apply -f ./company-service/company-service-deployment.yaml
 
 kubectl apply -f ./okta-adapter/okta-adapter-deployment.yaml
+
+kubectl apply -f ./blackbox-exporter/blackbox-exporter-deployment.yaml
+kubectl apply -f ./blackbox-exporter/blackbox-exporter-service.yaml
+
+kubectl apply -f ./prometheus/prometheus-deployment.yaml
+kubectl apply -f ./prometheus/prometheus-service.yaml
+
+kubectl apply -f ./grafana/grafana-deployment.yaml
+kubectl apply -f ./grafana/grafana-service.yaml
+
