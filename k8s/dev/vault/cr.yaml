@@ -176,6 +176,7 @@ spec:
         data:
           data:
             EUREKA_URL: http://account_eureka:M8egvEsFfBg7W5Qt83a2isqT@server-discovery:8761/eureka/
+            EUREKA_LOCAL_URL: http://account_eureka:M8egvEsFfBg7W5Qt83a2isqT@localhost:8761/eureka/
             EUREKA_PASSWORD: M8egvEsFfBg7W5Qt83a2isqT
             DASHBOARD_PASSWORD: xqn3QyCV2g7idbi3LdkFLGtk
       - type: kv

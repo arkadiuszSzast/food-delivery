@@ -50,10 +50,10 @@ databaseChangeLog:
                   value: dev
               - column:
                   name: KEY
-                  value: spring.mvc.async.request-timeout
+                  value: eureka.instance.prefer-ip-address
               - column:
                   name: value
-                  value: 40s
+                  value: true
               - column:
                   name: label
                   value: master
@@ -68,10 +68,10 @@ databaseChangeLog:
                   value: dev
               - column:
                   name: KEY
-                  value: eureka.client.fetch-registry
+                  value: spring.mvc.async.request-timeout
               - column:
                   name: value
-                  value: false
+                  value: 40s
               - column:
                   name: label
                   value: master
