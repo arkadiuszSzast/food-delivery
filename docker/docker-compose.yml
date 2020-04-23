@@ -53,16 +53,6 @@ services:
         aliases:
           - "prometheus"
 
-  blackbox-exporter:
-    image: prom/blackbox-exporter
-    container_name: black-exporter
-    ports:
-      - 9115:9115
-    networks:
-      food-delivery-net:
-        aliases:
-          - "blackbox-exporter"
-
   grafana:
     image: szastarek/food-delivery-grafana
     container_name: grafana
