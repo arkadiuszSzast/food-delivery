@@ -44,7 +44,8 @@ public class SecurityConfiguration {
 						"/configuration/security",
 						"/swagger-ui.html",
 						"/webjars/**",
-						"/**/v2/api-docs")
+						"/**/v2/api-docs",
+						"/account")
 				.permitAll()
 				.anyExchange().hasAuthority("USER")
 				.and()
