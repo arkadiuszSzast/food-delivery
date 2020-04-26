@@ -28,7 +28,7 @@ public class CompanyController {
 	}
 
 	@PostMapping
-	@PreAuthorize("hasAuthority('CompanyAdmin')")
+	@PreAuthorize("hasAuthority('COMPANY_ADMIN')")
 	public Mono<Company> test(Company company) {
 		return accountClient.findAccount()
 				.flatMap(account -> companyCreateService.create(account, company));

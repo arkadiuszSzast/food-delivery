@@ -218,7 +218,7 @@ services:
       - OKTA_DOMAIN_URL=https://dev-826281.oktapreview.com/
       - OKTA_API_TOKEN=00-huO9jqNlI-jRAwgSjhvTMI_4Og17V07fvnHjehO
       - ACTUATOR_PASSWORD=iN09KtaW59dqeRylgZFV4aSZ
-      - ENV=dev
+      - ENV=dev,swagger
     depends_on:
       - config-server
     networks:

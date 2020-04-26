@@ -1,0 +1,58 @@
+package com.food.delivery.accountservice.account;
+
+import com.food.delivery.accountservice.account.domain.Account;
+import com.food.delivery.accountservice.support.AccountServiceIntegrationTest;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+@AccountServiceIntegrationTest
+class AccountMapperTest {
+
+	public static final String EMAIL = "email@email.com";
+	public static final String LAST_NAME = "Doe";
+	public static final String FIRST_NAME = "Joe";
+	public static final String ID = "id";
+
+	@Autowired
+	private AccountMapper accountMapper;
+
+	@Test
+	@DisplayName("Should map accountRest to domain object")
+	void shouldMapToDomainObject() {
+		//arrange
+		final var accountRest = new AccountRest(FIRST_NAME, LAST_NAME, EMAIL);
+
+		//act
+		final var account = accountMapper.toDomain(accountRest);
+
+		//assertI
+		assertAll(
+				() -> assertThat(account.getEmail()).isEqualTo(EMAIL),
+				() -> assertThat(account.getFirstName()).isEqualTo(FIRST_NAME),
+				() -> assertThat(account.getLastName()).isEqualTo(LAST_NAME),
+				() -> assertThat(account.getId()).isNull()
+		);
+	}
+
+	@Test
+	@DisplayName("Should map domain object to accountRest")
+	void shouldMapToRestObject() {
+		//arrange
+		final var account = new Account(ID, FIRST_NAME, LAST_NAME, EMAIL);
+
+		//act
+		final var accountRest = accountMapper.toRest(account);
+
+		//assert
+		assertAll(
+				() -> assertThat(accountRest.getEmail()).isEqualTo(EMAIL),
+				() -> assertThat(accountRest.getFirstName()).isEqualTo(FIRST_NAME),
+				() -> assertThat(accountRest.getLastName()).isEqualTo(LAST_NAME)
+		);
+	}
+
+}

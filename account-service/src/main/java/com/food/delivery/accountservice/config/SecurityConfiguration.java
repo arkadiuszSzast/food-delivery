@@ -4,6 +4,7 @@ import com.food.delivery.accountservice.utils.properties.ActuatorProperties;
 import com.okta.spring.boot.oauth.Okta;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -39,8 +40,8 @@ public class SecurityConfiguration {
 						"/swagger-resources/**",
 						"/configuration/security",
 						"/swagger-ui.html",
-						"/webjars/**")
-				.permitAll()
+						"/webjars/**").permitAll()
+				.pathMatchers(HttpMethod.POST, "/account").permitAll()
 				.anyExchange().hasAuthority("USER")
 				.and()
 				.oauth2ResourceServer()
