@@ -273,6 +273,75 @@ databaseChangeLog:
               - column:
                   name: label
                   value: master
-
-
-
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: account-service
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: spring.kafka.producer.bootstrap-servers
+              - column:
+                  name: value
+                  value: ${KAFKA_URI:localhost:9092}
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: account-service
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: spring.kafka.producer.value-serializer
+              - column:
+                  name: value
+                  value: org.springframework.kafka.support.serializer.JsonSerializer
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: account-service
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: spring.kafka.producer.properties.spring.json.add.type.headers
+              - column:
+                  name: value
+                  value: false
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: account-service
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds
+              - column:
+                  name: value
+                  value: 4000
+              - column:
+                  name: label
+                  value: master

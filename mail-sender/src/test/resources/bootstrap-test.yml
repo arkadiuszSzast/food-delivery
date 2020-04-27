@@ -1,0 +1,18 @@
+spring:
+  cloud:
+    config:
+      discovery:
+        enabled: false
+      enabled: false
+    discovery:
+      enabled: false
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+
+actuator:
+  username: admin
+  password: admin
+  authority: ACTUATOR
+  path: /actuator/**
+

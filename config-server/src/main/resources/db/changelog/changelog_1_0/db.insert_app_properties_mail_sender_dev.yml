@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: insert_app_properties_account_service_dev
+      id: insert_app_properties_okta_adapter_dev
       author: arkadiusz.szast
       changes:
         - insert:
@@ -8,7 +8,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: account-service
+                  value: mail-sender
               - column:
                   name: profile
                   value: dev
@@ -26,7 +26,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: account-service
+                  value: mail-sender
               - column:
                   name: profile
                   value: dev
@@ -44,7 +44,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: account-service
+                  value: mail-sender
               - column:
                   name: profile
                   value: dev
@@ -62,61 +62,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: account-service
-              - column:
-                  name: profile
-                  value: dev
-              - column:
-                  name: KEY
-                  value: okta.oauth2.issuer
-              - column:
-                  name: value
-                  value: ${OKTA_ISSUER}
-              - column:
-                  name: label
-                  value: master
-        - insert:
-            tableName: properties
-            columns:
-              - column:
-                  name: application
-                  value: account-service
-              - column:
-                  name: profile
-                  value: dev
-              - column:
-                  name: KEY
-                  value: okta.oauth2.client-id
-              - column:
-                  name: value
-                  value: ${OKTA_CLIENT_ID}
-              - column:
-                  name: label
-                  value: master
-        - insert:
-            tableName: properties
-            columns:
-              - column:
-                  name: application
-                  value: account-service
-              - column:
-                  name: profile
-                  value: dev
-              - column:
-                  name: KEY
-                  value: spring.data.mongodb.uri
-              - column:
-                  name: value
-                  value: ${DATABASE_URI:mongodb://account_user:EtQ43076pyyuaY9rBRtc3opV@localhost:27017/account?authSource=admin}
-              - column:
-                  name: label
-                  value: master
-        - insert:
-            tableName: properties
-            columns:
-              - column:
-                  name: application
-                  value: account-service
+                  value: mail-sender
               - column:
                   name: profile
                   value: dev
@@ -134,7 +80,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: account-service
+                  value: mail-sender
               - column:
                   name: profile
                   value: dev
@@ -152,7 +98,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: account-service
+                  value: mail-sender
               - column:
                   name: profile
                   value: dev
@@ -170,7 +116,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: account-service
+                  value: mail-sender
               - column:
                   name: profile
                   value: dev
@@ -188,7 +134,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: account-service
+                  value: mail-sender
               - column:
                   name: profile
                   value: dev
@@ -206,7 +152,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: account-service
+                  value: mail-sender
               - column:
                   name: profile
                   value: dev
@@ -224,7 +170,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: account-service
+                  value: mail-sender
               - column:
                   name: profile
                   value: dev
@@ -242,7 +188,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: account-service
+                  value: mail-sender
               - column:
                   name: profile
                   value: dev
@@ -260,7 +206,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: account-service
+                  value: mail-sender
               - column:
                   name: profile
                   value: dev
@@ -278,70 +224,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: account-service
+                  value: mail-sender
               - column:
                   name: profile
                   value: dev
               - column:
                   name: KEY
-                  value: spring.kafka.producer.bootstrap-servers
+                  value: spring.kafka.consumer.bootstrap-servers
               - column:
                   name: value
                   value: ${KAFKA_URI:localhost:9092}
-              - column:
-                  name: label
-                  value: master
-        - insert:
-            tableName: properties
-            columns:
-              - column:
-                  name: application
-                  value: account-service
-              - column:
-                  name: profile
-                  value: dev
-              - column:
-                  name: KEY
-                  value: spring.kafka.producer.value-serializer
-              - column:
-                  name: value
-                  value: org.springframework.kafka.support.serializer.JsonSerializer
-              - column:
-                  name: label
-                  value: master
-        - insert:
-            tableName: properties
-            columns:
-              - column:
-                  name: application
-                  value: account-service
-              - column:
-                  name: profile
-                  value: dev
-              - column:
-                  name: KEY
-                  value: spring.kafka.producer.properties.spring.json.add.type.headers
-              - column:
-                  name: value
-                  value: false
-              - column:
-                  name: label
-                  value: master
-        - insert:
-            tableName: properties
-            columns:
-              - column:
-                  name: application
-                  value: account-service
-              - column:
-                  name: profile
-                  value: dev
-              - column:
-                  name: KEY
-                  value: hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds
-              - column:
-                  name: value
-                  value: 4000
               - column:
                   name: label
                   value: master

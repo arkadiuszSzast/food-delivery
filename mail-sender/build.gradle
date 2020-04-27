@@ -12,10 +12,10 @@ sourceCompatibility = '14'
 
 sonarqube {
 	properties {
-		property "sonar.projectKey", "arkadiuszSzast_food-delivery_account_service"
+		property "sonar.projectKey", "arkadiuszSzast_food-delivery_mail_sender"
 		property "sonar.organization", "arkadiuszszast"
 		property "sonar.host.url", "https://sonarcloud.io"
-		property "sonar.login", "3b875a5e5048e1155e2642f1741b63aa3ea46c3b"
+		property "sonar.login", "5aa99f5fa69a40bf14ac90d7114003dadbe50f12"
 	}
 }
 
@@ -26,10 +26,6 @@ docker {
 }
 
 configurations {
-	developmentOnly
-	runtimeClasspath {
-		extendsFrom developmentOnly
-	}
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
@@ -37,7 +33,6 @@ configurations {
 
 repositories {
 	mavenCentral()
-	maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
 }
 
 task cleanBuildDockerPush(type: GradleBuild) {
@@ -49,30 +44,21 @@ ext {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-	implementation 'com.okta.spring:okta-spring-boot-starter:1.4.0'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.retry:spring-retry'
 	implementation 'com.github.piomin:reactive-logstash-logging-spring-boot-starter:1.0.0.RELEASE'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'com.playtika.reactivefeign:feign-reactor-spring-configuration:2.0.2'
-	implementation 'com.playtika.reactivefeign:feign-reactor-webclient:2.0.2'
 	implementation 'io.micrometer:micrometer-registry-prometheus'
 	implementation 'org.springframework.kafka:spring-kafka'
-	implementation 'com.playtika.reactivefeign:feign-reactor-cloud:2.0.2'
-	implementation 'io.springfox:springfox-swagger2:3.0.0-SNAPSHOT'
-	implementation 'io.springfox:springfox-swagger-ui:3.0.0-SNAPSHOT'
-	implementation 'io.springfox:springfox-spring-webflux:3.0.0-SNAPSHOT'
-	implementation 'org.modelmapper:modelmapper:2.3.7'
 	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
-	testImplementation 'io.projectreactor:reactor-test'
+	testImplementation 'org.springframework.kafka:spring-kafka-test'
 }
 
 dependencyManagement {
