@@ -1,14 +1,12 @@
-package com.food.delivery.mailsender.utils.mail;
+package com.food.delivery.mailsender.mail.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
 @AllArgsConstructor
 public class Email {
 
-	private String email;
+	private final String email;
 
 }

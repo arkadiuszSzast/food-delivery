@@ -237,3 +237,112 @@ databaseChangeLog:
               - column:
                   name: label
                   value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: mail-sender
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: sendgrid.api-key
+              - column:
+                  name: value
+                  value: ${SENDGRID_API_KEY}
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: mail-sender
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: sendgrid.url
+              - column:
+                  name: value
+                  value: https://api.sendgrid.com/
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: mail-sender
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: sendgrid.sender
+              - column:
+                  name: value
+                  value: confirm@food-delivery.com
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: mail-sender
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: sendgrid.template.confirmUserRegistration
+              - column:
+                  name: value
+                  value: d-d00f99de8c8c4fe8b697c546a0bace78
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: mail-sender
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: sendgrid.template.confirmEmployeeRegistration
+              - column:
+                  name: value
+                  value: d-1859b817f7844f06a3cac08fe9e7fed9
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: mail-sender
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds
+              - column:
+                  name: value
+                  value: 4000
+              - column:
+                  name: label
+                  value: master
+

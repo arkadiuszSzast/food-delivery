@@ -1,4 +1,4 @@
-package com.food.delivery.mailsender.utils.mail;
+package com.food.delivery.mailsender.mail;
 
 import com.food.delivery.mailsender.support.MailSenderIntegrationTest;
 import org.junit.jupiter.api.Test;
