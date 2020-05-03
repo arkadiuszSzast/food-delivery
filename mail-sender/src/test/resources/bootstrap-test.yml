@@ -10,6 +10,10 @@ spring:
     consumer:
       bootstrap-servers: localhost:9092
 
+sendgrid:
+  api-key: ${SENDGRID_API_KEY}
+  url: https://api.sendgrid.com/
+
 actuator:
   username: admin
   password: admin

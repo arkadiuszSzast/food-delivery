@@ -28,6 +28,7 @@ public class FeignClientInterceptor implements ReactiveHttpRequestInterceptor {
 							.putIfAbsent(AUTHORIZATION_HEADER,
 									List.of(String.format("%s %s", BEARER_TOKEN_TYPE, jwt.getTokenValue())));
 					return Mono.just(reactiveHttpRequest);
-				});
+				})
+				.switchIfEmpty(Mono.just(reactiveHttpRequest));
 	}
 }

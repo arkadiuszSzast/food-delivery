@@ -4,7 +4,7 @@ import com.food.delivery.mailsender.support.MailSenderIntegrationTest;
 import org.junit.jupiter.api.Test;
 
 @MailSenderIntegrationTest
-class MailSenderApplicationTests {
+class EmailSenderApplicationTests {
 
 	@Test
 	void contextLoads() {
