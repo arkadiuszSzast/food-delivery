@@ -33,3 +33,10 @@ kubectl apply -f ./prometheus/prometheus-service.yaml
 kubectl apply -f ./grafana/grafana-deployment.yaml
 kubectl apply -f ./grafana/grafana-service.yaml
 
+kubectl apply -f ./zookeeper/zookeeper-deployment.yaml
+kubectl apply -f ./zookeeper/zookeeper-service.yaml
+
+kubectl apply -f ./mail-sender/mail-sender-deployment.yaml
+kubectl apply -f ./mail-sender/mail-sender-kafka-deployment.yaml
+kubectl apply -f ./mail-sender/mail-sender-kafka-service.yaml
+
