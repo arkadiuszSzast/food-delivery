@@ -272,6 +272,22 @@ services:
         aliases:
           - "mail-sender"
 
+  jwt-service:
+    image: szastarek/food-delivery-jwt-service:${TAG}
+    container_name: jwt-service
+    environment:
+      - CONFIG_URI=http://config-server:8888
+      - EUREKA_URL=http://account_eureka:password@server-discovery:8761/eureka/
+      - ACTUATOR_PASSWORD=iN09KtaW59dqeRylgZFV4aSZ
+      - ACTIVATE_ACCOUNT_SECRET=4XUagJh9fZZrWDBfsEe6wmL3eC4765cL
+      - ENV=dev
+    depends_on:
+      - config-server
+    networks:
+      food-delivery-net:
+        aliases:
+          - jwt-service
+
 networks:
   food-delivery-net:
     driver: bridge

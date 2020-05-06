@@ -1,5 +1,6 @@
 package com.food.delivery.accountservice.account.domain;
 
+import com.food.delivery.accountservice.account.AccountActivateService;
 import com.food.delivery.accountservice.account.AccountCreateService;
 import com.food.delivery.accountservice.account.AccountGetService;
 import com.food.delivery.accountservice.account.AccountRest;
@@ -17,6 +18,7 @@ public class AccountController {
 
 	private final AccountGetService accountGetService;
 	private final AccountCreateService accountCreateService;
+	private final AccountActivateService accountActivateService;
 
 	@GetMapping
 	public Flux<Account> findAll() {
@@ -31,6 +33,11 @@ public class AccountController {
 	@PostMapping
 	public Mono<Account> create(@RequestBody AccountRest accountRest) {
 		return accountCreateService.create(accountRest);
+	}
+
+	@PatchMapping("/activate")
+	public Mono<Object> activateAccount(@RequestParam String token) {
+		return accountActivateService.activateAccount(token);
 	}
 
 }

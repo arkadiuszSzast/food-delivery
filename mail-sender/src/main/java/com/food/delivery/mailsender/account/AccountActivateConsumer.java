@@ -20,7 +20,8 @@ public class AccountActivateConsumer {
 
 	@KafkaListener(id = "activate-user-consumer", topicPattern = TOPIC_ACTIVATE_USER)
 	public void consumeActivateUser(@Payload AccountActivateEvent accountActivateEvent) {
-		final var sendgridMail = sendgridMailFactory.userActivateMail(accountActivateEvent);
-		mailSender.send(sendgridMail).subscribe(data -> log.info("Mail sent successfully"));
+		sendgridMailFactory.userActivateMail(accountActivateEvent)
+				.flatMap(mailSender::send)
+				.subscribe(data -> log.info("Mail send success"));
 	}
 }

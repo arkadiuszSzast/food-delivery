@@ -25,7 +25,8 @@ public class AccountCreateService {
 	}
 
 	private void produceSendUserActivateEmail(Account account) {
-		final var accountActivateEvent = new AccountActivateEvent(account.getEmail(), account.getFirstName());
+		final var accountActivateEvent = new AccountActivateEvent(account.getId(), account.getEmail(),
+				account.getFirstName(), account.getOktaId());
 		accountActivateProducer.produceSendUserActivateEmail(accountActivateEvent);
 	}
 }

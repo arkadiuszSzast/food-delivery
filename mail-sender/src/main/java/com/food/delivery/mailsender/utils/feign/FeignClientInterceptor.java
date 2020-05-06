@@ -20,13 +20,19 @@ public class FeignClientInterceptor implements ReactiveHttpRequestInterceptor {
 
 	@Override
 	public Mono<ReactiveHttpRequest> apply(ReactiveHttpRequest reactiveHttpRequest) {
-		return Mono.just(sendgridProperties.getApiKey())
-				.flatMap(apiKey -> {
-					reactiveHttpRequest.headers()
-							.putIfAbsent(AUTHORIZATION_HEADER,
-									List.of(String.format("%s %s", BEARER_TOKEN_TYPE, apiKey)));
-					return Mono.just(reactiveHttpRequest);
-				})
-				.switchIfEmpty(Mono.just(reactiveHttpRequest));
+		final var apiKey = sendgridProperties.getApiKey();
+		return Mono.just(reactiveHttpRequest)
+				.flatMap(request -> {
+					if (isSendgridRequest(request)) {
+						reactiveHttpRequest.headers()
+								.putIfAbsent(AUTHORIZATION_HEADER,
+										List.of(String.format("%s %s", BEARER_TOKEN_TYPE, apiKey)));
+					}
+					return Mono.just(request);
+				});
+	}
+
+	private boolean isSendgridRequest(ReactiveHttpRequest request) {
+		return request.uri().toString().contains(sendgridProperties.getUrl());
 	}
 }

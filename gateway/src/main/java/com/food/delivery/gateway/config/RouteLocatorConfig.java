@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RouteLocatorConfig {
 
-	public static final String SWAGGER_EP = "/v2/api-docs";
+	private static final String SWAGGER_EP = "/v2/api-docs";
 	private static final String LB_ACCOUNT_SERVICE = "lb://account-service";
 	private static final String LB_COMPANY_SERVICE = "lb://company-service";
 	private static final String LB_OKTA_ADAPTER = "lb://okta-adapter";
@@ -34,6 +34,8 @@ public class RouteLocatorConfig {
 				.route("account-service-accounts", r -> r.path("/account")
 						.uri(LB_ACCOUNT_SERVICE))
 				.route("account-service-me", r -> r.path("/account/me")
+						.uri(LB_ACCOUNT_SERVICE))
+				.route("account-service-activate", r -> r.path("/account/activate")
 						.uri(LB_ACCOUNT_SERVICE))
 				.build();
 	}
