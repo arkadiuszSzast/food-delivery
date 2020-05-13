@@ -12,3 +12,9 @@ actuator:
   password: admin
   authority: ACTUATOR
   path: /actuator/**
+
+jwt:
+  activate-account:
+    issuer: food-delivery
+    expiration-time: 86400000
+    secret: secret_password

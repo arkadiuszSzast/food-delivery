@@ -230,7 +230,7 @@ databaseChangeLog:
                   value: dev
               - column:
                   name: KEY
-                  value: jwt.activate-account.issuser
+                  value: jwt.activate-account.issuer
               - column:
                   name: value
                   value: food-delivery

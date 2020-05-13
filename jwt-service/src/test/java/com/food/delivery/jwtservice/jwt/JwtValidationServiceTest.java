@@ -29,7 +29,7 @@ class JwtValidationServiceTest {
 		//arrange
 		final var secret = "Bm30lw0I";
 		final var expirationTime = 86400000L;
-		when(jwtProperties.getActivateAccount()).thenReturn(new ActivateAccountJwt(secret, "issuear", expirationTime));
+		when(jwtProperties.getActivateAccount()).thenReturn(new ActivateAccountJwt(secret, "issuer", expirationTime));
 		final var token = JWT.create()
 				.withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
 				.sign(Algorithm.HMAC256(secret));
