@@ -3,6 +3,7 @@ package com.food.delivery.companyservice.company.domain;
 import com.food.delivery.companyservice.account.AccountClient;
 import com.food.delivery.companyservice.company.CompanyCreateService;
 import com.food.delivery.companyservice.company.CompanyGetService;
+import com.food.delivery.companyservice.company.model.CompanyRest;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +30,8 @@ public class CompanyController {
 
 	@PostMapping
 	@PreAuthorize("hasAuthority('COMPANY_ADMIN')")
-	public Mono<Company> test(Company company) {
+	public Mono<Company> test(CompanyRest companyRest) {
 		return accountClient.findAccount()
-				.flatMap(account -> companyCreateService.create(account, company));
+				.flatMap(account -> companyCreateService.create(account, companyRest));
 	}
 }

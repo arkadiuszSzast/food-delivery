@@ -9,7 +9,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 public class JwtServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(JwtServiceApplication.class, args);
+		SpringApplication.run(JwtServiceApplication.class);
 	}
 
 }

@@ -9,7 +9,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 public class OktaAdapterApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(OktaAdapterApplication.class, args);
+		SpringApplication.run(OktaAdapterApplication.class);
 	}
 
 }

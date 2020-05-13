@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class Email {
+public class EmailWrapper {
 
 	private final String email;
 

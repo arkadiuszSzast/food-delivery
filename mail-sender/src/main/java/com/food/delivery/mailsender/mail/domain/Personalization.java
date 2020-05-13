@@ -13,10 +13,10 @@ import java.util.Set;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Personalization {
 
-	private final Set<Email> to;
+	private final Set<EmailWrapper> to;
 	private final Map<String, String> dynamicTemplateData;
 
-	public static Personalization aPersonalization(Email to, Map<String, String> dynamicTemplateData) {
+	public static Personalization aPersonalization(EmailWrapper to, Map<String, String> dynamicTemplateData) {
 		return new Personalization(Set.of(to), dynamicTemplateData);
 	}
 
