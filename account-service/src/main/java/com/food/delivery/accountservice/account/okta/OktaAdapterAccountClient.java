@@ -1,6 +1,7 @@
 package com.food.delivery.accountservice.account.okta;
 
-import com.food.delivery.accountservice.account.AccountRest;
+import com.food.delivery.accountservice.account.model.AccountActivation;
+import com.food.delivery.accountservice.account.model.AccountRest;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,5 +16,5 @@ public interface OktaAdapterAccountClient {
 	Mono<OktaAccountRest> createAccount(@RequestBody AccountRest accountRest);
 
 	@PatchMapping("/account/activate")
-	Mono<Object> activateAccount(@RequestParam String userId);
+	Mono<AccountActivation> activateAccount(@RequestParam String userId);
 }

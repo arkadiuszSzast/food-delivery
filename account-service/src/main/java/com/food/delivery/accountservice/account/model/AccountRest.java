@@ -1,4 +1,4 @@
-package com.food.delivery.accountservice.account;
+package com.food.delivery.accountservice.account.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

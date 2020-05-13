@@ -3,7 +3,8 @@ package com.food.delivery.accountservice.account.domain;
 import com.food.delivery.accountservice.account.AccountActivateService;
 import com.food.delivery.accountservice.account.AccountCreateService;
 import com.food.delivery.accountservice.account.AccountGetService;
-import com.food.delivery.accountservice.account.AccountRest;
+import com.food.delivery.accountservice.account.model.AccountActivation;
+import com.food.delivery.accountservice.account.model.AccountRest;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -36,7 +37,7 @@ public class AccountController {
 	}
 
 	@PatchMapping("/activate")
-	public Mono<Object> activateAccount(@RequestParam String token) {
+	public Mono<AccountActivation> activateAccount(@RequestParam String token) {
 		return accountActivateService.activateAccount(token);
 	}
 

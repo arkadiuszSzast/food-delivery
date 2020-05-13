@@ -1,6 +1,7 @@
 package com.food.delivery.accountservice.account;
 
 import com.food.delivery.accountservice.account.domain.Account;
+import com.food.delivery.accountservice.account.model.AccountRest;
 import com.food.delivery.accountservice.account.okta.OktaAccountRest;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
