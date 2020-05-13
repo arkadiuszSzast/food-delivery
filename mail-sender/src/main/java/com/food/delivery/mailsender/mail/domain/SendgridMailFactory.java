@@ -26,8 +26,8 @@ public class SendgridMailFactory {
 				.map(accountActivateUrlProvider::getAccountActivateUrl)
 				.map(accountActivateUrl -> {
 					final var template = sendgridTemplatesProperties.getConfirmUserRegistration();
-					final var sender = new Email(sendgridProperties.getSender());
-					final var recipient = new Email(accountActivateEvent.getEmail());
+					final var sender = new EmailWrapper(sendgridProperties.getSender());
+					final var recipient = new EmailWrapper(accountActivateEvent.getEmail());
 					final var dynamicTemplateData = Map.of(
 							"username", accountActivateEvent.getFirstName(),
 							"confirm-url", accountActivateUrl);

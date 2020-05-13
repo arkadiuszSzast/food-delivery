@@ -13,7 +13,7 @@ import java.util.Set;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class SendgridMail {
 
-	private final Email from;
+	private final EmailWrapper from;
 	private final Set<Personalization> personalizations;
 	private final String templateId;
 

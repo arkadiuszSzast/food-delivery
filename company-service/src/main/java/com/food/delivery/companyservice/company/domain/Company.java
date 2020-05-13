@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 
+@Setter
 @Document
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,7 +19,6 @@ public class Company {
 	@Id
 	private String id;
 	@NotNull
-	@Setter
 	private String companyAdminId;
 	@NotNull
 	private String name;
