@@ -205,6 +205,11 @@ spec:
         data:
           data:
             OKTA_API_TOKEN: 00-huO9jqNlI-jRAwgSjhvTMI_4Og17V07fvnHjehO
+      - type: kv
+        path: secret/data/sendgrid
+        data:
+          data:
+            SENDGRID_API_KEY: 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
 
   vaultEnvsConfig:
     - name: VAULT_LOG_LEVEL

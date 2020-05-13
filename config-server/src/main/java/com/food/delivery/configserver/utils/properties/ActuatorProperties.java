@@ -1,19 +1,21 @@
 package com.food.delivery.configserver.utils.properties;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Getter
-@Setter
+@AllArgsConstructor
+@ConstructorBinding
 @ConfigurationProperties("actuator")
 public class ActuatorProperties {
 
-	private String path;
-	private String username;
-	private String password;
-	private SimpleGrantedAuthority authority;
+	private final String path;
+	private final String username;
+	private final String password;
+	private final SimpleGrantedAuthority authority;
 
 	public String getAuthorityName() {
 		return authority.getAuthority();

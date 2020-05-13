@@ -1,16 +1,15 @@
-package com.food.delivery.accountservice.account;
+package com.food.delivery.mailsender.account;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
 @AllArgsConstructor
-public class AccountRest {
+public class AccountActivateEvent {
 
+	private final String id;
 	private final String firstName;
-	private final String lastName;
 	private final String email;
+	private final String oktaId;
 
 }

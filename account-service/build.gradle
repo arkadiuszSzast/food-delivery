@@ -38,6 +38,7 @@ configurations {
 repositories {
 	mavenCentral()
 	maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+	maven { url 'https://jitpack.io' }
 }
 
 task cleanBuildDockerPush(type: GradleBuild) {
@@ -55,12 +56,13 @@ dependencies {
 	implementation 'com.okta.spring:okta-spring-boot-starter:1.4.0'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 	implementation 'org.springframework.retry:spring-retry'
-	implementation 'com.github.piomin:reactive-logstash-logging-spring-boot-starter:1.0.0.RELEASE'
+	implementation 'com.github.arkadiuszSzast:reactive-logstash-logging-starter:1.0.7'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'com.playtika.reactivefeign:feign-reactor-spring-configuration:2.0.2'
 	implementation 'com.playtika.reactivefeign:feign-reactor-webclient:2.0.2'
-	implementation 'io.micrometer:micrometer-registry-prometheus'
 	implementation 'com.playtika.reactivefeign:feign-reactor-cloud:2.0.2'
+	implementation 'io.micrometer:micrometer-registry-prometheus'
+	implementation 'org.springframework.kafka:spring-kafka'
 	implementation 'io.springfox:springfox-swagger2:3.0.0-SNAPSHOT'
 	implementation 'io.springfox:springfox-swagger-ui:3.0.0-SNAPSHOT'
 	implementation 'io.springfox:springfox-spring-webflux:3.0.0-SNAPSHOT'

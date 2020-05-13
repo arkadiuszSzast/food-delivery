@@ -42,6 +42,7 @@ public class SecurityConfiguration {
 						"/swagger-ui.html",
 						"/webjars/**").permitAll()
 				.pathMatchers(HttpMethod.POST, "/account").permitAll()
+				.pathMatchers(HttpMethod.PATCH, "/account/activate").permitAll()
 				.anyExchange().hasAuthority("USER")
 				.and()
 				.oauth2ResourceServer()

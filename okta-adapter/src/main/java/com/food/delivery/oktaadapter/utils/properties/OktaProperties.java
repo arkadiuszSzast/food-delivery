@@ -1,16 +1,18 @@
 package com.food.delivery.oktaadapter.utils.properties;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
 @Getter
-@Setter
+@AllArgsConstructor
+@ConstructorBinding
 @ConfigurationProperties("okta")
 public class OktaProperties {
 
-	private String domainUrl;
-	private String apiToken;
+	private final String domainUrl;
+	private final String apiToken;
 
 }
 

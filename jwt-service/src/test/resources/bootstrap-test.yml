@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    config:
+      discovery:
+        enabled: false
+      enabled: false
+    discovery:
+      enabled: false
+
+actuator:
+  username: admin
+  password: admin
+  authority: ACTUATOR
+  path: /actuator/**
