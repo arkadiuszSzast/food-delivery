@@ -7,7 +7,7 @@ import springfox.documentation.swagger.web.SwaggerResource;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 final class SwaggerResourceBuilder {
 
-	private static String SWAGGER_VERSION = "2.0";
+	private static final String SWAGGER_VERSION = "2.0";
 
 	static SwaggerResource aSwaggerResource(String name, String location) {
 		final var swaggerResource = new SwaggerResource();

@@ -35,7 +35,7 @@ databaseChangeLog:
                   value: eureka.client.service-url.defaultZone
               - column:
                   name: value
-                  value: ${EUREKA_URL:http://localhost:8761/eureka/}
+                  value: ${EUREKA_URL:http://account_eureka:password@localhost:8761/eureka/}
               - column:
                   name: label
                   value: master
@@ -183,5 +183,94 @@ databaseChangeLog:
               - column:
                   name: label
                   value: master
-
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: company-service
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: management.endpoints.web.exposure.include
+              - column:
+                  name: value
+                  value: "*"
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: company-service
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: actuator.path
+              - column:
+                  name: value
+                  value: /actuator/**
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: company-service
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: actuator.username
+              - column:
+                  name: value
+                  value: account_actuator
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: company-service
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: actuator.password
+              - column:
+                  name: value
+                  value: ${ACTUATOR_PASSWORD}
+              - column:
+                  name: label
+            value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: company-service
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: actuator.authority
+              - column:
+                  name: value
+                  value: ACTUATOR
+              - column:
+                  name: label
+                  value: master
 

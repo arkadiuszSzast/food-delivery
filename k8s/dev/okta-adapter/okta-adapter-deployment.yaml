@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: okta-adapter
+  name: okta-adapter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: okta-adapter
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        vault.security.banzaicloud.io/vault-addr: "https://vault:8200"
+        vault.security.banzaicloud.io/vault-tls-secret: "vault-tls"
+      labels:
+        io.kompose.service: okta-adapter
+    spec:
+      containers:
+        - env:
+            - name: CONFIG_URI
+              value: http://config-server:8888
+            - name: ENV
+              value: dev,swagger
+            - name: EUREKA_URL
+              value: "vault:secret/data/server-discovery#EUREKA_URL"
+            - name: OKTA_DOMAIN_URL
+              value: https://dev-826281.oktapreview.com/
+            - name: ACTUATOR_PASSWORD
+              value: "vault:secret/data/actuator#ACTUATOR_PASSWORD"
+            - name: OKTA_API_TOKEN
+              value: "vault:secret/data/okta-adapter#OKTA_API_TOKEN"
+            - name: OKTA_CLIENT_ID
+              value: 0oaqf5gc3jy2DHcYI0h7
+            - name: OKTA_ISSUER
+              value: https://dev-826281.oktapreview.com/oauth2/default
+          image: 'szastarek/food-delivery-okta-adapter:0.0.1-SNAPSHOT'
+          imagePullPolicy: ""
+          name: okta-adapter
+          resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""

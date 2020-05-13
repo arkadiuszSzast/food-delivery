@@ -1,4 +1,1 @@
 FROM postgres
-ENV POSTGRES_DB application-properties
-ENV POSTGRES_USER config_user
-ENV POSTGRES_PASSWORD z8BFsHAQ4dGrm8R12SQCoTvG

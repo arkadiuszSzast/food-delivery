@@ -1,7 +1,7 @@
 package com.food.delivery.companyservice;
 
 import com.food.delivery.companyservice.config.SecurityConfiguration;
-import com.food.delivery.companyservice.utils.CompanyServiceIntegrationTest;
+import com.food.delivery.companyservice.support.CompanyServiceIntegrationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

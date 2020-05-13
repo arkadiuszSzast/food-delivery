@@ -14,24 +14,6 @@ databaseChangeLog:
                   value: prod
               - column:
                   name: KEY
-                  value: eureka.client.register-with-eureka
-              - column:
-                  name: value
-                  value: false
-              - column:
-                  name: label
-                  value: master
-        - insert:
-            tableName: properties
-            columns:
-              - column:
-                  name: application
-                  value: eureka
-              - column:
-                  name: profile
-                  value: prod
-              - column:
-                  name: KEY
                   value: server.port
               - column:
                   name: value
@@ -50,10 +32,10 @@ databaseChangeLog:
                   value: prod
               - column:
                   name: KEY
-                  value: eureka.client.register-with-eureka
+                  value: eureka.client.service-url.defaultZone
               - column:
                   name: value
-                  value: false
+                  value: ${EUREKA_URL:http://account_eureka:password@localhost:8761/eureka/}
               - column:
                   name: label
                   value: master
@@ -68,10 +50,28 @@ databaseChangeLog:
                   value: prod
               - column:
                   name: KEY
-                  value: eureka.client.fetch-registry
+                  value: eureka.instance.prefer-ip-address
               - column:
                   name: value
-                  value: false
+                  value: true
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: spring.mvc.async.request-timeout
+              - column:
+                  name: value
+                  value: 40s
               - column:
                   name: label
                   value: master
@@ -147,3 +147,239 @@ databaseChangeLog:
               - column:
                   name: label
                   value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: management.endpoints.web.exposure.include
+              - column:
+                  name: value
+                  value: "*"
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: actuator.paths
+              - column:
+                  name: value
+                  value: /actuator/**
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: actuator.username
+              - column:
+                  name: value
+                  value: account_actuator
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: actuator.password
+              - column:
+                  name: value
+                  value: ${ACTUATOR_PASSWORD}
+              - column:
+                  name: label
+            value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: actuator.authorities
+              - column:
+                  name: value
+                  value: ACTUATOR
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: eureka.paths
+              - column:
+                  name: value
+                  value: /eureka/**
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: eureka.username
+              - column:
+                  name: value
+                  value: account_eureka
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: eureka.password
+              - column:
+                  name: value
+                  value: ${EUREKA_PASSWORD}
+              - column:
+                  name: label
+            value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: eureka.authorities
+              - column:
+                  name: value
+                  value: SYSTEM
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: dashboard.paths
+              - column:
+                  name: value
+                  value: /, /eureka/**
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: dashboard.username
+              - column:
+                  name: value
+                  value: account_dashboard
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: dashboard.password
+              - column:
+                  name: value
+                  value: ${DASHBOARD_PASSWORD}
+              - column:
+                  name: label
+            value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: eureka
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: dashboard.authorities
+              - column:
+                  name: value
+                  value: ADMIN
+              - column:
+                  name: label
+                  value: master
+
+

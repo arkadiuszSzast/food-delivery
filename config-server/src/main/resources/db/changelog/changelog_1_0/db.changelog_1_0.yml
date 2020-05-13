@@ -26,4 +26,22 @@ databaseChangeLog:
   - include:
       file: db.insert_app_properties_company_service_prod.yml
       relativeToChangelogFile: true
+  - include:
+      file: db.insert_app_properties_okta_adapter_dev.yml
+      relativeToChangelogFile: true
+  - include:
+      file: db.insert_app_properties_okta_adapter_prod.yml
+      relativeToChangelogFile: true
+  - include:
+      file: db.insert_app_properties_mail_sender_dev.yml
+      relativeToChangelogFile: true
+  - include:
+      file: db.insert_app_properties_mail_sender_prod.yml
+      relativeToChangelogFile: true
+  - include:
+      file: db.insert_app_properties_jwt_service_dev.yml
+      relativeToChangelogFile: true
+  - include:
+      file: db.insert_app_properties_jwt_service_prod.yml
+      relativeToChangelogFile: true
 

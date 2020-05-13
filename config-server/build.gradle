@@ -1,10 +1,14 @@
 plugins {
-	id 'org.springframework.boot' version '2.2.5.RELEASE'
+	id 'org.springframework.boot' version '2.2.6.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'com.palantir.docker' version '0.25.0'
 	id "org.sonarqube" version "2.8"
 	id 'java'
 }
+
+group = 'com.food.delivery'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '14'
 
 sonarqube {
 	properties {
@@ -15,18 +19,14 @@ sonarqube {
 	}
 }
 
-group = 'com.food.delivery'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '13'
-
-repositories {
-	mavenCentral()
-}
-
 docker {
 	name "${project.name}:${project.version}"
 	files "build/libs/${project.name}-${project.version}.jar"
 	tag 'DockerHub', "szastarek/food-delivery-${project.name}:${project.version}"
+}
+
+repositories {
+	mavenCentral()
 }
 
 task cleanBuildDockerPush(type: GradleBuild) {
@@ -38,13 +38,18 @@ ext {
 }
 
 dependencies {
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.cloud:spring-cloud-config-server'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.liquibase:liquibase-core'
 	implementation 'com.github.piomin:logstash-logging-spring-boot-starter:1.2.2.RELEASE'
 	implementation 'com.fasterxml.jackson.module:jackson-module-jaxb-annotations'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'io.micrometer:micrometer-registry-prometheus'
+	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

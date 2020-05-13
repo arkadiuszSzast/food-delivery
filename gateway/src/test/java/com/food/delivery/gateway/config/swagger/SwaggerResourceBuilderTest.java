@@ -15,9 +15,11 @@ class SwaggerResourceBuilderTest {
 	@Test
 	@DisplayName("Should create instance of swagger resource")
 	void shouldCreateSwaggerResource() {
+		//arrange && act
 		final var swaggerResource = SwaggerResourceBuilder
 				.aSwaggerResource(SWAGGER_RESOURCE_NAME, SWAGGER_RESOURCE_LOCATION);
 
+		//assert
 		assertAll(
 				() -> assertThat(swaggerResource.getName()).isEqualTo(SWAGGER_RESOURCE_NAME),
 				() -> assertThat(swaggerResource.getUrl()).isEqualTo(SWAGGER_RESOURCE_LOCATION),
