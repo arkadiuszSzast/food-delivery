@@ -14,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @AccountServiceIntegrationTest
 class AccountMapperTest {
 
-	public static final String EMAIL = "email@email.com";
-	public static final String LAST_NAME = "Doe";
-	public static final String FIRST_NAME = "Joe";
-	public static final String ID = "id";
-	public static final String OKTA_ID = "okta_id";
+	private static final String EMAIL = "email@email.com";
+	private static final String LAST_NAME = "Doe";
+	private static final String FIRST_NAME = "Joe";
+	private static final String ID = "id";
+	private static final String OKTA_ID = "okta_id";
 
 	@Autowired
 	private AccountMapper accountMapper;
@@ -32,7 +32,7 @@ class AccountMapperTest {
 		//act
 		final var account = accountMapper.toDomain(accountRest);
 
-		//assertI
+		//assert
 		assertAll(
 				() -> assertThat(account.getEmail()).isEqualTo(EMAIL),
 				() -> assertThat(account.getFirstName()).isEqualTo(FIRST_NAME),
@@ -68,7 +68,7 @@ class AccountMapperTest {
 		//act
 		final var account = accountMapper.toDomain(oktaAccountRest);
 
-		//assertI
+		//assert
 		assertAll(
 				() -> assertThat(account.getEmail()).isEqualTo(EMAIL),
 				() -> assertThat(account.getFirstName()).isEqualTo(FIRST_NAME),

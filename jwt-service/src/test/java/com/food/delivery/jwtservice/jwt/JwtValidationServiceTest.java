@@ -34,7 +34,7 @@ class JwtValidationServiceTest {
 				.withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
 				.sign(Algorithm.HMAC256(secret));
 
-		//act && arrange
+		//act && assert
 		jwtValidationService.validateActivateAccountToken(token);
 	}
 

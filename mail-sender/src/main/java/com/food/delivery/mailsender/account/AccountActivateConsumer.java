@@ -8,9 +8,9 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @AllArgsConstructor
-@Slf4j
 public class AccountActivateConsumer {
 
 	private static final String TOPIC_ACTIVATE_USER = "activate-user";

@@ -11,7 +11,6 @@ public class AccountActivateUrlProvider {
 
 	private final UrlsProperties urlsProperties;
 
-
 	public String getAccountActivateUrl(String token) {
 		return UriComponentsBuilder
 				.fromHttpUrl(urlsProperties.getAccountActivateUrl())

@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class AccountActivateProducer {
 
-	private static final String ACTIVATE_USER = "activate-user";
+	private static final String ACTIVATE_USER_TOPIC = "activate-user";
 
 	private final KafkaTemplate<String, AccountActivateEvent> kafkaTemplate;
 
 	public void produceSendUserActivateEmail(AccountActivateEvent accountActivateEvent) {
-		kafkaTemplate.send(ACTIVATE_USER, accountActivateEvent);
+		kafkaTemplate.send(ACTIVATE_USER_TOPIC, accountActivateEvent);
 	}
 
 }
