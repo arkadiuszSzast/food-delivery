@@ -16,7 +16,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import static org.mockito.Mockito.when;
 
 @JwtServiceIntegrationTest
-class JwtValidationControllerTest {
+class JwtValidationControllerTestIT {
 
 	@Autowired
 	private WebTestClient webTestClient;
@@ -29,10 +29,12 @@ class JwtValidationControllerTest {
 	@DisplayName("Should return 200 when token is valid")
 	void shouldReturn200WhenValidToken() {
 
+		//arrange
 		final var activateAccountJwt = new ActivateAccountJwt("secret", "issuer", 86400000L);
+		final var userId = "exampleUser";
 		when(jwtProperties.getActivateAccount()).thenReturn(activateAccountJwt);
 
-		final var userId = "exampleUser";
+		//act && assert
 		final var token = jwtGenerateService.getAccountActivateJwt(userId);
 		webTestClient.get()
 				.uri(uriBuilder -> uriBuilder
@@ -49,10 +51,12 @@ class JwtValidationControllerTest {
 	@DisplayName("Should return 401 when invalid token is given")
 	void shouldReturn404WhenInvalidToken() {
 
+		//arrange
 		final var activateAccountJwt = new ActivateAccountJwt("secret", "issuer", 86400000L);
+		final var invalidToken = JWT.create().sign(Algorithm.none());
 		when(jwtProperties.getActivateAccount()).thenReturn(activateAccountJwt);
 
-		final var invalidToken = JWT.create().sign(Algorithm.none());
+		//act && assert
 		webTestClient.get()
 				.uri(uriBuilder -> uriBuilder
 						.path("/jwt/validations/account-activate")

@@ -1,7 +1,6 @@
 package com.food.delivery.jwtservice.jwt;
 
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.food.delivery.jwtservice.utils.properties.jwt.ActivateAccountJwt;
 import com.food.delivery.jwtservice.utils.properties.jwt.JwtProperties;
 import org.junit.jupiter.api.DisplayName;
@@ -11,38 +10,34 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Date;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class JwtValidationServiceTest {
+class JwtGenerateServiceTest {
 
 	@Mock
 	private JwtProperties jwtProperties;
 	@InjectMocks
-	private JwtValidationService jwtValidationService;
+	private JwtGenerateService jwtGenerateService;
 
 	@Test
-	@DisplayName("Should successfully validate token")
-	void shouldSuccessfullyValidateToken() {
+	@DisplayName("Should generate token")
+	void shouldGenerateToken() {
 		//arrange
-		final var issuer = "issuer";
 		final var secret = "Bm30lw0I";
-		final var subject = "oktaUserId";
 		final var expirationTime = 86400000L;
-		final var token = JWT.create()
-				.withSubject(subject)
-				.withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
-				.sign(Algorithm.HMAC256(secret));
+		final var issuer = "issuer";
+		final var userId = "oktaUserId";
 		when(jwtProperties.getActivateAccount()).thenReturn(new ActivateAccountJwt(secret, issuer, expirationTime));
 
-		//act
-		final var result = jwtValidationService.validateActivateAccountToken(token).block();
-
-		//assert
-		assertThat(result).isEqualTo(subject);
+		//act && assert
+		final var result = jwtGenerateService.getAccountActivateJwt(userId);
+		assertAll(
+				() -> assertThat(result).isNotNull(),
+				() -> assertThat(JWT.decode(result).getSubject()).isEqualTo(userId),
+				() -> assertThat(JWT.decode(result).getIssuer()).isEqualTo(issuer)
+		);
 	}
-
 }

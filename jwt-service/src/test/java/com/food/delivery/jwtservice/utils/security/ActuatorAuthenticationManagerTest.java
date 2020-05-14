@@ -1,50 +1,69 @@
 package com.food.delivery.jwtservice.utils.security;
 
-import com.food.delivery.jwtservice.support.JwtServiceIntegrationTest;
 import com.food.delivery.jwtservice.utils.properties.ActuatorProperties;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 
-@JwtServiceIntegrationTest
+@ExtendWith(MockitoExtension.class)
 class ActuatorAuthenticationManagerTest {
 
-	private static final String ACTUATOR_WRONG_PASSWORD = "BAD_PASSWORD";
+	private final static String ACTUATOR_USERNAME = "actuator_account";
+	private final static String ACTUATOR_PASSWORD = "password";
+	private static final String ACTUATOR_INVALID_PASSWORD = "INVALID_PASSWORD";
+	private final static SimpleGrantedAuthority ACTUATOR_AUTHORITIES = new SimpleGrantedAuthority("ACTUATOR");
 
-	@Autowired
-	private ActuatorAuthenticationManager actuatorAuthenticationManager;
-	@Autowired
+	@Mock
 	private ActuatorProperties actuatorProperties;
+
+	@InjectMocks
+	private ActuatorAuthenticationManager actuatorAuthenticationManager;
 
 	@Test
 	@DisplayName("Should authenticate as actuator")
 	void shouldAuthenticateAsActuator() {
 
+		//arrange
+		when(actuatorProperties.getUsername()).thenReturn(ACTUATOR_USERNAME);
+		when(actuatorProperties.getPassword()).thenReturn(ACTUATOR_PASSWORD);
+		when(actuatorProperties.getAuthority()).thenReturn(ACTUATOR_AUTHORITIES);
+
+		//act
 		final var authentication = new UsernamePasswordAuthenticationToken(actuatorProperties.getUsername(),
 				actuatorProperties.getPassword(),
 				Set.of(actuatorProperties.getAuthority()));
-
 		final var result = actuatorAuthenticationManager.authenticate(authentication).block();
 
+		//assert
 		assertThat(result).isEqualTo(authentication);
 	}
 
 	@Test
-	@DisplayName("Should not authenticate as actuator when bad credentials given")
-	void shouldNotAuthenticateAsActuator() {
+	@DisplayName("Should not authenticate as actuator when invalid credentials")
+	void shouldNotAuthenticateAsActuatorWhenInvalidCredentials() {
 
+		//arrange
+		when(actuatorProperties.getUsername()).thenReturn(ACTUATOR_USERNAME);
+		when(actuatorProperties.getPassword()).thenReturn(ACTUATOR_PASSWORD);
+		when(actuatorProperties.getAuthority()).thenReturn(ACTUATOR_AUTHORITIES);
+
+		//act && assert
 		final var authentication = new UsernamePasswordAuthenticationToken(actuatorProperties.getUsername(),
-				ACTUATOR_WRONG_PASSWORD,
+				ACTUATOR_INVALID_PASSWORD,
 				Set.of(actuatorProperties.getAuthority()));
-
 		assertThrows(BadCredentialsException.class,
 				() -> actuatorAuthenticationManager.authenticate(authentication).block());
 	}

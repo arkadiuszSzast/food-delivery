@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @JwtServiceIntegrationTest
-class JwtPropertiesTest {
+class JwtPropertiesTestIT {
 
 	private final static String ACTIVATE_ACCOUNT_JWT_ISSUER = "food-delivery";
 	private final static Long ACTIVATE_ACCOUNT_JWT_EXPIRATION_TIME = 86400000L;
@@ -21,9 +21,10 @@ class JwtPropertiesTest {
 	@Test
 	@DisplayName("Should get activate account jwt properties")
 	void shouldGetActivateAccountJwtProperties() {
-
+		//arrange && act
 		final var result = jwtProperties.getActivateAccount();
 
+		//assert
 		assertAll(
 				() -> assertThat(result.getIssuer()).isEqualTo(ACTIVATE_ACCOUNT_JWT_ISSUER),
 				() -> assertThat(result.getExpirationTime()).isEqualTo(ACTIVATE_ACCOUNT_JWT_EXPIRATION_TIME),

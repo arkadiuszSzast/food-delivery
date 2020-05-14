@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.when;
 
 @JwtServiceIntegrationTest
-class JwtGenerateControllerTest {
+class JwtGenerateControllerTestIT {
 
 	@Autowired
 	private WebTestClient webTestClient;
@@ -27,12 +27,13 @@ class JwtGenerateControllerTest {
 	@DisplayName("Should return user activation token")
 	void shouldReturnUserActivationToken() {
 
+		//arrange
 		final var activateAccountJwt = new ActivateAccountJwt("secret", "issuer", 86400000L);
+		final var userId = "exampleUser";
 		when(jwtProperties.getActivateAccount()).thenReturn(activateAccountJwt);
 
-		final var userId = "exampleUser";
-
-		final var token = webTestClient.get()
+		//act
+		final var result = webTestClient.get()
 				.uri(uriBuilder -> uriBuilder
 						.path("/jwt/account-activate")
 						.queryParam("oktaUserId", userId)
@@ -44,10 +45,11 @@ class JwtGenerateControllerTest {
 				.returnResult()
 				.getResponseBody();
 
+		//assert
 		assertAll(
-				() -> assertThat(token).isNotNull(),
-				() -> assertThat(JWT.decode(token).getSubject()).isEqualTo(userId),
-				() -> assertThat(JWT.decode(token).getIssuer()).isEqualTo(activateAccountJwt.getIssuer())
+				() -> assertThat(result).isNotNull(),
+				() -> assertThat(JWT.decode(result).getSubject()).isEqualTo(userId),
+				() -> assertThat(JWT.decode(result).getIssuer()).isEqualTo(activateAccountJwt.getIssuer())
 		);
 	}
 }
