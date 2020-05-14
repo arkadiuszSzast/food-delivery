@@ -24,6 +24,7 @@ class ActuatorAuthenticationManagerTest {
 	private final static String ACTUATOR_USERNAME = "actuator_account";
 	private final static String ACTUATOR_PASSWORD = "password";
 	private static final String ACTUATOR_INVALID_PASSWORD = "INVALID_PASSWORD";
+	private static final String ACTUATOR_INVALID_USERNAME = "INVALID_USERNAME";
 	private final static SimpleGrantedAuthority ACTUATOR_AUTHORITIES = new SimpleGrantedAuthority("ACTUATOR");
 
 	@Mock
@@ -63,6 +64,23 @@ class ActuatorAuthenticationManagerTest {
 		//act && assert
 		final var authentication = new UsernamePasswordAuthenticationToken(actuatorProperties.getUsername(),
 				ACTUATOR_INVALID_PASSWORD,
+				Set.of(actuatorProperties.getAuthority()));
+		assertThrows(BadCredentialsException.class,
+				() -> actuatorAuthenticationManager.authenticate(authentication).block());
+	}
+
+	@Test
+	@DisplayName("Should not authenticate as actuator when invalid username")
+	void shouldNotAuthenticateAsActuatorWhenInvalidUsername() {
+
+		//arrange
+		when(actuatorProperties.getUsername()).thenReturn(ACTUATOR_USERNAME);
+		when(actuatorProperties.getPassword()).thenReturn(ACTUATOR_PASSWORD);
+		when(actuatorProperties.getAuthority()).thenReturn(ACTUATOR_AUTHORITIES);
+
+		//act && assert
+		final var authentication = new UsernamePasswordAuthenticationToken(ACTUATOR_INVALID_USERNAME,
+				actuatorProperties.getPassword(),
 				Set.of(actuatorProperties.getAuthority()));
 		assertThrows(BadCredentialsException.class,
 				() -> actuatorAuthenticationManager.authenticate(authentication).block());
