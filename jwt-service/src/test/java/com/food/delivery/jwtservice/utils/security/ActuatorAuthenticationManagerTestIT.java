@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ActuatorAuthenticationManagerTestIT {
 
 	private static final String ACTUATOR_WRONG_PASSWORD = "BAD_PASSWORD";
+	private static final String ACTUATOR_INVALID_USERNAME = "INVALID_USERNAME";
 
 	@Autowired
 	private ActuatorAuthenticationManager actuatorAuthenticationManager;
@@ -41,12 +42,26 @@ class ActuatorAuthenticationManagerTestIT {
 	}
 
 	@Test
-	@DisplayName("Should not authenticate as actuator when bad credentials given")
-	void shouldNotAuthenticateAsActuator() {
+	@DisplayName("Should not authenticate as actuator when invalid credentials")
+	void shouldNotAuthenticateAsActuatorWhenInvalidCredentials() {
 
 		//arrange
 		final var authentication = new UsernamePasswordAuthenticationToken(actuatorProperties.getUsername(),
 				ACTUATOR_WRONG_PASSWORD,
+				Set.of(actuatorProperties.getAuthority()));
+
+		//act && assert
+		assertThrows(BadCredentialsException.class,
+				() -> actuatorAuthenticationManager.authenticate(authentication).block());
+	}
+
+	@Test
+	@DisplayName("Should not authenticate as actuator when invalid username")
+	void shouldNotAuthenticateAsActuatorWhenInvalidUsername() {
+
+		//arrange
+		final var authentication = new UsernamePasswordAuthenticationToken(ACTUATOR_INVALID_USERNAME,
+				actuatorProperties.getPassword(),
 				Set.of(actuatorProperties.getAuthority()));
 
 		//act && assert
