@@ -22,6 +22,7 @@ public class AccountActivateConsumer {
 	public void consumeActivateUser(@Payload AccountActivateEvent accountActivateEvent) {
 		sendgridMailFactory.userActivateMail(accountActivateEvent)
 				.flatMap(mailSender::send)
-				.subscribe(data -> log.info("Mail send success"));
+				.doOnSuccess(data -> log.info("Mail send success"))
+				.subscribe();
 	}
 }

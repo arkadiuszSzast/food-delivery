@@ -12,6 +12,5 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 public class SendgridTemplatesProperties {
 
 	private final String confirmUserRegistration;
-	private final String confirmEmployeeRegistration;
 
 }

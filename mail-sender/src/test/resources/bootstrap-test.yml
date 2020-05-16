@@ -13,10 +13,25 @@ spring:
 sendgrid:
   api-key: ${SENDGRID_API_KEY}
   url: https://api.sendgrid.com/
+  sender: food-delivery@mail.com
+  template:
+    confirmUserRegistration: d-d435f79c0b604a2dabb2d55e1cb9fda3
+    confirmEmployeeRegistration: d-27ec902c1813433bb89b4702032dc165
 
 actuator:
   username: admin
   password: admin
   authority: ACTUATOR
   path: /actuator/**
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 4000
+
+urls:
+  account-activate-url: http://localhost:8060/account/activate
 
