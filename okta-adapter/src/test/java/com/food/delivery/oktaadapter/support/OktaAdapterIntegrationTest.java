@@ -1,6 +1,5 @@
 package com.food.delivery.oktaadapter.support;
 
-import com.okta.sdk.client.Client;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,6 +18,5 @@ import java.lang.annotation.Target;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @MockBean(ReactiveJwtDecoder.class)
-@MockBean(Client.class)
 public @interface OktaAdapterIntegrationTest {
 }
