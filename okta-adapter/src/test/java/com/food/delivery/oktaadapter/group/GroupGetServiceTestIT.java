@@ -25,7 +25,6 @@ class GroupGetServiceTestIT {
 				() -> assertThat(userGroup).isNotNull(),
 				() -> assertThat(userGroup.getId()).isNotNull()
 		);
-
 	}
 
 }

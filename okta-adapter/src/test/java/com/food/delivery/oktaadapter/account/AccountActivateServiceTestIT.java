@@ -4,6 +4,7 @@ import com.food.delivery.oktaadapter.support.OktaAdapterIntegrationTest;
 import com.food.delivery.oktaadapter.support.account.AccountRestFactory;
 import com.food.delivery.oktaadapter.support.okta.OktaUserDeleteService;
 import com.okta.sdk.client.Client;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,17 @@ class AccountActivateServiceTestIT {
 	@Autowired
 	private Client client;
 
+	@BeforeEach
+	void init() {
+		oktaUserDeleteService.deleteTestUser();
+	}
+
 	@Test
 	@DisplayName("Should activate account")
 	void shouldActivateAccount() {
 		//arrange
 		final var accountRest = AccountRestFactory.getAccountRest();
 		final var account = accountCreateService.createAccount(accountRest).block();
-		final var user = client.getUser(account.getOktaId());
 
 		//act
 		final var activationToken = accountActivateService.activateAccount(account.getOktaId()).block();
@@ -39,9 +44,6 @@ class AccountActivateServiceTestIT {
 				() -> assertThat(activationToken.getActivationToken()).isNotNull(),
 				() -> assertThat(activationToken.getActivationUrl()).isNotNull()
 		);
-
-		//clean
-		oktaUserDeleteService.deleteUserFromOkta(user);
 	}
 
 }

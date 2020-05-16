@@ -5,11 +5,10 @@ import com.food.delivery.oktaadapter.support.OktaAdapterIntegrationTest;
 import com.food.delivery.oktaadapter.support.account.AccountRestFactory;
 import com.food.delivery.oktaadapter.support.okta.OktaUserDeleteService;
 import com.okta.sdk.client.Client;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -25,6 +24,11 @@ class AccountControllerTestIT {
 	private GroupGetService groupGetService;
 	@Autowired
 	private OktaUserDeleteService oktaUserDeleteService;
+
+	@BeforeEach
+	void init() {
+		oktaUserDeleteService.deleteTestUser();
+	}
 
 	@Test
 	@DisplayName("Should create account")
@@ -43,13 +47,9 @@ class AccountControllerTestIT {
 				() -> assertThat(account.getAccountRest().getFirstName()).isEqualTo(accountRest.getFirstName()),
 				() -> assertThat(account.getAccountRest().getLastName()).isEqualTo(accountRest.getLastName()),
 				() -> assertThat(account.getAccountRest().getEmail()).isEqualTo(accountRest.getEmail()),
-				() -> assertThat(user.getCreated()).isEqualToIgnoringSeconds(new Date()),
 				() -> assertThat(user.listGroups()).hasSize(2),
-				() -> assertThat(user.listGroups()).contains(userGroup)
+				() -> assertThat(user.listGroups()).usingElementComparatorOnFields("id").contains(userGroup)
 		);
-
-		//clean
-		oktaUserDeleteService.deleteUserFromOkta(user);
 	}
 
 	@Test
@@ -68,9 +68,6 @@ class AccountControllerTestIT {
 				() -> assertThat(activationToken.getActivationToken()).isNotNull(),
 				() -> assertThat(activationToken.getActivationUrl()).isNotNull()
 		);
-
-		//clean
-		oktaUserDeleteService.deleteUserFromOkta(user);
 	}
 
 }
