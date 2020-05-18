@@ -13,10 +13,3 @@ spring:
       uri: ${CONFIG_URI:http://localhost:8888}
       username: account_actuator
       password: ${ACTUATOR_PASSWORD}
-
-okta:
-  apiToken: 00-huO9jqNlI-jRAwgSjhvTMI_4Og17V07fvnHjehO
-  domainUrl: https://dev-826281.oktapreview.com/
-  oauth2:
-    client-id: 0oaqhr4dajPv04F9p0h7
-    issuer: https://dev-826281.oktapreview.com/oauth2/default
