@@ -27,7 +27,7 @@ public class AccountController {
 	}
 
 	@GetMapping("/me")
-	public Mono<Account> findAll(@AuthenticationPrincipal JwtAuthenticationToken principal) {
+	public Mono<Account> findMe(@AuthenticationPrincipal JwtAuthenticationToken principal) {
 		return accountGetService.findByEmail(principal.getName());
 	}
 

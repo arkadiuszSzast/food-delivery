@@ -6,7 +6,13 @@ spring:
       enabled: false
     discovery:
       enabled: false
-
+  data:
+    mongodb:
+      uri: mongodb://${embedded.mongodb.host}:${embedded.mongodb.port}/${embedded.mongodb.database}
+  kafka:
+    producer:
+      bootstrap-servers: ${embedded.kafka.brokerList}
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 actuator:
   username: admin
   password: admin
