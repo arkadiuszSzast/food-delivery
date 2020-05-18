@@ -11,7 +11,7 @@ spring:
       bootstrap-servers: localhost:9092
 
 sendgrid:
-  api-key: ${SENDGRID_API_KEY}
+  api-key: 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
   url: https://api.sendgrid.com/
   sender: food-delivery@mail.com
   template:
