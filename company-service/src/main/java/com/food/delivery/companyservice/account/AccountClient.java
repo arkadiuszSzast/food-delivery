@@ -8,5 +8,5 @@ import reactor.core.publisher.Mono;
 public interface AccountClient {
 
 	@GetMapping("/account/me")
-	Mono<Account> findAccount();
+	Mono<Account> findMe();
 }
