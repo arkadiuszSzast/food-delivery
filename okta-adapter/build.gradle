@@ -18,7 +18,7 @@ sonarqube {
 		property "sonar.host.url", "https://sonarcloud.io"
 		property "sonar.login", "c50fea7fecaee7511b3cc7b318aaf79bf3cfe010"
 		property 'sonar.coverage.exclusions', "**/OktaAdapterApplication.java," +
-				"**/FeignClientInterceptor.java"
+				"**/SwaggerConfiguration.java.java"
 	}
 }
 
