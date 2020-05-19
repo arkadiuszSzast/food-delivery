@@ -17,6 +17,9 @@ sonarqube {
 		property "sonar.organization", "arkadiuszszast"
 		property "sonar.host.url", "https://sonarcloud.io"
 		property "sonar.login", "3b875a5e5048e1155e2642f1741b63aa3ea46c3b"
+		property 'sonar.coverage.exclusions', "**/AccountServiceApplication.java," +
+				"**/SwaggerConfiguration.java," +
+				"**/FeignClientInterceptor.java"
 	}
 }
 

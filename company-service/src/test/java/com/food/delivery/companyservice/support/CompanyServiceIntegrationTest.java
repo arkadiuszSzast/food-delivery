@@ -1,5 +1,6 @@
 package com.food.delivery.companyservice.support;
 
+import com.food.delivery.companyservice.support.extensions.CleanDatabaseExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -18,5 +19,6 @@ import java.lang.annotation.Target;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @MockBean(ReactiveJwtDecoder.class)
+@ExtendWith(CleanDatabaseExtension.class)
 public @interface CompanyServiceIntegrationTest {
 }
