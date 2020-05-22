@@ -135,6 +135,20 @@ services:
         aliases:
           - "company-service-db"
 
+  gateway-db:
+    image: szastarek/food-delivery-gateway-db
+    container_name: gateway-db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=gateway_user
+      - MONGO_INITDB_ROOT_PASSWORD=iwmH3cmFVANFnU45JWm8WWb0
+      - MONGO_INITDB_DATABASE=gateway
+    ports:
+      - 27015:27017
+    networks:
+      food-delivery-net:
+        aliases:
+          - "gateway-db"
+
   config-server:
     image: szastarek/food-delivery-config-server:${TAG}
     container_name: config-server
@@ -186,12 +200,14 @@ services:
       - EUREKA_URL=http://account_eureka:password@server-discovery:8761/eureka/
       - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
       - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
+      - DATABASE_URI=mongodb://gateway_user:iwmH3cmFVANFnU45JWm8WWb0@gateway-db:27017/gateway?authSource=admin
       - ACTUATOR_PASSWORD=iN09KtaW59dqeRylgZFV4aSZ
       - ENV=dev,swagger
     ports:
       - 8060:8060
     depends_on:
       - config-server
+      - gateway-db
     networks:
       food-delivery-net:
         aliases:

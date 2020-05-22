@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RouteLocatorConfig {
+public class RouteLocatorConfiguration {
 
 	private static final String SWAGGER_EP = "/v2/api-docs";
 	private static final String LB_ACCOUNT_SERVICE = "lb://account-service";
