@@ -291,4 +291,21 @@ databaseChangeLog:
               - column:
                   name: label
                   value: master
-
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: gateway
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: spring.data.mongodb.uri
+              - column:
+                  name: value
+                  value: ${DATABASE_URI:mongodb://gateway_user:iwmH3cmFVANFnU45JWm8WWb0@gateway-db:27017/gateway?authSource=admin}
+              - column:
+                  name: label
+                  value: master

@@ -1,0 +1,17 @@
+spring:
+  cloud:
+    config:
+      discovery:
+        enabled: false
+      enabled: false
+    discovery:
+      enabled: false
+  data:
+    mongodb:
+      uri: mongodb://${embedded.mongodb.host}:${embedded.mongodb.port}/${embedded.mongodb.database}
+
+actuator:
+  username: admin
+  password: admin
+  authority: ACTUATOR
+  path: /actuator/**
