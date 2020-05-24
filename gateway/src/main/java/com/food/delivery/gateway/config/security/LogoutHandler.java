@@ -18,6 +18,6 @@ public class LogoutHandler implements ServerLogoutHandler {
 	@Override
 	public Mono<Void> logout(WebFilterExchange exchange, Authentication authentication) {
 		final var jwt = ((JwtAuthenticationToken) authentication).getToken();
-		return blacklistedTokenCreateService.create(jwt).then();
+		return blacklistedTokenCreateService.create(jwt).then(Mono.empty());
 	}
 }
