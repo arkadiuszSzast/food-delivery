@@ -296,13 +296,13 @@ services:
       - EUREKA_URL=http://account_eureka:password@server-discovery:8761/eureka/
       - ACTUATOR_PASSWORD=iN09KtaW59dqeRylgZFV4aSZ
       - ACTIVATE_ACCOUNT_SECRET=4XUagJh9fZZrWDBfsEe6wmL3eC4765cL
-      - ENV=dev
+      - ENV=dev,swagger
     depends_on:
       - config-server
     networks:
       food-delivery-net:
         aliases:
-          - jwt-service
+          - "jwt-service"
 
 networks:
   food-delivery-net:

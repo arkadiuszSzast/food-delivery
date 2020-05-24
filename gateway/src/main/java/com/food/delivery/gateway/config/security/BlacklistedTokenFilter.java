@@ -24,7 +24,7 @@ public class BlacklistedTokenFilter implements WebFilter {
 				.flatMap(blacklistedTokenRepository::findByToken)
 				.flatMap(token -> Mono.error(new AuthorizationServiceException(
 						String.format("Token: %s is blacklisted", token)))
-				);
+				).then(chain.filter(exchange));
 	}
 
 	private Mono<String> getAuthorization(ServerHttpRequest request) {

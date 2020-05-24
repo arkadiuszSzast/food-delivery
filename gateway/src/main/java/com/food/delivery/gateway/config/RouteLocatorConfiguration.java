@@ -12,6 +12,7 @@ public class RouteLocatorConfiguration {
 	private static final String LB_ACCOUNT_SERVICE = "lb://account-service";
 	private static final String LB_COMPANY_SERVICE = "lb://company-service";
 	private static final String LB_OKTA_ADAPTER = "lb://okta-adapter";
+	private static final String LB_JWT_SERVICE = "lb://jwt-service";
 
 	@Bean
 	public RouteLocator swaggerRouter(RouteLocatorBuilder builder) {
@@ -25,17 +26,16 @@ public class RouteLocatorConfiguration {
 				.route("okta-adapter-swagger", r -> r.path("/okta-adapter/v2/api-docs")
 						.filters(f -> f.rewritePath("/okta-adapter/v2/api-docs", SWAGGER_EP))
 						.uri(LB_OKTA_ADAPTER))
+				.route("jwt-service-swagger", r -> r.path("/jwt-service/v2/api-docs")
+						.filters(f -> f.rewritePath("/jwt-service/v2/api-docs", SWAGGER_EP))
+						.uri(LB_JWT_SERVICE))
 				.build();
 	}
 
 	@Bean
 	public RouteLocator accountServiceRouter(RouteLocatorBuilder builder) {
 		return builder.routes()
-				.route("account-service-accounts", r -> r.path("/account")
-						.uri(LB_ACCOUNT_SERVICE))
-				.route("account-service-me", r -> r.path("/account/me")
-						.uri(LB_ACCOUNT_SERVICE))
-				.route("account-service-activate", r -> r.path("/account/activate")
+				.route("account-service-accounts", r -> r.path("/account/**")
 						.uri(LB_ACCOUNT_SERVICE))
 				.build();
 	}
@@ -43,7 +43,7 @@ public class RouteLocatorConfiguration {
 	@Bean
 	public RouteLocator companyServiceRouter(RouteLocatorBuilder builder) {
 		return builder.routes()
-				.route("company-service-companies", r -> r.path("/company")
+				.route("company-service-companies", r -> r.path("/company/**")
 						.uri(LB_COMPANY_SERVICE))
 				.build();
 	}
