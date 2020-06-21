@@ -18,7 +18,7 @@ class AccountActivateUrlProviderTestIT {
 
 	@Test
 	@DisplayName("Should return user activation url with token")
-	void shouldReturnActivationUrl() {
+	void shouldReturnUserActivationUrl() {
 		//arrange
 		final var token = "25aIGS2R";
 
@@ -27,6 +27,45 @@ class AccountActivateUrlProviderTestIT {
 
 		//assert
 		assertThat(result).isEqualTo(urlsProperties.getUserActivateUrl() + "?token=" + token);
+	}
+
+	@Test
+	@DisplayName("Should return employee activation url with token")
+	void shouldReturnEmployeeActivationUrl() {
+		//arrange
+		final var token = "25aIGS2R";
+
+		//act
+		final var result = accountActivateUrlProvider.getEmployeeActivateUrl(token);
+
+		//assert
+		assertThat(result).isEqualTo(urlsProperties.getEmployeeActivateUrl() + "?token=" + token);
+	}
+
+	@Test
+	@DisplayName("Should return company admin activation url with token")
+	void shouldReturnCompanyAdminActivationUrl() {
+		//arrange
+		final var token = "25aIGS2R";
+
+		//act
+		final var result = accountActivateUrlProvider.getCompanyAdminActivateUrl(token);
+
+		//assert
+		assertThat(result).isEqualTo(urlsProperties.getCompanyAdminActivateUrl() + "?token=" + token);
+	}
+
+	@Test
+	@DisplayName("Should return company admin register url with token")
+	void shouldReturnCompanyAdminRegisterUrl() {
+		//arrange
+		final var token = "25aIGS2R";
+
+		//act
+		final var result = accountActivateUrlProvider.getCompanyAdminRegisterUrl(token);
+
+		//assert
+		assertThat(result).isEqualTo(urlsProperties.getCompanyAdminRegisterUrl() + "?token=" + token);
 	}
 
 }

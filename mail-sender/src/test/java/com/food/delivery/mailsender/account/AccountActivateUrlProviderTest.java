@@ -21,7 +21,7 @@ class AccountActivateUrlProviderTest {
 
 	@Test
 	@DisplayName("Should return user activation url with token")
-	void shouldReturnActivationUrl() {
+	void shouldReturnUserActivationUrl() {
 		//arrange
 		final var token = "25aIGS2R";
 		final var accountActivateUrl = "http://localhost:8060/account/activate";
@@ -29,6 +29,51 @@ class AccountActivateUrlProviderTest {
 
 		//act
 		final var result = accountActivateUrlProvider.getUserActivateUrl(token);
+
+		//assert
+		assertThat(result).isEqualTo(accountActivateUrl + "?token=" + token);
+	}
+
+	@Test
+	@DisplayName("Should return employee activation url with token")
+	void shouldReturnEmployeeActivationUrl() {
+		//arrange
+		final var token = "25aIGS2R";
+		final var accountActivateUrl = "http://localhost:8060/account/activate";
+		when(urlsProperties.getEmployeeActivateUrl()).thenReturn(accountActivateUrl);
+
+		//act
+		final var result = accountActivateUrlProvider.getEmployeeActivateUrl(token);
+
+		//assert
+		assertThat(result).isEqualTo(accountActivateUrl + "?token=" + token);
+	}
+
+	@Test
+	@DisplayName("Should return company admin activation url with token")
+	void shouldReturnCompanyAdminActivationUrl() {
+		//arrange
+		final var token = "25aIGS2R";
+		final var accountActivateUrl = "http://localhost:8060/account/activate";
+		when(urlsProperties.getCompanyAdminActivateUrl()).thenReturn(accountActivateUrl);
+
+		//act
+		final var result = accountActivateUrlProvider.getCompanyAdminActivateUrl(token);
+
+		//assert
+		assertThat(result).isEqualTo(accountActivateUrl + "?token=" + token);
+	}
+
+	@Test
+	@DisplayName("Should return company admin register url with token")
+	void shouldReturnCompanyAdminRegisterUrl() {
+		//arrange
+		final var token = "25aIGS2R";
+		final var accountActivateUrl = "http://localhost:8060/account/activate";
+		when(urlsProperties.getCompanyAdminRegisterUrl()).thenReturn(accountActivateUrl);
+
+		//act
+		final var result = accountActivateUrlProvider.getCompanyAdminRegisterUrl(token);
 
 		//assert
 		assertThat(result).isEqualTo(accountActivateUrl + "?token=" + token);
