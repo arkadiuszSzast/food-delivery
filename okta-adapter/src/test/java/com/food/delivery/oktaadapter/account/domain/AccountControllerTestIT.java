@@ -31,8 +31,8 @@ class AccountControllerTestIT {
 	}
 
 	@Test
-	@DisplayName("Should create account")
-	void shouldCreateAccount() {
+	@DisplayName("Should create user account")
+	void shouldCreateUserAccount() {
 		//arrange
 		final var accountRest = AccountRestFactory.getAccountRest();
 		final var userGroup = groupGetService.getUserGroup();
@@ -58,7 +58,6 @@ class AccountControllerTestIT {
 		//arrange
 		final var accountRest = AccountRestFactory.getAccountRest();
 		final var account = accountController.createUser(accountRest).block();
-		final var user = client.getUser(account.getOktaId());
 
 		//act
 		final var activationToken = accountController.activateAccount(account.getOktaId()).block();
@@ -67,6 +66,51 @@ class AccountControllerTestIT {
 		assertAll(
 				() -> assertThat(activationToken.getActivationToken()).isNotNull(),
 				() -> assertThat(activationToken.getActivationUrl()).isNotNull()
+		);
+	}
+
+	@Test
+	@DisplayName("Should create employee account")
+	void shouldCreateEmployeeAccount() {
+		//arrange
+		final var accountRest = AccountRestFactory.getAccountRest();
+		final var companyEmployeeGroup = groupGetService.getCompanyEmployeeGroup();
+
+		//act
+		final var account = accountController.createEmployee(accountRest).block();
+
+		//assert
+		final var user = client.getUser(account.getOktaId());
+		assertAll(
+				() -> assertThat(account.getOktaId()).isNotNull(),
+				() -> assertThat(account.getAccountRest().getFirstName()).isEqualTo(accountRest.getFirstName()),
+				() -> assertThat(account.getAccountRest().getLastName()).isEqualTo(accountRest.getLastName()),
+				() -> assertThat(account.getAccountRest().getEmail()).isEqualTo(accountRest.getEmail()),
+				() -> assertThat(user.listGroups()).hasSize(2),
+				() -> assertThat(user.listGroups()).usingElementComparatorOnFields("id").contains(companyEmployeeGroup)
+		);
+	}
+
+	@Test
+	@DisplayName("Should create company admin account")
+	void shouldCreateCompanyAdminAccount() {
+		//arrange
+		final var accountRest = AccountRestFactory.getAccountRest();
+		final var companyEmployeeGroup = groupGetService.getCompanyEmployeeGroup();
+		final var companyAdminGroup = groupGetService.getCompanyAdminGroup();
+
+		//act
+		final var account = accountController.createCompanyAdmin(accountRest).block();
+
+		//assert
+		final var user = client.getUser(account.getOktaId());
+		assertAll(
+				() -> assertThat(account.getOktaId()).isNotNull(),
+				() -> assertThat(account.getAccountRest().getFirstName()).isEqualTo(accountRest.getFirstName()),
+				() -> assertThat(account.getAccountRest().getLastName()).isEqualTo(accountRest.getLastName()),
+				() -> assertThat(account.getAccountRest().getEmail()).isEqualTo(accountRest.getEmail()),
+				() -> assertThat(user.listGroups()).hasSize(3),
+				() -> assertThat(user.listGroups()).usingElementComparatorOnFields("id").contains(companyAdminGroup, companyEmployeeGroup)
 		);
 	}
 

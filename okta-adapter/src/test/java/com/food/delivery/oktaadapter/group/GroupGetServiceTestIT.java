@@ -27,4 +27,30 @@ class GroupGetServiceTestIT {
 		);
 	}
 
+	@Test
+	@DisplayName("Should return employee group")
+	void shouldReturnEmployeeGroup() {
+		//act
+		final var userGroup = groupGetService.getCompanyEmployeeGroup();
+
+		//arrange
+		assertAll(
+				() -> assertThat(userGroup).isNotNull(),
+				() -> assertThat(userGroup.getId()).isNotNull()
+		);
+	}
+
+	@Test
+	@DisplayName("Should return company admin group")
+	void shouldReturnCompanyAdminGroup() {
+		//act
+		final var userGroup = groupGetService.getCompanyAdminGroup();
+
+		//arrange
+		assertAll(
+				() -> assertThat(userGroup).isNotNull(),
+				() -> assertThat(userGroup.getId()).isNotNull()
+		);
+	}
+
 }

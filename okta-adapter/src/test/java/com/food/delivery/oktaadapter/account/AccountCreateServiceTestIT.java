@@ -33,8 +33,8 @@ class AccountCreateServiceTestIT {
 	}
 
 	@Test
-	@DisplayName("Should create account")
-	void shouldCreateAccount() {
+	@DisplayName("Should create user account")
+	void shouldCreateUserAccount() {
 		//arrange
 		final var accountRest = AccountRestFactory.getAccountRest();
 		final var userGroup = groupGetService.getUserGroup();
@@ -56,12 +56,79 @@ class AccountCreateServiceTestIT {
 
 	@Test
 	@DisplayName("Should not create account when email already exist")
-	void shouldNotCreateAccount() {
+	void shouldNotCreateUserAccount() {
 		//arrange
 		final var accountRest = AccountRestFactory.getAccountRest();
 
 		//act && assert
 		accountCreateService.createUser(accountRest).block();
 		assertThrows(ResourceException.class, () -> accountCreateService.createUser(accountRest).block());
+	}
+
+	@Test
+	@DisplayName("Should create employee account")
+	void shouldCreateEmployeeAccount() {
+		//arrange
+		final var accountRest = AccountRestFactory.getAccountRest();
+		final var employeeGroup = groupGetService.getCompanyEmployeeGroup();
+
+		//act
+		final var account = accountCreateService.createEmployee(accountRest).block();
+		final var user = client.getUser(account.getOktaId());
+
+		//assert
+		assertAll(
+				() -> assertThat(account.getOktaId()).isNotNull(),
+				() -> assertThat(account.getAccountRest().getFirstName()).isEqualTo(accountRest.getFirstName()),
+				() -> assertThat(account.getAccountRest().getLastName()).isEqualTo(accountRest.getLastName()),
+				() -> assertThat(account.getAccountRest().getEmail()).isEqualTo(accountRest.getEmail()),
+				() -> assertThat(user.listGroups()).hasSize(2),
+				() -> assertThat(user.listGroups()).usingElementComparatorOnFields("id").contains(employeeGroup)
+		);
+	}
+
+	@Test
+	@DisplayName("Should not create employee account when email already exist")
+	void shouldNotCreateEmployeeAccount() {
+		//arrange
+		final var accountRest = AccountRestFactory.getAccountRest();
+
+		//act && assert
+		accountCreateService.createEmployee(accountRest).block();
+		assertThrows(ResourceException.class, () -> accountCreateService.createEmployee(accountRest).block());
+	}
+
+	@Test
+	@DisplayName("Should create company admin account")
+	void shouldCreateCompanyAdminAccount() {
+		//arrange
+		final var accountRest = AccountRestFactory.getAccountRest();
+		final var employeeGroup = groupGetService.getCompanyEmployeeGroup();
+		final var companyAdminGroup = groupGetService.getCompanyAdminGroup();
+
+		//act
+		final var account = accountCreateService.createCompanyAdmin(accountRest).block();
+		final var user = client.getUser(account.getOktaId());
+
+		//assert
+		assertAll(
+				() -> assertThat(account.getOktaId()).isNotNull(),
+				() -> assertThat(account.getAccountRest().getFirstName()).isEqualTo(accountRest.getFirstName()),
+				() -> assertThat(account.getAccountRest().getLastName()).isEqualTo(accountRest.getLastName()),
+				() -> assertThat(account.getAccountRest().getEmail()).isEqualTo(accountRest.getEmail()),
+				() -> assertThat(user.listGroups()).hasSize(3),
+				() -> assertThat(user.listGroups()).usingElementComparatorOnFields("id").contains(companyAdminGroup, employeeGroup)
+		);
+	}
+
+	@Test
+	@DisplayName("Should not create company admin account when email already exist")
+	void shouldNotCreateCompanyAdminAccount() {
+		//arrange
+		final var accountRest = AccountRestFactory.getAccountRest();
+
+		//act && assert
+		accountCreateService.createEmployee(accountRest).block();
+		assertThrows(ResourceException.class, () -> accountCreateService.createEmployee(accountRest).block());
 	}
 }
