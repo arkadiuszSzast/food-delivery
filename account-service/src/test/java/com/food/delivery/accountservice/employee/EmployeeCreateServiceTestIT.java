@@ -45,7 +45,7 @@ class EmployeeCreateServiceTestIT {
 		final var companyAdmin = employeeRepository.save(EmployeeProvider.getEmployee(companyId, randomString())).block();
 		final var employee = getEmployee(accountRest, companyId);
 		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(companyAdmin.getEmail()));
-		final var companyRest = new CompanyRest(companyId, randomString(), randomString());
+		final var companyRest = new CompanyRest(companyId, randomString());
 		when(companyClient.getCompany(companyId)).thenReturn(Mono.just(companyRest));
 		when(oktaAdapterAccountClient.createEmployee(accountRest)).thenReturn(Mono.just(oktaAccountRest));
 
@@ -66,7 +66,7 @@ class EmployeeCreateServiceTestIT {
 		final var oktaAccountRest = new OktaAccountRest(accountRest, UUID.randomUUID().toString());
 		final var companyAdmin = employeeRepository.save(EmployeeProvider.getEmployee(companyId, employeeEmail)).block();
 		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(companyAdmin.getEmail()));
-		final var companyRest = new CompanyRest(companyId, randomString(), randomString());
+		final var companyRest = new CompanyRest(companyId, randomString());
 		when(companyClient.getCompany(companyId)).thenReturn(Mono.just(companyRest));
 		when(oktaAdapterAccountClient.createEmployee(accountRest)).thenReturn(Mono.just(oktaAccountRest));
 

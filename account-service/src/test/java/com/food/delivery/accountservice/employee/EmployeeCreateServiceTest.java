@@ -51,7 +51,7 @@ class EmployeeCreateServiceTest {
 		final var oktaAccountRest = new OktaAccountRest(accountRest, UUID.randomUUID().toString());
 		final var employee = getEmployee(accountRest, companyId);
 		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(companyAdminEmail));
-		final var companyRest = new CompanyRest(companyId, randomString(), randomString());
+		final var companyRest = new CompanyRest(companyId, randomString());
 		when(companyGetService.getCompany(companyAdminEmail)).thenReturn(Mono.just(companyRest));
 		when(employeeMapper.toDomain(oktaAccountRest, companyId)).thenReturn(employee);
 		when(employeeRepository.save(employee)).thenReturn(Mono.just(employee));
@@ -74,7 +74,7 @@ class EmployeeCreateServiceTest {
 		final var oktaAccountRest = new OktaAccountRest(accountRest, UUID.randomUUID().toString());
 		final var employee = getEmployee(accountRest, companyId);
 		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(companyAdminEmail));
-		final var companyRest = new CompanyRest(companyId, randomString(), randomString());
+		final var companyRest = new CompanyRest(companyId, randomString());
 		when(companyGetService.getCompany(companyAdminEmail)).thenReturn(Mono.just(companyRest));
 		when(employeeMapper.toDomain(oktaAccountRest, companyId)).thenReturn(employee);
 		when(employeeRepository.save(employee)).thenThrow(DuplicateKeyException.class);

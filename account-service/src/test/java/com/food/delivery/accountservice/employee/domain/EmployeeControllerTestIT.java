@@ -58,7 +58,7 @@ class EmployeeControllerTestIT {
 		final var companyAdmin = employeeRepository.save(EmployeeProvider.getEmployee(companyId, randomString())).block();
 		final var employee = getEmployee(accountRest, companyId);
 		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(companyAdmin.getEmail()));
-		final var companyRest = new CompanyRest(companyId, randomString(), randomString());
+		final var companyRest = new CompanyRest(companyId, randomString());
 		when(companyClient.getCompany(companyId)).thenReturn(Mono.just(companyRest));
 		when(oktaAdapterAccountClient.createEmployee(accountRest)).thenReturn(Mono.just(oktaAccountRest));
 
@@ -98,7 +98,7 @@ class EmployeeControllerTestIT {
 		final var employee = getEmployee(accountRest, companyId);
 		employeeRepository.save(employee).block();
 		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(companyAdmin.getEmail()));
-		final var companyRest = new CompanyRest(companyId, randomString(), randomString());
+		final var companyRest = new CompanyRest(companyId, randomString());
 		when(companyClient.getCompany(companyId)).thenReturn(Mono.just(companyRest));
 		when(oktaAdapterAccountClient.createEmployee(accountRest)).thenReturn(Mono.just(oktaAccountRest));
 
