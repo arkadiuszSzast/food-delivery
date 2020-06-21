@@ -18,7 +18,7 @@ class CompanyGetServiceTestIT {
 
 	@Test
 	@DisplayName("Should return list of all companies")
-	void shouldReturnListOfAllCOmpanies() {
+	void shouldReturnListOfAllCompanies() {
 		//arrange
 		final var company1 = companyProvider.createAndSave();
 		final var company2 = companyProvider.createAndSave();
@@ -44,6 +44,37 @@ class CompanyGetServiceTestIT {
 
 		//assert
 		assertThat(result).isEmpty();
+	}
+
+	@Test
+	@DisplayName("Should return company by id")
+	void shouldReturnCompanyById() {
+		//arrange
+		final var company = companyProvider.createAndSave();
+
+		//act
+		final var result = companyGetService.findById(company.getId()).blockOptional();
+
+		//assert
+		assertAll(
+				() -> assertThat(result).isPresent(),
+				() -> assertThat(result.get()).usingRecursiveComparison().isEqualTo(company)
+		);
+	}
+
+	@Test
+	@DisplayName("Should return empty when company not found by id")
+	void shouldReturnEmptyWhenCompanyNotFoundById() {
+		//arrange
+		final var notExistingId = "notExistingId";
+
+		//act
+		final var result = companyGetService.findById(notExistingId).blockOptional();
+
+		//assert
+		assertAll(
+				() -> assertThat(result).isEmpty()
+		);
 	}
 
 }

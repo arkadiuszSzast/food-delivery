@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -54,4 +55,38 @@ class CompanyGetServiceTest {
 		//assert
 		assertThat(result).isEmpty();
 	}
+
+	@Test
+	@DisplayName("Should return company by id")
+	void shouldReturnCompanyById() {
+		//arrange
+		final var company = companyFactory.create();
+		when(companyRepository.findById(company.getId())).thenReturn(Mono.just(company));
+
+		//act
+		final var result = companyGetService.findById(company.getId()).blockOptional();
+
+		//assert
+		assertAll(
+				() -> assertThat(result).isPresent(),
+				() -> assertThat(result.get()).usingRecursiveComparison().isEqualTo(company)
+		);
+	}
+
+	@Test
+	@DisplayName("Should return empty when company not found by id")
+	void shouldReturnEmptyWhenCompanyNotFoundById() {
+		//arrange
+		final var notExistingId = "notExistingId";
+		when(companyRepository.findById(notExistingId)).thenReturn(Mono.empty());
+
+		//act
+		final var result = companyGetService.findById(notExistingId).blockOptional();
+
+		//assert
+		assertAll(
+				() -> assertThat(result).isEmpty()
+		);
+	}
+
 }

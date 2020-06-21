@@ -132,4 +132,36 @@ class CompanyControllerTestIT {
 				() -> companyController.createCompany(companyRest).block());
 	}
 
+	@Test
+	@DisplayName("Should return company found by id")
+	void shouldReturnCompanyFoundById() {
+		//arrange
+		final var company = companyProvider.createAndSave();
+		final var companyRest = new CompanyRest(company.getId(), company.getName(), company.getPhoneNumber());
+
+		//act
+		final var result = companyController.findById(company.getId()).blockOptional();
+
+		//assert
+		assertAll(
+				() -> assertThat(result).isPresent(),
+				() -> assertThat(result.get()).usingRecursiveComparison().isEqualTo(companyRest)
+		);
+	}
+
+	@Test
+	@DisplayName("Should return empty when company not found by id")
+	void shouldReturnEmptyWhenCompanyNotFoundById() {
+		//arrange
+		final var notExistingId = "notExistingId";
+
+		//act
+		final var result = companyController.findById(notExistingId).blockOptional();
+
+		//assert
+		assertAll(
+				() -> assertThat(result).isEmpty()
+		);
+	}
+
 }
