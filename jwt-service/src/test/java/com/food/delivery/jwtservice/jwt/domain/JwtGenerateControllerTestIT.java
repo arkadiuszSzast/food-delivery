@@ -2,35 +2,27 @@ package com.food.delivery.jwtservice.jwt.domain;
 
 import com.auth0.jwt.JWT;
 import com.food.delivery.jwtservice.support.JwtServiceIntegrationTest;
-import com.food.delivery.jwtservice.utils.properties.jwt.BasicJwt;
-import com.food.delivery.jwtservice.utils.properties.jwt.JwtProperties;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.Mockito.when;
 
 @JwtServiceIntegrationTest
 class JwtGenerateControllerTestIT {
 
 	@Autowired
 	private WebTestClient webTestClient;
-	@MockBean
-	private JwtProperties jwtProperties;
 
 	@Test
 	@DisplayName("Should return user activation token")
 	void shouldReturnUserActivationToken() {
 
 		//arrange
-		final var activateAccountJwt = new BasicJwt("secret", "issuer", 86400000L);
 		final var userId = "exampleUser";
-		when(jwtProperties.getActivateUserJwt()).thenReturn(activateAccountJwt);
 
 		//act
 		final var result = webTestClient.get()
@@ -48,8 +40,88 @@ class JwtGenerateControllerTestIT {
 		//assert
 		assertAll(
 				() -> assertThat(result).isNotNull(),
-				() -> assertThat(JWT.decode(result).getSubject()).isEqualTo(userId),
-				() -> assertThat(JWT.decode(result).getIssuer()).isEqualTo(activateAccountJwt.getIssuer())
+				() -> assertThat(JWT.decode(result).getSubject()).isEqualTo(userId)
+		);
+	}
+
+	@Test
+	@DisplayName("Should return employee activation token")
+	void shouldReturnEmployeeActivationToken() {
+
+		//arrange
+		final var userId = "exampleUser";
+
+		//act
+		final var result = webTestClient.get()
+				.uri(uriBuilder -> uriBuilder
+						.path("/jwt/employee-activate")
+						.queryParam("oktaUserId", userId)
+						.build())
+				.accept(MediaType.APPLICATION_JSON)
+				.exchange()
+				.expectStatus().isOk()
+				.expectBody(String.class)
+				.returnResult()
+				.getResponseBody();
+
+		//assert
+		assertAll(
+				() -> assertThat(result).isNotNull(),
+				() -> assertThat(JWT.decode(result).getSubject()).isEqualTo(userId)
+		);
+	}
+
+	@Test
+	@DisplayName("Should return company admin activation token")
+	void shouldReturnCompanyAdminActivationToken() {
+
+		//arrange
+		final var userId = "exampleUser";
+
+		//act
+		final var result = webTestClient.get()
+				.uri(uriBuilder -> uriBuilder
+						.path("/jwt/company-admin-activate")
+						.queryParam("oktaUserId", userId)
+						.build())
+				.accept(MediaType.APPLICATION_JSON)
+				.exchange()
+				.expectStatus().isOk()
+				.expectBody(String.class)
+				.returnResult()
+				.getResponseBody();
+
+		//assert
+		assertAll(
+				() -> assertThat(result).isNotNull(),
+				() -> assertThat(JWT.decode(result).getSubject()).isEqualTo(userId)
+		);
+	}
+
+	@Test
+	@DisplayName("Should return company admin register token")
+	void shouldReturnCompanyAdminRegisterToken() {
+
+		//arrange
+		final var email = "email@mail.com";
+
+		//act
+		final var result = webTestClient.get()
+				.uri(uriBuilder -> uriBuilder
+						.path("/jwt/company-admin-register")
+						.queryParam("email", email)
+						.build())
+				.accept(MediaType.APPLICATION_JSON)
+				.exchange()
+				.expectStatus().isOk()
+				.expectBody(String.class)
+				.returnResult()
+				.getResponseBody();
+
+		//assert
+		assertAll(
+				() -> assertThat(result).isNotNull(),
+				() -> assertThat(JWT.decode(result).getSubject()).isEqualTo(email)
 		);
 	}
 }

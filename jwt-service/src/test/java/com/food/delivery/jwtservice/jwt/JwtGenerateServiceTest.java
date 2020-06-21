@@ -23,8 +23,8 @@ class JwtGenerateServiceTest {
 	private JwtGenerateService jwtGenerateService;
 
 	@Test
-	@DisplayName("Should generate token")
-	void shouldGenerateToken() {
+	@DisplayName("Should generate user activate token")
+	void shouldGenerateUserActivateToken() {
 		//arrange
 		final var secret = "Bm30lw0I";
 		final var expirationTime = 86400000L;
@@ -34,6 +34,63 @@ class JwtGenerateServiceTest {
 
 		//act && assert
 		final var result = jwtGenerateService.getUserActivateJwt(userId);
+		assertAll(
+				() -> assertThat(result).isNotNull(),
+				() -> assertThat(JWT.decode(result).getSubject()).isEqualTo(userId),
+				() -> assertThat(JWT.decode(result).getIssuer()).isEqualTo(issuer)
+		);
+	}
+
+	@Test
+	@DisplayName("Should generate employee activate token")
+	void shouldGenerateEmployeeActivateToken() {
+		//arrange
+		final var secret = "Bm30lw0I";
+		final var expirationTime = 86400000L;
+		final var issuer = "issuer";
+		final var userId = "oktaUserId";
+		when(jwtProperties.getActivateEmployeeJwt()).thenReturn(new BasicJwt(secret, issuer, expirationTime));
+
+		//act && assert
+		final var result = jwtGenerateService.getEmployeeActivateJwt(userId);
+		assertAll(
+				() -> assertThat(result).isNotNull(),
+				() -> assertThat(JWT.decode(result).getSubject()).isEqualTo(userId),
+				() -> assertThat(JWT.decode(result).getIssuer()).isEqualTo(issuer)
+		);
+	}
+
+	@Test
+	@DisplayName("Should generate company admin activate token")
+	void shouldGenerateCompanyAdminActivateToken() {
+		//arrange
+		final var secret = "Bm30lw0I";
+		final var expirationTime = 86400000L;
+		final var issuer = "issuer";
+		final var userId = "oktaUserId";
+		when(jwtProperties.getActivateCompanyAdminJwt()).thenReturn(new BasicJwt(secret, issuer, expirationTime));
+
+		//act && assert
+		final var result = jwtGenerateService.getCompanyAdminActivateJwt(userId);
+		assertAll(
+				() -> assertThat(result).isNotNull(),
+				() -> assertThat(JWT.decode(result).getSubject()).isEqualTo(userId),
+				() -> assertThat(JWT.decode(result).getIssuer()).isEqualTo(issuer)
+		);
+	}
+
+	@Test
+	@DisplayName("Should generate company admin register token")
+	void shouldGenerateCompanyAdminRegisterToken() {
+		//arrange
+		final var secret = "Bm30lw0I";
+		final var expirationTime = 86400000L;
+		final var issuer = "issuer";
+		final var userId = "oktaUserId";
+		when(jwtProperties.getRegisterCompanyAdminJwt()).thenReturn(new BasicJwt(secret, issuer, expirationTime));
+
+		//act && assert
+		final var result = jwtGenerateService.getCompanyAdminRegisterJwt(userId);
 		assertAll(
 				() -> assertThat(result).isNotNull(),
 				() -> assertThat(JWT.decode(result).getSubject()).isEqualTo(userId),

@@ -22,3 +22,11 @@ jwt:
     issuer: food-delivery
     expiration-time: 86400000
     secret: secret_password2
+  activate-company-admin-jwt:
+    issuer: food-delivery
+    expiration-time: 86400000
+    secret: secret_password3
+  register-company-admin-jwt:
+    issuer: food-delivery
+    expiration-time: 86400000
+    secret: secret_password4

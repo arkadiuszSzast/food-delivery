@@ -25,8 +25,8 @@ class JwtValidationServiceTest {
 	private JwtValidationService jwtValidationService;
 
 	@Test
-	@DisplayName("Should successfully validate token")
-	void shouldSuccessfullyValidateToken() {
+	@DisplayName("Should successfully validate user activate token")
+	void shouldSuccessfullyValidateUserActivateToken() {
 		//arrange
 		final var issuer = "issuer";
 		final var secret = "Bm30lw0I";
@@ -40,6 +40,69 @@ class JwtValidationServiceTest {
 
 		//act
 		final var result = jwtValidationService.validateActivateUserToken(token).block();
+
+		//assert
+		assertThat(result).isEqualTo(subject);
+	}
+
+	@Test
+	@DisplayName("Should successfully validate employee activate token")
+	void shouldSuccessfullyValidateEmployeeActivateToken() {
+		//arrange
+		final var issuer = "issuer";
+		final var secret = "Bm30lw0I";
+		final var subject = "oktaUserId";
+		final var expirationTime = 86400000L;
+		final var token = JWT.create()
+				.withSubject(subject)
+				.withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
+				.sign(Algorithm.HMAC256(secret));
+		when(jwtProperties.getActivateEmployeeJwt()).thenReturn(new BasicJwt(secret, issuer, expirationTime));
+
+		//act
+		final var result = jwtValidationService.validateActivateEmployeeToken(token).block();
+
+		//assert
+		assertThat(result).isEqualTo(subject);
+	}
+
+	@Test
+	@DisplayName("Should successfully validate company admin activate token")
+	void shouldSuccessfullyValidateCompanyAdminActivateToken() {
+		//arrange
+		final var issuer = "issuer";
+		final var secret = "Bm30lw0I";
+		final var subject = "oktaUserId";
+		final var expirationTime = 86400000L;
+		final var token = JWT.create()
+				.withSubject(subject)
+				.withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
+				.sign(Algorithm.HMAC256(secret));
+		when(jwtProperties.getActivateCompanyAdminJwt()).thenReturn(new BasicJwt(secret, issuer, expirationTime));
+
+		//act
+		final var result = jwtValidationService.validateActivateCompanyAdminToken(token).block();
+
+		//assert
+		assertThat(result).isEqualTo(subject);
+	}
+
+	@Test
+	@DisplayName("Should successfully validate company admin register token")
+	void shouldSuccessfullyValidateCompanyAdminRegisterToken() {
+		//arrange
+		final var issuer = "issuer";
+		final var secret = "Bm30lw0I";
+		final var subject = "oktaUserId";
+		final var expirationTime = 86400000L;
+		final var token = JWT.create()
+				.withSubject(subject)
+				.withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
+				.sign(Algorithm.HMAC256(secret));
+		when(jwtProperties.getRegisterCompanyAdminJwt()).thenReturn(new BasicJwt(secret, issuer, expirationTime));
+
+		//act
+		final var result = jwtValidationService.validateCompanyAdminRegisterToken(token).block();
 
 		//assert
 		assertThat(result).isEqualTo(subject);
