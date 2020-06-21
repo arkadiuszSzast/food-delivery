@@ -2,7 +2,7 @@ package com.food.delivery.jwtservice.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.food.delivery.jwtservice.utils.properties.jwt.ActivateAccountJwt;
+import com.food.delivery.jwtservice.utils.properties.jwt.BasicJwt;
 import com.food.delivery.jwtservice.utils.properties.jwt.JwtProperties;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,10 +36,10 @@ class JwtValidationServiceTest {
 				.withSubject(subject)
 				.withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
 				.sign(Algorithm.HMAC256(secret));
-		when(jwtProperties.getActivateAccount()).thenReturn(new ActivateAccountJwt(secret, issuer, expirationTime));
+		when(jwtProperties.getActivateUserJwt()).thenReturn(new BasicJwt(secret, issuer, expirationTime));
 
 		//act
-		final var result = jwtValidationService.validateActivateAccountToken(token).block();
+		final var result = jwtValidationService.validateActivateUserToken(token).block();
 
 		//assert
 		assertThat(result).isEqualTo(subject);

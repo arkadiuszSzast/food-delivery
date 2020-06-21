@@ -22,7 +22,7 @@ class JwtPropertiesTestIT {
 	@DisplayName("Should get activate account jwt properties")
 	void shouldGetActivateAccountJwtProperties() {
 		//arrange && act
-		final var result = jwtProperties.getActivateAccount();
+		final var result = jwtProperties.getActivateUserJwt();
 
 		//assert
 		assertAll(

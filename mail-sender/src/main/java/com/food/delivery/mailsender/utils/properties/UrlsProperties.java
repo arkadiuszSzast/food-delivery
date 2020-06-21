@@ -11,6 +11,9 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @ConfigurationProperties("urls")
 public class UrlsProperties {
 
-	private final String accountActivateUrl;
+	private final String userActivateUrl;
+	private final String employeeActivateUrl;
+	private final String companyAdminActivateUrl;
+	private final String companyAdminRegisterUrl;
 
 }

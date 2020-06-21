@@ -2,7 +2,7 @@ package com.food.delivery.jwtservice.jwt.domain;
 
 import com.auth0.jwt.JWT;
 import com.food.delivery.jwtservice.support.JwtServiceIntegrationTest;
-import com.food.delivery.jwtservice.utils.properties.jwt.ActivateAccountJwt;
+import com.food.delivery.jwtservice.utils.properties.jwt.BasicJwt;
 import com.food.delivery.jwtservice.utils.properties.jwt.JwtProperties;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,14 +28,14 @@ class JwtGenerateControllerTestIT {
 	void shouldReturnUserActivationToken() {
 
 		//arrange
-		final var activateAccountJwt = new ActivateAccountJwt("secret", "issuer", 86400000L);
+		final var activateAccountJwt = new BasicJwt("secret", "issuer", 86400000L);
 		final var userId = "exampleUser";
-		when(jwtProperties.getActivateAccount()).thenReturn(activateAccountJwt);
+		when(jwtProperties.getActivateUserJwt()).thenReturn(activateAccountJwt);
 
 		//act
 		final var result = webTestClient.get()
 				.uri(uriBuilder -> uriBuilder
-						.path("/jwt/account-activate")
+						.path("/jwt/user-activate")
 						.queryParam("oktaUserId", userId)
 						.build())
 				.accept(MediaType.APPLICATION_JSON)

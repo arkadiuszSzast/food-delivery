@@ -32,15 +32,15 @@ class AccountActivateConsumerTestIT {
 		final var firstName = "Joe";
 		final var to = "joe@mail.com";
 		final var oktaId = "oktaId";
-		final var accountActivateEvent = new AccountActivateEvent(firstName, to, oktaId);
-		when(sendgridMailFactory.userActivateMail(accountActivateEvent)).thenReturn(Mono.just(sendgridMail));
+		final var accountActivateEvent = new UserActivateEvent(firstName, to, oktaId);
+		when(sendgridMailFactory.getUserActivateMail(accountActivateEvent)).thenReturn(Mono.just(sendgridMail));
 		when(mailSender.send(sendgridMail)).thenReturn(Mono.fromRunnable(System.out::println));
 
 		//act
 		accountActivateConsumer.consumeActivateUser(accountActivateEvent);
 
 		//assert
-		verify(sendgridMailFactory, only()).userActivateMail(accountActivateEvent);
+		verify(sendgridMailFactory, only()).getUserActivateMail(accountActivateEvent);
 		verify(mailSender, only()).send(sendgridMail);
 	}
 

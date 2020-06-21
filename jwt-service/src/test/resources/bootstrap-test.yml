@@ -14,7 +14,11 @@ actuator:
   path: /actuator/**
 
 jwt:
-  activate-account:
+  activate-user-jwt:
     issuer: food-delivery
     expiration-time: 86400000
     secret: secret_password
+  activate-employee-jwt:
+    issuer: food-delivery
+    expiration-time: 86400000
+    secret: secret_password2

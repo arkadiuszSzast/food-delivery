@@ -11,6 +11,9 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @ConfigurationProperties("jwt")
 public class JwtProperties {
 
-	private final ActivateAccountJwt activateAccount;
+	private final BasicJwt activateUserJwt;
+	private final BasicJwt activateEmployeeJwt;
+	private final BasicJwt activateCompanyAdminJwt;
+	private final BasicJwt registerCompanyAdminJwt;
 
 }

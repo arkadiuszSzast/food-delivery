@@ -230,7 +230,7 @@ databaseChangeLog:
                   value: dev
               - column:
                   name: KEY
-                  value: jwt.activate-account.issuer
+                  value: jwt.activate-user-jwt.issuer
               - column:
                   name: value
                   value: food-delivery
@@ -248,7 +248,7 @@ databaseChangeLog:
                   value: dev
               - column:
                   name: KEY
-                  value: jwt.activate-account.expiration-time
+                  value: jwt.activate-user-jwt.expiration-time
               - column:
                   name: value
                   value: 86400000
@@ -266,10 +266,172 @@ databaseChangeLog:
                   value: dev
               - column:
                   name: KEY
-                  value: jwt.activate-account.secret
+                  value: jwt.activate-user-jwt.secret
               - column:
                   name: value
-                  value: ${ACTIVATE_ACCOUNT_SECRET}
+                  value: ${ACTIVATE_USER_SECRET}
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: jwt-service
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: jwt.activate-employee-jwt.issuer
+              - column:
+                  name: value
+                  value: food-delivery
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: jwt-service
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: jwt.activate-employee-jwt.expiration-time
+              - column:
+                  name: value
+                  value: 86400000
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: jwt-service
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: jwt.activate-employee-jwt.secret
+              - column:
+                  name: value
+                  value: ${ACTIVATE_EMPLOYEE_SECRET}
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: jwt-service
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: jwt.register-company-admin-jwt.issuer
+              - column:
+                  name: value
+                  value: food-delivery
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: jwt-service
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: jwt.register-company-admin-jwt.expiration-time
+              - column:
+                  name: value
+                  value: 86400000
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: jwt-service
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: jwt.register-company-admin-jwt.secret
+              - column:
+                  name: value
+                  value: ${REGISTER_COMPANY_ADMIN_SECRET}
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: jwt-service
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: jwt.activate-company-admin-jwt.issuer
+              - column:
+                  name: value
+                  value: food-delivery
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: jwt-service
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: jwt.activate-company-admin-jwt.expiration-time
+              - column:
+                  name: value
+                  value: 86400000
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: jwt-service
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: jwt.activate-company-admin-jwt.secret
+              - column:
+                  name: value
+                  value: ${ACTIVATE_COMPANY_ADMIN_SECRET}
               - column:
                   name: label
                   value: master

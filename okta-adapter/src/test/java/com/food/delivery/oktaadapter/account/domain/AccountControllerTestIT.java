@@ -38,7 +38,7 @@ class AccountControllerTestIT {
 		final var userGroup = groupGetService.getUserGroup();
 
 		//act
-		final var account = accountController.createAccount(accountRest).block();
+		final var account = accountController.createUser(accountRest).block();
 
 		//assert
 		final var user = client.getUser(account.getOktaId());
@@ -57,7 +57,7 @@ class AccountControllerTestIT {
 	void shouldActivateAccount() {
 		//arrange
 		final var accountRest = AccountRestFactory.getAccountRest();
-		final var account = accountController.createAccount(accountRest).block();
+		final var account = accountController.createUser(accountRest).block();
 		final var user = client.getUser(account.getOktaId());
 
 		//act

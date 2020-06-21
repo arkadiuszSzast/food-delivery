@@ -8,6 +8,15 @@ import reactor.core.publisher.Mono;
 @ReactiveFeignClient("jwt-service")
 public interface JwtServiceClient {
 
-	@GetMapping("/jwt/validations/account-activate")
-	Mono<String> validateAccountActivateToken(@RequestParam String token);
+	@GetMapping("/jwt/validations/user-activate")
+	Mono<String> validateUserActivateToken(@RequestParam String token);
+
+	@GetMapping("/jwt/validations/employee-activate")
+	Mono<String> validateEmployeeActivateToken(@RequestParam String token);
+
+	@GetMapping("/jwt/validations/company-admin-activate")
+	Mono<String> validateCompanyAdminActivateToken(@RequestParam String token);
+
+	@GetMapping("/jwt/validations/company-admin-register")
+	Mono<String> validateCompanyAdminRegisterToken(@RequestParam String token);
 }

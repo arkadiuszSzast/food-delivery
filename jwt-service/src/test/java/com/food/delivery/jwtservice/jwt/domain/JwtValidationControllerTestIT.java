@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.food.delivery.jwtservice.jwt.JwtGenerateService;
 import com.food.delivery.jwtservice.support.JwtServiceIntegrationTest;
-import com.food.delivery.jwtservice.utils.properties.jwt.ActivateAccountJwt;
+import com.food.delivery.jwtservice.utils.properties.jwt.BasicJwt;
 import com.food.delivery.jwtservice.utils.properties.jwt.JwtProperties;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,15 +30,15 @@ class JwtValidationControllerTestIT {
 	void shouldReturn200WhenValidToken() {
 
 		//arrange
-		final var activateAccountJwt = new ActivateAccountJwt("secret", "issuer", 86400000L);
+		final var activateAccountJwt = new BasicJwt("secret", "issuer", 86400000L);
 		final var userId = "exampleUser";
-		when(jwtProperties.getActivateAccount()).thenReturn(activateAccountJwt);
+		when(jwtProperties.getActivateUserJwt()).thenReturn(activateAccountJwt);
 
 		//act && assert
-		final var token = jwtGenerateService.getAccountActivateJwt(userId);
+		final var token = jwtGenerateService.getUserActivateJwt(userId);
 		webTestClient.get()
 				.uri(uriBuilder -> uriBuilder
-						.path("/jwt/validations/account-activate")
+						.path("/jwt/validations/user-activate")
 						.queryParam("token", token)
 						.build())
 				.accept(MediaType.APPLICATION_JSON)
@@ -52,14 +52,14 @@ class JwtValidationControllerTestIT {
 	void shouldReturn404WhenInvalidToken() {
 
 		//arrange
-		final var activateAccountJwt = new ActivateAccountJwt("secret", "issuer", 86400000L);
+		final var activateAccountJwt = new BasicJwt("secret", "issuer", 86400000L);
 		final var invalidToken = JWT.create().sign(Algorithm.none());
-		when(jwtProperties.getActivateAccount()).thenReturn(activateAccountJwt);
+		when(jwtProperties.getActivateUserJwt()).thenReturn(activateAccountJwt);
 
 		//act && assert
 		webTestClient.get()
 				.uri(uriBuilder -> uriBuilder
-						.path("/jwt/validations/account-activate")
+						.path("/jwt/validations/user-activate")
 						.queryParam("token", invalidToken)
 						.build())
 				.accept(MediaType.APPLICATION_JSON)

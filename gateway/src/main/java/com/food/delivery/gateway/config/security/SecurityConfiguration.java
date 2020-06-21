@@ -4,6 +4,7 @@ import com.food.delivery.gateway.utils.properties.ActuatorProperties;
 import com.okta.spring.boot.oauth.Okta;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
@@ -48,10 +49,13 @@ public class SecurityConfiguration {
 						"/swagger-ui.html",
 						"/webjars/**",
 						"/**/v2/api-docs",
-						"/account",
-						"/account/activate")
+						"/account/user",
+						"/account/user/activate",
+						"/account/employee/activate",
+						"/account/employee/company-admin/activate")
 				.permitAll()
-				.anyExchange().hasAuthority("USER")
+				.pathMatchers(HttpMethod.POST, "/account/employee/company-admin").permitAll()
+				.anyExchange().hasAnyAuthority("USER", "COMPANY_EMPLOYEE")
 				.and()
 				.addFilterBefore(blacklistedTokenFilter, SecurityWebFiltersOrder.AUTHORIZATION)
 				.logout().logoutHandler(logoutHandler).logoutUrl("/logout")

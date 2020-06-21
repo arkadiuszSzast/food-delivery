@@ -14,8 +14,27 @@ public class JwtValidationService {
 
 	private final JwtProperties jwtProperties;
 
-	public Mono<String> validateActivateAccountToken(String token) {
-		final var secret = jwtProperties.getActivateAccount().getSecret();
+	public Mono<String> validateActivateUserToken(String token) {
+		final var secret = jwtProperties.getActivateUserJwt().getSecret();
+		return validateToken(token, secret);
+	}
+
+	public Mono<String> validateActivateEmployeeToken(String token) {
+		final var secret = jwtProperties.getActivateEmployeeJwt().getSecret();
+		return validateToken(token, secret);
+	}
+
+	public Mono<String> validateActivateCompanyAdminToken(String token) {
+		final var secret = jwtProperties.getActivateCompanyAdminJwt().getSecret();
+		return validateToken(token, secret);
+	}
+
+	public Mono<String> validateCompanyAdminRegisterToken(String token) {
+		final var secret = jwtProperties.getRegisterCompanyAdminJwt().getSecret();
+		return validateToken(token, secret);
+	}
+
+	private Mono<String> validateToken(String token, String secret) {
 		return Mono.just(JWT.require(Algorithm.HMAC256(secret)).build())
 				.map(jwtVerifier -> jwtVerifier.verify(token))
 				.map(DecodedJWT::getSubject);

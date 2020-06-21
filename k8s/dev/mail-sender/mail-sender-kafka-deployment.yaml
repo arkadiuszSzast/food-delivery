@@ -21,7 +21,7 @@ spec:
             - name: KAFKA_ADVERTISED_HOST_NAME
               value: mail-sender-kafka
             - name: KAFKA_CREATE_TOPICS
-              value: activate-user:1:1
+              value: activate-user:1:1,activate-employee:1:1,company-admin-register:1:1,activate-company-admin:1:1
             - name: KAFKA_ZOOKEEPER_CONNECT
               value: zookeeper:2181
           image: wurstmeister/kafka:2.12-2.2.1

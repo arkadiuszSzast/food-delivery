@@ -16,9 +16,24 @@ public class JwtValidationController {
 
 	private final JwtValidationService jwtValidationService;
 
-	@GetMapping("/account-activate")
-	public Mono<String> validateJwt(@RequestParam String token) {
-		return jwtValidationService.validateActivateAccountToken(token);
+	@GetMapping("/user-activate")
+	public Mono<String> validateUserActivateJwt(@RequestParam String token) {
+		return jwtValidationService.validateActivateUserToken(token);
+	}
+
+	@GetMapping("/employee-activate")
+	public Mono<String> validateEmployeeActivateJwt(@RequestParam String token) {
+		return jwtValidationService.validateActivateEmployeeToken(token);
+	}
+
+	@GetMapping("/company-admin-activate")
+	public Mono<String> validateCompanyAdminActivateJwt(@RequestParam String token) {
+		return jwtValidationService.validateActivateCompanyAdminToken(token);
+	}
+
+	@GetMapping("/company-admin-register")
+	public Mono<String> validateCompanyAdminRegisterJwt(@RequestParam String token) {
+		return jwtValidationService.validateCompanyAdminRegisterToken(token);
 	}
 
 	@ResponseStatus(value = HttpStatus.UNAUTHORIZED, reason = "Given token is invalid")

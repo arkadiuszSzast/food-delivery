@@ -1,7 +1,7 @@
 package com.food.delivery.mailsender.mail.domain;
 
-import com.food.delivery.mailsender.account.AccountActivateEvent;
 import com.food.delivery.mailsender.account.AccountActivateUrlProvider;
+import com.food.delivery.mailsender.account.UserActivateEvent;
 import com.food.delivery.mailsender.jwt.JwtServiceClient;
 import com.food.delivery.mailsender.utils.properties.SendgridProperties;
 import com.food.delivery.mailsender.utils.properties.SendgridTemplatesProperties;
@@ -44,16 +44,16 @@ class SendgridMailFactoryTest {
 		final var confirmUserTemplateId = "confirmUserTemplateId";
 		final var activateAccountJwt = "activateAccountJwt";
 		final var activateUrl = "http://account-activate";
-		final var accountActivateEvent = new AccountActivateEvent(firstName, to, oktaUserId);
+		final var accountActivateEvent = new UserActivateEvent(firstName, to, oktaUserId);
 
-		when(jwtServiceClient.getAccountActivateJwt(oktaUserId)).thenReturn(Mono.just(activateAccountJwt));
-		when(accountActivateUrlProvider.getAccountActivateUrl(activateAccountJwt)).thenReturn(activateUrl);
+		when(jwtServiceClient.getUserActivateJwt(oktaUserId)).thenReturn(Mono.just(activateAccountJwt));
+		when(accountActivateUrlProvider.getUserActivateUrl(activateAccountJwt)).thenReturn(activateUrl);
 		when(sendgridProperties.getSender()).thenReturn(from);
 		when(sendgridTemplatesProperties.getConfirmUserRegistration()).thenReturn(confirmUserTemplateId);
 
 
 		//act
-		final var result = sendgridMailFactory.userActivateMail(accountActivateEvent).block();
+		final var result = sendgridMailFactory.getUserActivateMail(accountActivateEvent).block();
 
 		//assert
 		final var personalization = Objects.requireNonNull(result).getPersonalizations().iterator().next();

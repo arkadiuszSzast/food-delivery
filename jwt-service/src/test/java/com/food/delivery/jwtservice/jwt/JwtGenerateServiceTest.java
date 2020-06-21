@@ -1,7 +1,7 @@
 package com.food.delivery.jwtservice.jwt;
 
 import com.auth0.jwt.JWT;
-import com.food.delivery.jwtservice.utils.properties.jwt.ActivateAccountJwt;
+import com.food.delivery.jwtservice.utils.properties.jwt.BasicJwt;
 import com.food.delivery.jwtservice.utils.properties.jwt.JwtProperties;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,10 +30,10 @@ class JwtGenerateServiceTest {
 		final var expirationTime = 86400000L;
 		final var issuer = "issuer";
 		final var userId = "oktaUserId";
-		when(jwtProperties.getActivateAccount()).thenReturn(new ActivateAccountJwt(secret, issuer, expirationTime));
+		when(jwtProperties.getActivateUserJwt()).thenReturn(new BasicJwt(secret, issuer, expirationTime));
 
 		//act && assert
-		final var result = jwtGenerateService.getAccountActivateJwt(userId);
+		final var result = jwtGenerateService.getUserActivateJwt(userId);
 		assertAll(
 				() -> assertThat(result).isNotNull(),
 				() -> assertThat(JWT.decode(result).getSubject()).isEqualTo(userId),

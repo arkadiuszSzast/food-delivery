@@ -34,7 +34,7 @@ class AccountActivateServiceTestIT {
 	void shouldActivateAccount() {
 		//arrange
 		final var accountRest = AccountRestFactory.getAccountRest();
-		final var account = accountCreateService.createAccount(accountRest).block();
+		final var account = accountCreateService.createUser(accountRest).block();
 
 		//act
 		final var activationToken = accountActivateService.activateAccount(account.getOktaId()).block();

@@ -41,9 +41,12 @@ public class SecurityConfiguration {
 						"/configuration/security",
 						"/swagger-ui.html",
 						"/webjars/**").permitAll()
-				.pathMatchers(HttpMethod.POST, "/account").permitAll()
-				.pathMatchers(HttpMethod.PATCH, "/account/activate").permitAll()
-				.anyExchange().hasAuthority("USER")
+				.pathMatchers(HttpMethod.POST, "/account/user",
+						"/account/employee/company-admin").permitAll()
+				.pathMatchers(HttpMethod.PATCH, "/account/user/activate",
+						"/account/employee/company-admin/activate").permitAll()
+				.pathMatchers(HttpMethod.PATCH, "/account/employee/activate").permitAll()
+				.anyExchange().hasAnyAuthority("USER", "COMPANY_EMPLOYEE")
 				.and()
 				.oauth2ResourceServer()
 				.jwt();

@@ -83,7 +83,7 @@ services:
     environment:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_HOST_NAME: mail-sender-kafka
-      KAFKA_CREATE_TOPICS: "activate-user:1:1"
+      KAFKA_CREATE_TOPICS: "activate-user:1:1,activate-employee:1:1,activate-company-admin:1:1,company-admin-register:1:1"
     ports:
       - 9092:9092
     depends_on:
@@ -295,7 +295,10 @@ services:
       - CONFIG_URI=http://config-server:8888
       - EUREKA_URL=http://account_eureka:password@server-discovery:8761/eureka/
       - ACTUATOR_PASSWORD=iN09KtaW59dqeRylgZFV4aSZ
-      - ACTIVATE_ACCOUNT_SECRET=4XUagJh9fZZrWDBfsEe6wmL3eC4765cL
+      - ACTIVATE_USER_SECRET=4XUagJh9fZZrWDBfsEe6wmL3eC4765cL
+      - ACTIVATE_EMPLOYEE_SECRET=gQZsDgo64m1zjlYax5QgHEmLMcinp9id
+      - ACTIVATE_COMPANY_ADMIN_SECRET=WwrghBZr135Ah9qjNW5rl95f1WtJPRK5
+      - REGISTER_COMPANY_ADMIN_SECRET=9Q1Ca1DXlw7zYm4aYuOhKvtRMQ65Gr8S
       - ENV=dev,swagger
     depends_on:
       - config-server

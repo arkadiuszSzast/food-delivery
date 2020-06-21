@@ -23,10 +23,10 @@ class AccountActivateUrlProviderTestIT {
 		final var token = "25aIGS2R";
 
 		//act
-		final var result = accountActivateUrlProvider.getAccountActivateUrl(token);
+		final var result = accountActivateUrlProvider.getUserActivateUrl(token);
 
 		//assert
-		assertThat(result).isEqualTo(urlsProperties.getAccountActivateUrl() + "?token=" + token);
+		assertThat(result).isEqualTo(urlsProperties.getUserActivateUrl() + "?token=" + token);
 	}
 
 }

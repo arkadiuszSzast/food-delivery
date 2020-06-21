@@ -19,6 +19,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @CompanyServiceIntegrationTest
@@ -67,14 +68,16 @@ class CompanyControllerTestIT {
 	@DisplayName("Should create company")
 	void shouldCreateCompany() {
 		//arrange
+		final var companyId = "id";
 		final var companyName = "companyName";
 		final var phoneNumber = "123123123";
-		final var companyRest = new CompanyRest(companyName, phoneNumber);
+		final var companyRest = new CompanyRest(companyId, companyName, phoneNumber);
 		final var accountName = "accountName";
 		final var surname = "surname";
 		final var email = "name@mail.com";
 		final var account = new Account(UUID.randomUUID().toString(), accountName, surname, email);
-		when(accountClient.findMe()).thenReturn(Mono.just(account));
+		when(accountClient.findEmployeeMe()).thenReturn(Mono.just(account));
+		when(accountClient.assignCompany(any())).thenReturn(Mono.just(account));
 
 		//act
 		final var company = companyController.createCompany(companyRest).block();
@@ -94,14 +97,15 @@ class CompanyControllerTestIT {
 	@DisplayName("Should not create company when invalid phoneNumber given")
 	void shouldNotCreateCompanyWhenInvalidPhoneNumber() {
 		//arrange
+		final var companyId = "id";
 		final var companyName = "companyName";
 		final var phoneNumber = "invalidPhone";
-		final var companyRest = new CompanyRest(companyName, phoneNumber);
+		final var companyRest = new CompanyRest(companyId, companyName, phoneNumber);
 		final var accountName = "accountName";
 		final var surname = "surname";
 		final var email = "name@mail.com";
 		final var account = new Account(UUID.randomUUID().toString(), accountName, surname, email);
-		when(accountClient.findMe()).thenReturn(Mono.just(account));
+		when(accountClient.findEmployeeMe()).thenReturn(Mono.just(account));
 
 		//act && assert
 		assertThrows(ConstraintViolationException.class,
@@ -113,14 +117,15 @@ class CompanyControllerTestIT {
 	@DisplayName("Should not create company without required authority")
 	void shouldNotCreateCompanyWithoutPermission() {
 		//arrange
+		final var companyId = "id";
 		final var companyName = "companyName";
 		final var phoneNumber = "invalidPhone";
-		final var companyRest = new CompanyRest(companyName, phoneNumber);
+		final var companyRest = new CompanyRest(companyId, companyName, phoneNumber);
 		final var accountName = "accountName";
 		final var surname = "surname";
 		final var email = "name@mail.com";
 		final var account = new Account(UUID.randomUUID().toString(), accountName, surname, email);
-		when(accountClient.findMe()).thenReturn(Mono.just(account));
+		when(accountClient.findEmployeeMe()).thenReturn(Mono.just(account));
 
 		//act && assert
 		assertThrows(AccessDeniedException.class,

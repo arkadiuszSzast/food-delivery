@@ -273,4 +273,21 @@ databaseChangeLog:
               - column:
                   name: label
                   value: master
-
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: company-service
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds
+              - column:
+                  name: value
+                  value: 4000
+              - column:
+                  name: label
+                  value: master

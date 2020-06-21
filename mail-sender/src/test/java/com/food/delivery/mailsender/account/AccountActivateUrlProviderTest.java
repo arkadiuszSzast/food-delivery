@@ -25,10 +25,10 @@ class AccountActivateUrlProviderTest {
 		//arrange
 		final var token = "25aIGS2R";
 		final var accountActivateUrl = "http://localhost:8060/account/activate";
-		when(urlsProperties.getAccountActivateUrl()).thenReturn(accountActivateUrl);
+		when(urlsProperties.getUserActivateUrl()).thenReturn(accountActivateUrl);
 
 		//act
-		final var result = accountActivateUrlProvider.getAccountActivateUrl(token);
+		final var result = accountActivateUrlProvider.getUserActivateUrl(token);
 
 		//assert
 		assertThat(result).isEqualTo(accountActivateUrl + "?token=" + token);

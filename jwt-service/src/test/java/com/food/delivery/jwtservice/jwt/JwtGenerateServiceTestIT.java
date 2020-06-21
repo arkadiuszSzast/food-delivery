@@ -23,11 +23,11 @@ class JwtGenerateServiceTestIT {
 	void shouldGenerateToken() {
 		//arrange
 		final var userId = "oktaUserId";
-		final var activateAccountProperties = jwtProperties.getActivateAccount();
+		final var activateAccountProperties = jwtProperties.getActivateUserJwt();
 		final var issuer = activateAccountProperties.getIssuer();
 
 		//act
-		final var result = jwtGenerateService.getAccountActivateJwt(userId);
+		final var result = jwtGenerateService.getUserActivateJwt(userId);
 
 		//assert
 		assertAll(

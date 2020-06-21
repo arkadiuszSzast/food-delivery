@@ -1,5 +1,6 @@
 package com.food.delivery.accountservice.support.extensions;
 
+import com.mongodb.client.result.DeleteResult;
 import org.bson.Document;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -14,7 +15,8 @@ public class CleanDatabaseExtension implements BeforeEachCallback {
 		final var db = getBean(context, MongoTemplate.class).getDb();
 		db.listCollectionNames()
 				.map(db::getCollection)
-				.map(collection -> collection.deleteMany(new Document())).first();
+				.map(collection -> collection.deleteMany(new Document()))
+				.cursor().forEachRemaining(DeleteResult::wasAcknowledged);
 	}
 
 	private <T> T getBean(ExtensionContext context, Class<T> clazz) {

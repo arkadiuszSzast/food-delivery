@@ -15,8 +15,23 @@ public class JwtGenerateController {
 
 	private final JwtGenerateService jwtGenerateService;
 
-	@GetMapping("/account-activate")
-	public Mono<String> getAccountActivateJwt(@RequestParam String oktaUserId) {
-		return Mono.just(jwtGenerateService.getAccountActivateJwt(oktaUserId));
+	@GetMapping("/user-activate")
+	public Mono<String> getUserActivateJwt(@RequestParam String oktaUserId) {
+		return Mono.just(jwtGenerateService.getUserActivateJwt(oktaUserId));
+	}
+
+	@GetMapping("/employee-activate")
+	public Mono<String> getEmployeeActivateJwt(@RequestParam String oktaUserId) {
+		return Mono.just(jwtGenerateService.getEmployeeActivateJwt(oktaUserId));
+	}
+
+	@GetMapping("/company-admin-activate")
+	public Mono<String> getCompanyAdminActivateJwt(@RequestParam String oktaUserId) {
+		return Mono.just(jwtGenerateService.getCompanyAdminActivateJwt(oktaUserId));
+	}
+
+	@GetMapping("/company-admin-register")
+	public Mono<String> getCompanyAdminRegisterJwt(@RequestParam String email) {
+		return Mono.just(jwtGenerateService.getCompanyAdminRegisterJwt(email));
 	}
 }

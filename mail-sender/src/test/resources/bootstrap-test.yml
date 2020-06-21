@@ -17,6 +17,8 @@ sendgrid:
   template:
     confirmUserRegistration: d-d435f79c0b604a2dabb2d55e1cb9fda3
     confirmEmployeeRegistration: d-27ec902c1813433bb89b4702032dc165
+    confirmCompanyAdminRegistration: d-2311a35670084cc5b7ee68b28c0a56fb
+    companyAdminRegistration: d-5b0d64b2332b4443b2533ca864f9c7df
 
 actuator:
   username: admin
@@ -33,5 +35,8 @@ hystrix:
             timeoutInMilliseconds: 4000
 
 urls:
-  account-activate-url: http://localhost:8060/account/activate
+  user-activate-url: http://localhost:8060/account/user/activate
+  employee-activate-url: http://localhost:8060/account/employee/activate
+  company-admin-activate-url: http://localhost:8060/account/company-admin/activate
+  company-admin-register-url: http://localhost:8060/account/company-admin/register
 

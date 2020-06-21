@@ -13,4 +13,8 @@ public class CompanyMapper {
 		company.setPhoneNumber(companyRest.getPhoneNumber());
 		return company;
 	}
+
+	public CompanyRest toRest(Company company) {
+		return new CompanyRest(company.getId(), company.getName(), company.getPhoneNumber());
+	}
 }

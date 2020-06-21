@@ -28,7 +28,7 @@ class JwtValidationServiceTestIT {
 	void shouldSuccessfullyValidateToken() {
 		//arrange
 		final var subject = "oktaUserId";
-		final var activateAccountProperties = jwtProperties.getActivateAccount();
+		final var activateAccountProperties = jwtProperties.getActivateUserJwt();
 		final var secret = activateAccountProperties.getSecret();
 		final var expirationTime = activateAccountProperties.getExpirationTime();
 		final var token = JWT.create()
@@ -37,7 +37,7 @@ class JwtValidationServiceTestIT {
 				.sign(Algorithm.HMAC256(secret));
 
 		//act
-		final var result = jwtValidationService.validateActivateAccountToken(token).block();
+		final var result = jwtValidationService.validateActivateUserToken(token).block();
 
 		//assert
 		assertThat(result).isEqualTo(subject);
@@ -49,7 +49,7 @@ class JwtValidationServiceTestIT {
 	void shouldThrowExceptionWhenTokenHasInvalidSignature() {
 		//arrange
 		final var badSecret = "BAD_SECRET";
-		final var activateAccountProperties = jwtProperties.getActivateAccount();
+		final var activateAccountProperties = jwtProperties.getActivateUserJwt();
 		final var expirationTime = activateAccountProperties.getExpirationTime();
 		final var token = JWT.create()
 				.withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
@@ -57,14 +57,14 @@ class JwtValidationServiceTestIT {
 
 		//act && assert
 		assertThrows(SignatureVerificationException.class,
-				() -> jwtValidationService.validateActivateAccountToken(token).block());
+				() -> jwtValidationService.validateActivateUserToken(token).block());
 	}
 
 	@Test
 	@DisplayName("Should throw exception when token expired")
 	void shouldThrowExceptionWhenTokenExpired() throws InterruptedException {
 		//arrange
-		final var activateAccountProperties = jwtProperties.getActivateAccount();
+		final var activateAccountProperties = jwtProperties.getActivateUserJwt();
 		final var secret = activateAccountProperties.getSecret();
 		final var token = JWT.create()
 				.withExpiresAt(new Date(System.currentTimeMillis() - 1000))
@@ -72,6 +72,6 @@ class JwtValidationServiceTestIT {
 
 		//act && assert
 		assertThrows(TokenExpiredException.class,
-				() -> jwtValidationService.validateActivateAccountToken(token).block());
+				() -> jwtValidationService.validateActivateUserToken(token).block());
 	}
 }

@@ -17,9 +17,19 @@ public class AccountController {
 	private final AccountCreateService accountCreateService;
 	private final AccountActivateService accountActivateService;
 
-	@PostMapping
-	public Mono<OktaAccountRest> createAccount(@RequestBody AccountRest accountRest) {
-		return accountCreateService.createAccount(accountRest);
+	@PostMapping("/user")
+	public Mono<OktaAccountRest> createUser(@RequestBody AccountRest accountRest) {
+		return accountCreateService.createUser(accountRest);
+	}
+
+	@PostMapping("/employee")
+	public Mono<OktaAccountRest> createEmployee(@RequestBody AccountRest accountRest) {
+		return accountCreateService.createEmployee(accountRest);
+	}
+
+	@PostMapping("/company-admin")
+	public Mono<OktaAccountRest> createCompanyAdmin(@RequestBody AccountRest accountRest) {
+		return accountCreateService.createCompanyAdmin(accountRest);
 	}
 
 	@PatchMapping("/activate")

@@ -40,7 +40,7 @@ public class SecurityConfiguration {
 						"/swagger-ui.html",
 						"/webjars/**")
 				.permitAll()
-				.anyExchange().hasAuthority("USER")
+				.anyExchange().hasAnyAuthority("USER", "COMPANY_EMPLOYEE")
 				.and()
 				.oauth2ResourceServer()
 				.jwt();

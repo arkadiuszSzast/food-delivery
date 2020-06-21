@@ -40,7 +40,7 @@ class AccountCreateServiceTestIT {
 		final var userGroup = groupGetService.getUserGroup();
 
 		//act
-		final var account = accountCreateService.createAccount(accountRest).block();
+		final var account = accountCreateService.createUser(accountRest).block();
 		final var user = client.getUser(account.getOktaId());
 
 		//assert
@@ -61,7 +61,7 @@ class AccountCreateServiceTestIT {
 		final var accountRest = AccountRestFactory.getAccountRest();
 
 		//act && assert
-		accountCreateService.createAccount(accountRest).block();
-		assertThrows(ResourceException.class, () -> accountCreateService.createAccount(accountRest).block());
+		accountCreateService.createUser(accountRest).block();
+		assertThrows(ResourceException.class, () -> accountCreateService.createUser(accountRest).block());
 	}
 }

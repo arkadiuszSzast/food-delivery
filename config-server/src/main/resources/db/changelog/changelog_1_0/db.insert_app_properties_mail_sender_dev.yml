@@ -338,6 +338,42 @@ databaseChangeLog:
                   value: dev
               - column:
                   name: KEY
+                  value: sendgrid.template.companyAdminRegistration
+              - column:
+                  name: value
+                  value: d-5b0d64b2332b4443b2533ca864f9c7df
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: mail-sender
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: sendgrid.template.confirmCompanyAdminRegistration
+              - column:
+                  name: value
+                  value: d-2311a35670084cc5b7ee68b28c0a56fb
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: mail-sender
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
                   value: hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds
               - column:
                   name: value
@@ -356,10 +392,64 @@ databaseChangeLog:
                   value: dev
               - column:
                   name: KEY
-                  value: urls.account-activate-url
+                  value: urls.user-activate-url
               - column:
                   name: value
-                  value: http://localhost:8060/account/activate
+                  value: http://localhost:8060/account/user/activate
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: mail-sender
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: urls.employee-activate-url
+              - column:
+                  name: value
+                  value: http://localhost:8060/account/employee/activate
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: mail-sender
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: urls.company-admin-register-url
+              - column:
+                  name: value
+                  value: http://localhost:3000/account/company-admin/register
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: mail-sender
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: urls.company-admin-activate-url
+              - column:
+                  name: value
+                  value: http://localhost:3000/account/company-admin/activate
               - column:
                   name: label
                   value: master

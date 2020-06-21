@@ -1,6 +1,6 @@
 package com.food.delivery.mailsender.mail.domain;
 
-import com.food.delivery.mailsender.account.AccountActivateEvent;
+import com.food.delivery.mailsender.account.UserActivateEvent;
 import com.food.delivery.mailsender.jwt.JwtServiceClient;
 import com.food.delivery.mailsender.support.MailSenderIntegrationTest;
 import com.food.delivery.mailsender.utils.properties.SendgridProperties;
@@ -40,12 +40,12 @@ class SendgridMailFactoryTestIT {
 		final var to = "joe@mail.com";
 		final var oktaUserId = "oktaUserId";
 		final var activateAccountJwt = "activateAccountJwt";
-		final var accountActivateEvent = new AccountActivateEvent(firstName, to, oktaUserId);
+		final var accountActivateEvent = new UserActivateEvent(firstName, to, oktaUserId);
 
-		when(jwtServiceClient.getAccountActivateJwt(oktaUserId)).thenReturn(Mono.just(activateAccountJwt));
+		when(jwtServiceClient.getUserActivateJwt(oktaUserId)).thenReturn(Mono.just(activateAccountJwt));
 
 		//act
-		final var result = sendgridMailFactory.userActivateMail(accountActivateEvent).block();
+		final var result = sendgridMailFactory.getUserActivateMail(accountActivateEvent).block();
 
 		//assert
 		final var personalization = Objects.requireNonNull(result).getPersonalizations().iterator().next();
@@ -62,7 +62,7 @@ class SendgridMailFactoryTestIT {
 				() -> assertThat(personalization.getDynamicTemplateData().get("username"))
 						.isEqualTo(firstName),
 				() -> assertThat(personalization.getDynamicTemplateData().get("confirm-url"))
-						.contains(urlsProperties.getAccountActivateUrl(), activateAccountJwt)
+						.contains(urlsProperties.getUserActivateUrl(), activateAccountJwt)
 		);
 
 	}
