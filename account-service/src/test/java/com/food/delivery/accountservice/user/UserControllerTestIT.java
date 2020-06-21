@@ -7,6 +7,7 @@ import com.food.delivery.accountservice.support.AccountServiceIntegrationTest;
 import com.food.delivery.accountservice.user.domain.UserController;
 import com.food.delivery.accountservice.user.okta.OktaAccountRest;
 import com.food.delivery.accountservice.user.okta.OktaAdapterAccountClient;
+import com.food.delivery.accountservice.utils.JwtProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +102,7 @@ class UserControllerTestIT {
 	@DisplayName("Should return my account")
 	void shouldReturnMyAccount() {
 		//arrange
-		final Jwt jwt = getEmptyJwt();
+		final Jwt jwt = JwtProvider.getEmptyJwt();
 		final var email = "joe@mail.com";
 		final var jwtAuthenticationToken = new JwtAuthenticationToken(jwt, Set.of(), email);
 		userProvider.createAccountAndSave(email);
@@ -111,13 +112,6 @@ class UserControllerTestIT {
 
 		//assert
 		assertThat(result).isPresent();
-	}
-
-	private Jwt getEmptyJwt() {
-		return Jwt.withTokenValue("empty")
-				.header("", "")
-				.claim("", "")
-				.build();
 	}
 
 	@Test

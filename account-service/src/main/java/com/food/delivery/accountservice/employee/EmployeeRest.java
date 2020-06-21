@@ -14,4 +14,5 @@ public class EmployeeRest {
 	@JsonProperty("account")
 	private final AccountRest accountRest;
 	private final String companyName;
+	private final String companyId;
 }

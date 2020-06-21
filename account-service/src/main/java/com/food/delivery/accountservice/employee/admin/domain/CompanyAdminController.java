@@ -41,8 +41,8 @@ public class CompanyAdminController {
 		return companyAdminActivateService.activateAccount(token);
 	}
 
-	@PreAuthorize("hasAuthority('COMPANY_ADMIN')")
 	@PatchMapping("/{companyId}")
+	@PreAuthorize("hasAuthority('COMPANY_ADMIN')")
 	public Mono<EmployeeRest> assignCompany(@AuthenticationPrincipal JwtAuthenticationToken principal,
 											@PathVariable String companyId) {
 		return companyAdminCreateService.assignCompany(principal, companyId);

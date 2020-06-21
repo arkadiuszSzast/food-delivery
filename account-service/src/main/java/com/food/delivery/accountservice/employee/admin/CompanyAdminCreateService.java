@@ -29,11 +29,6 @@ public class CompanyAdminCreateService {
 		return Mono.fromRunnable(() -> produceSendCompanyAdminRegisterEmail(email));
 	}
 
-	private void produceSendCompanyAdminRegisterEmail(String email) {
-		final var companyAdminRegisterEvent = new CompanyAdminRegisterEvent(email);
-		companyAdminRegisterProducer.produceSendCompanyAdminRegisterEmail(companyAdminRegisterEvent);
-	}
-
 	public Mono<Employee> register(AccountRest accountRest) {
 		return oktaAdapterAccountClient.createCompanyAdmin(accountRest)
 				.map(employeeMapper::toDomain)
@@ -46,6 +41,11 @@ public class CompanyAdminCreateService {
 				.map(employee -> setCompany(companyId, employee))
 				.flatMap(employeeRepository::save)
 				.map(employeeMapper::toRest);
+	}
+
+	private void produceSendCompanyAdminRegisterEmail(String email) {
+		final var companyAdminRegisterEvent = new CompanyAdminRegisterEvent(email);
+		companyAdminRegisterProducer.produceSendCompanyAdminRegisterEmail(companyAdminRegisterEvent);
 	}
 
 	private void produceSendCompanyAdminActivateEmail(Employee employee) {

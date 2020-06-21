@@ -1,5 +1,6 @@
 package com.food.delivery.accountservice.employee;
 
+import com.food.delivery.accountservice.account.AccountRest;
 import com.food.delivery.accountservice.employee.domain.Employee;
 import com.food.delivery.accountservice.user.okta.OktaAccountRest;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,11 @@ public class EmployeeMapper {
 	}
 
 	public EmployeeRest toRest(Employee employee) {
-		return modelMapper.map(employee, EmployeeRest.EmployeeRestBuilder.class)
+		final var accountRest = modelMapper.map(employee, AccountRest.AccountRestBuilder.class)
+				.build();
+		return EmployeeRest.builder()
+				.accountRest(accountRest)
+				.companyId(employee.getCompanyId())
 				.build();
 	}
 }

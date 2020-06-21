@@ -88,6 +88,7 @@ dependencies {
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'com.playtika.testcontainers:embedded-mongodb:1.66'
 	testImplementation 'com.playtika.testcontainers:embedded-kafka:1.66'
+	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 dependencyManagement {
