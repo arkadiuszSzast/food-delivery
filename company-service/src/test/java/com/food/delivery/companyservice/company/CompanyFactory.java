@@ -2,6 +2,7 @@ package com.food.delivery.companyservice.company;
 
 import com.food.delivery.companyservice.company.address.Address;
 import com.food.delivery.companyservice.company.domain.Company;
+import com.food.delivery.companyservice.company.model.CompanyRest;
 
 import java.util.UUID;
 
@@ -15,6 +16,13 @@ public class CompanyFactory {
 		final var address = new Address(UUID.randomUUID().toString(), UUID.randomUUID().toString(),
 				UUID.randomUUID().toString(), UUID.randomUUID().toString());
 		return new Company(id, companyAdminId, name, phoneNumber, address);
+	}
+
+	public CompanyRest createRest() {
+		final var id = UUID.randomUUID().toString();
+		final var name = UUID.randomUUID().toString();
+		final var phoneNumber = "123123123";
+		return new CompanyRest(id, name, phoneNumber);
 	}
 
 }

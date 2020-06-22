@@ -15,7 +15,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @CompanyServiceIntegrationTest
 class CompanyCreateServiceTestIT {
@@ -24,6 +24,8 @@ class CompanyCreateServiceTestIT {
 	private CompanyCreateService companyCreateService;
 	@Autowired
 	private CompanyRepository companyRepository;
+	@Autowired
+	private CompanyMapper companyMapper;
 	@MockBean
 	private AccountClient accountClient;
 
@@ -45,13 +47,18 @@ class CompanyCreateServiceTestIT {
 		final var company = companyCreateService.create(account, companyRest).block();
 
 		//assert
-		final var companies = companyRepository.findAll().collectList().block();
+		final var companies = companyRepository.findAll()
+				.map(companyMapper::toRest)
+				.collectList()
+				.block();
+
 		assertAll(
 				() -> assertThat(companies).hasSize(1),
 				() -> assertThat(companies)
 						.usingRecursiveFieldByFieldElementComparator()
 						.containsExactlyInAnyOrder(company)
 		);
+		verify(accountClient, times(1)).assignCompany(companyId);
 	}
 
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class UserMapper {
+class UserMapper {
 
 	private final ModelMapper modelMapper;
 

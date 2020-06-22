@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CompanyCreateServiceTest {
@@ -42,12 +42,14 @@ class CompanyCreateServiceTest {
 		when(companyMapper.toDomain(companyRest)).thenReturn(company);
 		when(companyRepository.save(company)).thenReturn(Mono.just(company));
 		when(accountClient.assignCompany(company.getId())).thenReturn(Mono.just(account));
+		when(companyMapper.toRest(company)).thenReturn(companyRest);
 
 		//act
 		final var result = companyCreateService.create(account, companyRest).block();
 
 		//assert
-		assertThat(result).isEqualToComparingFieldByField(company);
+		assertThat(result).isEqualToComparingFieldByField(companyRest);
+		verify(accountClient, times(1)).assignCompany(company.getId());
 	}
 
 }
