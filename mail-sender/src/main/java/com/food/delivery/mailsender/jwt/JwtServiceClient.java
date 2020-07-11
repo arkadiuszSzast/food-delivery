@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import reactivefeign.spring.config.ReactiveFeignClient;
 import reactor.core.publisher.Mono;
 
-@ReactiveFeignClient("jwt-service")
+@ReactiveFeignClient(value = "jwt-service", fallbackFactory = JwtClientFallbackFactory.class)
 public interface JwtServiceClient {
 
 	@GetMapping("/jwt/user-activate")

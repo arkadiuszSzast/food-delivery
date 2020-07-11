@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import reactivefeign.spring.config.ReactiveFeignClient;
 import reactor.core.publisher.Mono;
 
-@ReactiveFeignClient("account-service")
+@ReactiveFeignClient(value = "account-service", fallbackFactory = AccountClientFallbackFactory.class)
 public interface AccountClient {
 
 	@GetMapping("/account/user/me")
