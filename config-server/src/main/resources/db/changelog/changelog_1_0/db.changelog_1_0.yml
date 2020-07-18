@@ -44,4 +44,10 @@ databaseChangeLog:
   - include:
       file: db.insert_app_properties_jwt_service_prod.yml
       relativeToChangelogFile: true
+  - include:
+      file: db.insert_app_properties_menu_service_dev.yml
+      relativeToChangelogFile: true
+  - include:
+      file: db.insert_app_properties_menu_service_prod.yml
+      relativeToChangelogFile: true
 

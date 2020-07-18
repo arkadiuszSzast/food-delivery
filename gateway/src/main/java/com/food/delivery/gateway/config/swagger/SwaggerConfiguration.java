@@ -39,12 +39,14 @@ public class SwaggerConfiguration implements SwaggerResourcesProvider {
 				.aSwaggerResource("account-service", "/account-service/v2/api-docs");
 		final var swaggerResourceCompany = SwaggerResourceBuilder
 				.aSwaggerResource("company-service", "/company-service/v2/api-docs");
+		final var swaggerResourceMenu = SwaggerResourceBuilder
+				.aSwaggerResource("menu-service", "/menu-service/v2/api-docs");
 		final var swaggerResourceOktaAdapter = SwaggerResourceBuilder
 				.aSwaggerResource("okta-adapter", "/okta-adapter/v2/api-docs");
 		final var swaggerResourceJwtAdapter = SwaggerResourceBuilder
 				.aSwaggerResource("jwt-service", "/jwt-service/v2/api-docs");
 
-		return List.of(swaggerResourceAccount, swaggerResourceCompany,
+		return List.of(swaggerResourceAccount, swaggerResourceCompany, swaggerResourceMenu,
 				swaggerResourceOktaAdapter, swaggerResourceJwtAdapter);
 	}
 }
