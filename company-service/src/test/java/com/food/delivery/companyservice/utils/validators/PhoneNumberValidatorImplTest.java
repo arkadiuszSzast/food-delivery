@@ -3,11 +3,9 @@ package com.food.delivery.companyservice.utils.validators;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.validation.ConstraintValidatorContext;
+import java.util.regex.Pattern;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -15,21 +13,20 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @ExtendWith(MockitoExtension.class)
 class PhoneNumberValidatorImplTest {
 
-	@Mock
-	private ConstraintValidatorContext constraintValidatorContext;
-	@InjectMocks
-	private PhoneNumberValidatorImpl phoneNumberValidator;
-
 	@Test
 	@DisplayName("Should return true when phone is valid")
 	void shouldAcceptValidPhone() {
 		//arrange && act
-		final var valid_1 = phoneNumberValidator.isValid("123123123", constraintValidatorContext);
-		final var valid_2 = phoneNumberValidator.isValid("+48 123 123 123", constraintValidatorContext);
-		final var valid_3 = phoneNumberValidator.isValid("(42) 123 123 123", constraintValidatorContext);
-		final var valid_4 = phoneNumberValidator.isValid("+1-541-754-3010", constraintValidatorContext);
-		final var valid_5 = phoneNumberValidator.isValid("(089) / 636-48018", constraintValidatorContext);
-		final var valid_6 = phoneNumberValidator.isValid("19-49-89-636-48018", constraintValidatorContext);
+
+		final var phoneNumberRegex = Patterns.getPhoneNumberRegex();
+		final var pattern = Pattern.compile(phoneNumberRegex);
+
+		final var valid_1 = pattern.matcher("123123123").matches();
+		final var valid_2 = pattern.matcher("+48 123 123 123").matches();
+		final var valid_3 = pattern.matcher("(42) 123 123 123").matches();
+		final var valid_4 = pattern.matcher("+1-541-754-3010").matches();
+		final var valid_5 = pattern.matcher("(089) / 636-48018").matches();
+		final var valid_6 = pattern.matcher("19-49-89-636-48018").matches();
 
 		//assert
 		assertAll(
@@ -46,11 +43,15 @@ class PhoneNumberValidatorImplTest {
 	@DisplayName("Should return false when phone is invalid")
 	void shouldNotAcceptInvalidPhone() {
 		//arrange && act
-		final var invalid_1 = phoneNumberValidator.isValid("123123123a", constraintValidatorContext);
-		final var invalid_2 = phoneNumberValidator.isValid("+48%123 123 123", constraintValidatorContext);
-		final var invalid_3 = phoneNumberValidator.isValid("   ", constraintValidatorContext);
-		final var invalid_4 = phoneNumberValidator.isValid(" 123123123", constraintValidatorContext);
-		final var invalid_5 = phoneNumberValidator.isValid("123123123 ", constraintValidatorContext);
+		final var phoneNumberRegex = Patterns.getPhoneNumberRegex();
+		final var pattern = Pattern.compile(phoneNumberRegex);
+
+		final var invalid_1 = pattern.matcher("123123123a").matches();
+		final var invalid_2 = pattern.matcher("+48%123 123 123").matches();
+		final var invalid_3 = pattern.matcher("   ").matches();
+		final var invalid_4 = pattern.matcher(" 123123123").matches();
+		final var invalid_5 = pattern.matcher("123123123 ").matches();
+
 
 		//assert
 		assertAll(

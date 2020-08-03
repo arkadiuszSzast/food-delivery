@@ -13,7 +13,3 @@ spring:
       uri: ${CONFIG_URI:http://localhost:8888}
       username: account_actuator
       password: ${ACTUATOR_PASSWORD}
-
-  data:
-    mongodb:
-      uri: mongodb://${embedded.mongodb.host}:${embedded.mongodb.port}/${embedded.mongodb.database}

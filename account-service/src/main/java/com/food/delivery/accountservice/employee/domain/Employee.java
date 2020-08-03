@@ -16,7 +16,7 @@ public class Employee {
 	private String id;
 	private String firstName;
 	private String lastName;
-	@Indexed(unique = true)
+	@Indexed(name = "employee_email_index", unique = true)
 	private String email;
 	private String oktaId;
 	@Setter

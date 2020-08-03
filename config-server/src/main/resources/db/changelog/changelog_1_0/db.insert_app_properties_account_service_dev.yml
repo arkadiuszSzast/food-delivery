@@ -345,3 +345,21 @@ databaseChangeLog:
               - column:
                   name: label
                   value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: account-service
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: spring.data.mongodb.auto-index-creation
+              - column:
+                  name: value
+                  value: true
+              - column:
+                  name: label
+                  value: master

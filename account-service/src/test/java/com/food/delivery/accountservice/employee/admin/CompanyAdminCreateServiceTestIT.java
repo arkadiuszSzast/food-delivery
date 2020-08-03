@@ -31,7 +31,7 @@ class CompanyAdminCreateServiceTestIT {
 	private CompanyAdminActivateProducer companyAdminActivateProducer;
 	@MockBean
 	private CompanyAdminRegisterProducer companyAdminRegisterProducer;
-	@MockBean
+	@MockBean(name = "com.food.delivery.accountservice.user.okta.OktaAdapterAccountClient")
 	private OktaAdapterAccountClient oktaAdapterAccountClient;
 	@Autowired
 	private CompanyAdminCreateService companyAdminCreateService;

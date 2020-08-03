@@ -13,7 +13,6 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.test.context.support.WithMockUser;
 import reactor.core.publisher.Mono;
 
-import javax.validation.ConstraintViolationException;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -107,9 +106,11 @@ class CompanyControllerTestIT {
 		final var account = new Account(UUID.randomUUID().toString(), accountName, surname, email);
 		when(accountClient.findEmployeeMe()).thenReturn(Mono.just(account));
 
-		//act && assert
-		assertThrows(ConstraintViolationException.class,
-				() -> companyController.createCompany(companyRest).block());
+		//act
+		final var result = companyController.createCompany(companyRest).blockOptional();
+
+		//assert
+		assertThat(result).isEmpty();
 
 	}
 
