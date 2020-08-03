@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 @CompanyServiceIntegrationTest
 class CompanyControllerTestIT {
 
-	@MockBean
+	@MockBean(name = "com.food.delivery.companyservice.account.AccountClient")
 	private AccountClient accountClient;
 	@Autowired
 	private CompanyController companyController;

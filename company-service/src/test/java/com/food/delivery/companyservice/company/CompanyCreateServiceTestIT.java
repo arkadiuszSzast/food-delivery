@@ -26,7 +26,7 @@ class CompanyCreateServiceTestIT {
 	private CompanyRepository companyRepository;
 	@Autowired
 	private CompanyMapper companyMapper;
-	@MockBean
+	@MockBean(name = "com.food.delivery.companyservice.account.AccountClient")
 	private AccountClient accountClient;
 
 	@Test

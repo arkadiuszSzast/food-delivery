@@ -7,12 +7,10 @@ import com.food.delivery.companyservice.company.model.CompanyRest;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@Validated
 @RestController
 @AllArgsConstructor
 @RequestMapping("/company")

@@ -54,7 +54,7 @@ class CompanyMapperTestIT {
 		final var result = companyMapper.toRest(company);
 
 		//assert
-		assertThat(result).isEqualToComparingFieldByField(companyRest);
+		assertThat(result).isEqualToIgnoringGivenFields(companyRest, "validator");
 	}
 
 }
