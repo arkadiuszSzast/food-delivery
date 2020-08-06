@@ -76,6 +76,7 @@ dependencyManagement {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+	finalizedBy(tasks.jacocoTestReport)
 }
 
 tasks.withType<KotlinCompile> {
@@ -83,4 +84,16 @@ tasks.withType<KotlinCompile> {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
 		jvmTarget = "11"
 	}
+}
+
+tasks.jacocoTestReport {
+	reports {
+		xml.isEnabled = true
+		csv.isEnabled = true
+		html.isEnabled = true
+	}
+}
+
+tasks.register<GradleBuild>("cleanBuildDockerPush") {
+	tasks = listOf("clean", "build", "docker", "dockerTagDockerHub", "dockerPushDockerHub")
 }
