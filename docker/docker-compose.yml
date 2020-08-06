@@ -135,6 +135,20 @@ services:
         aliases:
           - "company-service-db"
 
+  menu-service-db:
+    image: szastarek/food-delivery-menu-service-db
+    container_name: menu-service-db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=menu_user
+      - MONGO_INITDB_ROOT_PASSWORD=2x9uCe2B2NzH72JMboHj8YjL2ymflxl6
+      - MONGO_INITDB_DATABASE=menu
+    ports:
+      - 27014:27017
+    networks:
+      food-delivery-net:
+        aliases:
+          - "menu-service-db"
+
   gateway-db:
     image: szastarek/food-delivery-gateway-db
     container_name: gateway-db
@@ -251,6 +265,26 @@ services:
       food-delivery-net:
         aliases:
           - "company-service"
+
+  menu-service:
+    image: szastarek/food-delivery-menu-service:${TAG}
+    container_name: menu-service
+    environment:
+      - CONFIG_URI=http://config-server:8888
+      - EUREKA_URL=http://account_eureka:password@server-discovery:8761/eureka/
+      - OKTA_CLIENT_ID=0oaqf5gc3jy2DHcYI0h7
+      - OKTA_ISSUER=https://dev-826281.oktapreview.com/oauth2/default
+      - DATABASE_URI=mongodb://menu_user:2x9uCe2B2NzH72JMboHj8YjL2ymflxl6@menu-service-db:27017/menu?authSource=admin
+      - ACTUATOR_PASSWORD=iN09KtaW59dqeRylgZFV4aSZ
+      - KAFKA_URI=mail-sender-kafka:9092
+      - ENV=dev,swagger
+    depends_on:
+      - config-server
+      - menu-service-db
+    networks:
+      food-delivery-net:
+        aliases:
+          - "menu-service"
 
   okta-adapter:
     image: szastarek/food-delivery-okta-adapter:${TAG}

@@ -34,13 +34,13 @@ import static org.mockito.Mockito.*;
 @AccountServiceIntegrationTest
 class EmployeeControllerTestIT {
 
-	@MockBean
+	@MockBean(name = "com.food.delivery.accountservice.company.CompanyClient")
 	private CompanyClient companyClient;
-	@MockBean
+	@MockBean(name = "com.food.delivery.accountservice.user.okta.OktaAdapterAccountClient")
 	private OktaAdapterAccountClient oktaAdapterAccountClient;
 	@MockBean
 	private EmployeeActivateProducer employeeActivateProducer;
-	@MockBean
+	@MockBean(name = "com.food.delivery.accountservice.jwt.JwtServiceClient")
 	private JwtServiceClient jwtServiceClient;
 	@Autowired
 	private EmployeeRepository employeeRepository;

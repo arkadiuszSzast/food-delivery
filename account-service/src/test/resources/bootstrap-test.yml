@@ -8,7 +8,9 @@ spring:
       enabled: false
   data:
     mongodb:
+      auto-index-creation: true
       uri: mongodb://${embedded.mongodb.host}:${embedded.mongodb.port}/${embedded.mongodb.database}
+
   kafka:
     producer:
       bootstrap-servers: ${embedded.kafka.brokerList}

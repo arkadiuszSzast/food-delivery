@@ -7,14 +7,10 @@ import com.food.delivery.companyservice.company.model.CompanyRest;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import javax.validation.Valid;
-
-@Validated
 @RestController
 @AllArgsConstructor
 @RequestMapping("/company")
@@ -36,9 +32,10 @@ public class CompanyController {
 
 	@PostMapping
 	@PreAuthorize("hasAuthority('COMPANY_ADMIN')")
-	public Mono<CompanyRest> createCompany(@Valid @RequestBody CompanyRest companyRest) {
-		return accountClient.findEmployeeMe()
-				.switchIfEmpty(Mono.error(new UsernameNotFoundException("Failed to create company")))
-				.flatMap(account -> companyCreateService.create(account, companyRest));
+	public Mono<CompanyRest> createCompany(@RequestBody CompanyRest companyRest) {
+		return companyRest.validate().fold(v -> Mono.empty(),
+				company -> accountClient.findEmployeeMe()
+						.switchIfEmpty(Mono.error(new UsernameNotFoundException("Failed to create company")))
+						.flatMap(account -> companyCreateService.create(account, companyRest)));
 	}
 }

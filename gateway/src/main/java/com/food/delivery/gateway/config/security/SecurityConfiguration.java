@@ -52,6 +52,7 @@ public class SecurityConfiguration {
 						"/account/user",
 						"/account/user/activate",
 						"/account/employee/activate",
+						"/menu/test",
 						"/account/employee/company-admin/activate")
 				.permitAll()
 				.pathMatchers(HttpMethod.POST, "/account/employee/company-admin").permitAll()

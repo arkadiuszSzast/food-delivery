@@ -1,10 +1,9 @@
 package com.food.delivery.companyservice.support.extensions;
 
-import com.mongodb.client.result.DeleteResult;
-import org.bson.Document;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.ReactiveMongoOperations;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
@@ -12,11 +11,12 @@ public class CleanDatabaseExtension implements BeforeEachCallback {
 
 	@Override
 	public void beforeEach(ExtensionContext context) {
-		final var db = getBean(context, MongoTemplate.class).getDb();
-		db.listCollectionNames()
-				.map(db::getCollection)
-				.map(collection -> collection.deleteMany(new Document()))
-				.cursor().forEachRemaining(DeleteResult::wasAcknowledged);
+		final var reactiveMongoOperations = getBean(context, ReactiveMongoOperations.class);
+		reactiveMongoOperations
+				.getCollectionNames()
+				.flatMap(collectionName -> reactiveMongoOperations.remove(new Query(), collectionName))
+				.collectList()
+				.block();
 	}
 
 	private <T> T getBean(ExtensionContext context, Class<T> clazz) {

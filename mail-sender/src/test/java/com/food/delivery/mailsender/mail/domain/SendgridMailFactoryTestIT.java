@@ -31,7 +31,7 @@ class SendgridMailFactoryTestIT {
 	private SendgridProperties sendgridProperties;
 	@Autowired
 	private UrlsProperties urlsProperties;
-	@MockBean
+	@MockBean(name = "com.food.delivery.mailsender.jwt.JwtServiceClient")
 	private JwtServiceClient jwtServiceClient;
 
 	@Test

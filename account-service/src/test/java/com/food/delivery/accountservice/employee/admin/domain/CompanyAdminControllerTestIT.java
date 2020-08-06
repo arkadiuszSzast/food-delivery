@@ -37,9 +37,9 @@ class CompanyAdminControllerTestIT {
 	private CompanyAdminActivateProducer companyAdminActivateProducer;
 	@MockBean
 	private CompanyAdminRegisterProducer companyAdminRegisterProducer;
-	@MockBean
+	@MockBean(name = "com.food.delivery.accountservice.user.okta.OktaAdapterAccountClient")
 	private OktaAdapterAccountClient oktaAdapterAccountClient;
-	@MockBean
+	@MockBean(name = "com.food.delivery.accountservice.jwt.JwtServiceClient")
 	private JwtServiceClient jwtServiceClient;
 	@Autowired
 	private EmployeeRepository employeeRepository;

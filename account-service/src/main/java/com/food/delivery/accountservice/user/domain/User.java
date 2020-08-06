@@ -19,7 +19,7 @@ public class User {
 	private String id;
 	private String firstName;
 	private String lastName;
-	@Indexed(unique = true)
+	@Indexed(name = "user_email_index", unique = true)
 	private String email;
 	private String oktaId;
 

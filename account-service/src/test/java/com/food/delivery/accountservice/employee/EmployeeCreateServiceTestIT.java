@@ -26,9 +26,9 @@ import static org.mockito.Mockito.when;
 @AccountServiceIntegrationTest
 class EmployeeCreateServiceTestIT {
 
-	@MockBean
+	@MockBean(name = "com.food.delivery.accountservice.company.CompanyClient")
 	private CompanyClient companyClient;
-	@MockBean
+	@MockBean(name = "com.food.delivery.accountservice.user.okta.OktaAdapterAccountClient")
 	private OktaAdapterAccountClient oktaAdapterAccountClient;
 	@Autowired
 	private EmployeeCreateService employeeCreateService;

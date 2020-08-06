@@ -19,9 +19,9 @@ import static org.mockito.Mockito.when;
 @AccountServiceIntegrationTest
 class CompanyAdminActivateServiceTestIT {
 
-	@MockBean
+	@MockBean(name = "com.food.delivery.accountservice.jwt.JwtServiceClient")
 	private JwtServiceClient jwtServiceClient;
-	@MockBean
+	@MockBean(name = "com.food.delivery.accountservice.user.okta.OktaAdapterAccountClient")
 	private OktaAdapterAccountClient oktaAdapterAccountClient;
 	@Autowired
 	private CompanyAdminActivateService companyAdminActivateService;
