@@ -41,14 +41,15 @@ public class SecurityConfiguration {
 				.securityMatcher(ServerWebExchangeMatchers.pathMatchers("/**"))
 				.csrf().disable()
 				.authorizeExchange()
-				.pathMatchers("/v2/api-docs",
+				.pathMatchers("/v3/api-docs",
 						"/configuration/ui",
 						"/swagger-resources",
 						"/swagger-resources/**",
 						"/configuration/security",
 						"/swagger-ui.html",
 						"/webjars/**",
-						"/**/v2/api-docs",
+						"/**/v3/api-docs",
+						"/v3/api-docs/**",
 						"/account/user",
 						"/account/user/activate",
 						"/account/employee/activate",

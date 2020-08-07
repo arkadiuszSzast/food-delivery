@@ -6,6 +6,10 @@ spring:
       enabled: false
     discovery:
       enabled: false
+    gateway:
+      discovery:
+        locator:
+          enabled: false
   data:
     mongodb:
       uri: mongodb://${embedded.mongodb.host}:${embedded.mongodb.port}/${embedded.mongodb.database}

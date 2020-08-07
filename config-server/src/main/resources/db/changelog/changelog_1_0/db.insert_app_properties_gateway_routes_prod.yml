@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: insert_app_properties_jwt_service_dev
+      id: insert_app_properties_gateway_routes_prod
       author: arkadiusz.szast
       changes:
         - insert:
@@ -8,16 +8,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: server.port
+                  value: spring.cloud.gateway.routes[0].id
               - column:
                   name: value
-                  value: 0
+                  value: account-service-docs
               - column:
                   name: label
                   value: master
@@ -26,16 +26,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: eureka.client.service-url.defaultZone
+                  value: spring.cloud.gateway.routes[0].uri
               - column:
                   name: value
-                  value: ${EUREKA_URL:http://account_eureka:password@localhost:8761/eureka/}
+                  value: lb://account-service
               - column:
                   name: label
                   value: master
@@ -44,16 +44,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: eureka.instance.prefer-ip-address
+                  value: spring.cloud.gateway.routes[0].predicates[0]
               - column:
                   name: value
-                  value: true
+                  value: Path=/account-service/v3/api-docs
               - column:
                   name: label
                   value: master
@@ -62,16 +62,35 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: logging.logstash.enabled
+                  value: spring.cloud.gateway.routes[0].filters[0]
               - column:
                   name: value
-                  value: true
+                  value: RewritePath=/account-service/v3/api-docs, /v3/api-docs
+              - column:
+                  name: label
+                  value: master
+
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: gateway
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: spring.cloud.gateway.routes[1].id
+              - column:
+                  name: value
+                  value: company-service-docs
               - column:
                   name: label
                   value: master
@@ -80,16 +99,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: logging.logstash.url
+                  value: spring.cloud.gateway.routes[1].uri
               - column:
                   name: value
-                  value: logstash:5000
+                  value: lb://company-service
               - column:
                   name: label
                   value: master
@@ -98,16 +117,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: logging.logstash.ignorePatterns
+                  value: spring.cloud.gateway.routes[1].predicates[0]
               - column:
                   name: value
-                  value: /(actuator|swagger|webjars).*
+                  value: Path=/company-service/v3/api-docs
               - column:
                   name: label
                   value: master
@@ -116,16 +135,35 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: logging.logstash.logHeaders
+                  value: spring.cloud.gateway.routes[1].filters[0]
               - column:
                   name: value
-                  value: true
+                  value: RewritePath=/company-service/v3/api-docs, /v3/api-docs
+              - column:
+                  name: label
+                  value: master
+
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: gateway
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: spring.cloud.gateway.routes[2].id
+              - column:
+                  name: value
+                  value: menu-service-docs
               - column:
                   name: label
                   value: master
@@ -134,16 +172,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: management.endpoints.web.exposure.include
+                  value: spring.cloud.gateway.routes[2].uri
               - column:
                   name: value
-                  value: "*"
+                  value: lb://menu-service
               - column:
                   name: label
                   value: master
@@ -152,16 +190,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: actuator.path
+                  value: spring.cloud.gateway.routes[2].predicates[0]
               - column:
                   name: value
-                  value: /actuator/**
+                  value: Path=/menu-service/v3/api-docs
               - column:
                   name: label
                   value: master
@@ -170,16 +208,35 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: actuator.username
+                  value: spring.cloud.gateway.routes[2].filters[0]
               - column:
                   name: value
-                  value: account_actuator
+                  value: RewritePath=/menu-service/v3/api-docs, /v3/api-docs
+              - column:
+                  name: label
+                  value: master
+
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: gateway
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: spring.cloud.gateway.routes[3].id
+              - column:
+                  name: value
+                  value: jwt-service-docs
               - column:
                   name: label
                   value: master
@@ -188,16 +245,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: actuator.password
+                  value: spring.cloud.gateway.routes[3].uri
               - column:
                   name: value
-                  value: ${ACTUATOR_PASSWORD}
+                  value: lb://jwt-service
               - column:
                   name: label
                   value: master
@@ -206,16 +263,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: actuator.authority
+                  value: spring.cloud.gateway.routes[3].predicates[0]
               - column:
                   name: value
-                  value: ACTUATOR
+                  value: Path=/jwt-service/v3/api-docs
               - column:
                   name: label
                   value: master
@@ -224,16 +281,35 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: jwt.activate-account.issuer
+                  value: spring.cloud.gateway.routes[3].filters[0]
               - column:
                   name: value
-                  value: food-delivery
+                  value: RewritePath=/jwt-service/v3/api-docs, /v3/api-docs
+              - column:
+                  name: label
+                  value: master
+
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: gateway
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: spring.cloud.gateway.routes[4].id
+              - column:
+                  name: value
+                  value: okta-adapter-docs
               - column:
                   name: label
                   value: master
@@ -242,16 +318,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: jwt.activate-account.expiration-time
+                  value: spring.cloud.gateway.routes[4].uri
               - column:
                   name: value
-                  value: 86400000
+                  value: lb://okta-adapter
               - column:
                   name: label
                   value: master
@@ -260,16 +336,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: jwt.activate-account.secret
+                  value: spring.cloud.gateway.routes[4].predicates[0]
               - column:
                   name: value
-                  value: ${ACTIVATE_ACCOUNT_SECRET}
+                  value: Path=/okta-adapter/v3/api-docs
               - column:
                   name: label
                   value: master
@@ -278,16 +354,35 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: jwt.activate-employee-jwt.issuer
+                  value: spring.cloud.gateway.routes[4].filters[0]
               - column:
                   name: value
-                  value: food-delivery
+                  value: RewritePath=/okta-adapter/v3/api-docs, /v3/api-docs
+              - column:
+                  name: label
+                  value: master
+
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: gateway
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: spring.cloud.gateway.routes[5].id
+              - column:
+                  name: value
+                  value: openapi
               - column:
                   name: label
                   value: master
@@ -296,16 +391,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: jwt.activate-employee-jwt.expiration-time
+                  value: spring.cloud.gateway.routes[5].uri
               - column:
                   name: value
-                  value: 86400000
+                  value: http://localhost:${server.port}
               - column:
                   name: label
                   value: master
@@ -314,16 +409,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: jwt.activate-employee-jwt.secret
+                  value: spring.cloud.gateway.routes[5].predicates[0]
               - column:
                   name: value
-                  value: ${ACTIVATE_EMPLOYEE_SECRET}
+                  value: Path=/v3/api-docs/**
               - column:
                   name: label
                   value: master
@@ -332,16 +427,35 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: jwt.register-company-admin-jwt.issuer
+                  value: spring.cloud.gateway.routes[5].filters[0]
               - column:
                   name: value
-                  value: food-delivery
+                  value: RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+              - column:
+                  name: label
+                  value: master
+
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: gateway
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: spring.cloud.gateway.routes[6].id
+              - column:
+                  name: value
+                  value: account-service
               - column:
                   name: label
                   value: master
@@ -350,16 +464,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: jwt.register-company-admin-jwt.expiration-time
+                  value: spring.cloud.gateway.routes[6].uri
               - column:
                   name: value
-                  value: 86400000
+                  value: lb://account-service
               - column:
                   name: label
                   value: master
@@ -368,16 +482,35 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: jwt.register-company-admin-jwt.secret
+                  value: spring.cloud.gateway.routes[6].predicates[0]
               - column:
                   name: value
-                  value: ${REGISTER_COMPANY_ADMIN_SECRET}
+                  value: Path=/account/**
+              - column:
+                  name: label
+                  value: master
+
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: gateway
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: spring.cloud.gateway.routes[7].id
+              - column:
+                  name: value
+                  value: company-service
               - column:
                   name: label
                   value: master
@@ -386,16 +519,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: jwt.activate-company-admin-jwt.issuer
+                  value: spring.cloud.gateway.routes[7].uri
               - column:
                   name: value
-                  value: food-delivery
+                  value: lb://company-service
               - column:
                   name: label
                   value: master
@@ -404,16 +537,35 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: jwt.activate-company-admin-jwt.expiration-time
+                  value: spring.cloud.gateway.routes[7].predicates[0]
               - column:
                   name: value
-                  value: 86400000
+                  value: Path=/company/**
+              - column:
+                  name: label
+                  value: master
+
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: gateway
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: spring.cloud.gateway.routes[8].id
+              - column:
+                  name: value
+                  value: menu-service
               - column:
                   name: label
                   value: master
@@ -422,16 +574,34 @@ databaseChangeLog:
             columns:
               - column:
                   name: application
-                  value: jwt-service
+                  value: gateway
               - column:
                   name: profile
                   value: prod
               - column:
                   name: KEY
-                  value: jwt.activate-company-admin-jwt.secret
+                  value: spring.cloud.gateway.routes[8].uri
               - column:
                   name: value
-                  value: ${ACTIVATE_COMPANY_ADMIN_SECRET}
+                  value: lb://menu-service
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: gateway
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: spring.cloud.gateway.routes[8].predicates[0]
+              - column:
+                  name: value
+                  value: Path=/menu/**
               - column:
                   name: label
                   value: master

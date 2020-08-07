@@ -12,15 +12,15 @@ import reactor.core.publisher.Mono;
 @ReactiveFeignClient("okta-adapter")
 public interface OktaAdapterAccountClient {
 
-	@PostMapping("/account/user")
+	@PostMapping("/okta/account/user")
 	Mono<OktaAccountRest> createUser(@RequestBody AccountRest accountRest);
 
-	@PostMapping("/account/employee")
+	@PostMapping("/okta/account/employee")
 	Mono<OktaAccountRest> createEmployee(@RequestBody AccountRest accountRest);
 
-	@PostMapping("/account/company-admin")
+	@PostMapping("/okta/account/company-admin")
 	Mono<OktaAccountRest> createCompanyAdmin(@RequestBody AccountRest accountRest);
 
-	@PatchMapping("/account/activate")
+	@PatchMapping("/okta/account/activate")
 	Mono<AccountActivation> activateAccount(@RequestParam String userId);
 }

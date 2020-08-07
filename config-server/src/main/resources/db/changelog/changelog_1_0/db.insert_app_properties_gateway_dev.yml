@@ -254,7 +254,7 @@ databaseChangeLog:
                   value: ${ACTUATOR_PASSWORD}
               - column:
                   name: label
-            value: master
+                  value: master
         - insert:
             tableName: properties
             columns:
@@ -288,6 +288,24 @@ databaseChangeLog:
               - column:
                   name: value
                   value: ${DATABASE_URI:mongodb://gateway_user:iwmH3cmFVANFnU45JWm8WWb0@localhost:27015/gateway?authSource=admin}
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: gateway
+              - column:
+                  name: profile
+                  value: dev
+              - column:
+                  name: KEY
+                  value: spring.cloud.gateway.discovery.locator.enabled
+              - column:
+                  name: value
+                  value: true
               - column:
                   name: label
                   value: master

@@ -52,6 +52,7 @@ dependencies {
 	implementation("com.playtika.reactivefeign:feign-reactor-webclient:2.0.13")
 	implementation("com.playtika.reactivefeign:feign-reactor-cloud:2.0.13")
 	implementation("com.github.arkadiuszSzast:reactive-logstash-logging-starter:1.0.7")
+	implementation("org.springdoc:springdoc-openapi-webflux-core:1.4.3")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")

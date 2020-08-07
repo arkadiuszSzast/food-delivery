@@ -272,7 +272,7 @@ databaseChangeLog:
                   value: ${ACTUATOR_PASSWORD}
               - column:
                   name: label
-            value: master
+                  value: master
         - insert:
             tableName: properties
             columns:

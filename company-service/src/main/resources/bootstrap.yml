@@ -1,6 +1,9 @@
 spring:
   application:
     name: company-service
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
 
   cloud:
     config:

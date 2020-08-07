@@ -32,13 +32,7 @@ public class SecurityConfiguration {
 				.securityMatcher(ServerWebExchangeMatchers.pathMatchers("/**"))
 				.csrf().disable()
 				.authorizeExchange()
-				.pathMatchers("/v2/api-docs",
-						"/configuration/ui",
-						"/swagger-resources",
-						"/swagger-resources/**",
-						"/configuration/security",
-						"/swagger-ui.html",
-						"/webjars/**")
+				.pathMatchers("/v3/api-docs")
 				.permitAll()
 				.anyExchange().hasAnyAuthority("USER", "COMPANY_EMPLOYEE")
 				.and()

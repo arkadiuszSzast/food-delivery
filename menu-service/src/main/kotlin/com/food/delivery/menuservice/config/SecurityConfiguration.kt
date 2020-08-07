@@ -26,14 +26,7 @@ class SecurityConfiguration(private val actuatorProperties: ActuatorProperties) 
 				.securityMatcher(ServerWebExchangeMatchers.pathMatchers("/**"))
 				.csrf().disable()
 				.authorizeExchange()
-				.pathMatchers("/v2/api-docs",
-						"/configuration/ui",
-						"/swagger-resources",
-						"/swagger-resources/**",
-						"/configuration/security",
-						"/swagger-ui.html",
-						"/menu/test",
-						"/webjars/**")
+				.pathMatchers("/v3/api-docs", "/menu/test")
 				.permitAll()
 				.anyExchange().hasAnyAuthority("USER", "COMPANY_EMPLOYEE")
 				.and()

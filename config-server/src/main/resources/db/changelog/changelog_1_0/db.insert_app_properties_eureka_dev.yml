@@ -218,7 +218,7 @@ databaseChangeLog:
                   value: ${ACTUATOR_PASSWORD}
               - column:
                   name: label
-            value: master
+                  value: master
         - insert:
             tableName: properties
             columns:
@@ -290,7 +290,7 @@ databaseChangeLog:
                   value: ${EUREKA_PASSWORD}
               - column:
                   name: label
-            value: master
+                  value: master
         - insert:
             tableName: properties
             columns:
@@ -362,7 +362,7 @@ databaseChangeLog:
                   value: ${DASHBOARD_PASSWORD}
               - column:
                   name: label
-            value: master
+                  value: master
         - insert:
             tableName: properties
             columns:

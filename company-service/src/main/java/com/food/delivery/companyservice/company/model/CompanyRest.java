@@ -4,6 +4,7 @@ import am.ik.yavi.builder.ValidatorBuilder;
 import am.ik.yavi.core.ConstraintViolations;
 import am.ik.yavi.core.Validator;
 import am.ik.yavi.fn.Either;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.food.delivery.companyservice.utils.validators.Patterns;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +15,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CompanyRest {
 
+	@JsonIgnore
 	private final Validator<CompanyRest> validator = ValidatorBuilder.<CompanyRest>of()
 			.constraint(CompanyRest::getPhoneNumber, "phone",
 					phone -> phone.pattern(Patterns.getPhoneNumberRegex()))

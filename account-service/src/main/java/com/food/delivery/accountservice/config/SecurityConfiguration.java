@@ -34,13 +34,8 @@ public class SecurityConfiguration {
 				.securityMatcher(ServerWebExchangeMatchers.pathMatchers("/**"))
 				.csrf().disable()
 				.authorizeExchange()
-				.pathMatchers("/v2/api-docs",
-						"/configuration/ui",
-						"/swagger-resources",
-						"/swagger-resources/**",
-						"/configuration/security",
-						"/swagger-ui.html",
-						"/webjars/**").permitAll()
+				.pathMatchers("/v3/api-docs")
+				.permitAll()
 				.pathMatchers(HttpMethod.POST, "/account/user",
 						"/account/employee/company-admin").permitAll()
 				.pathMatchers(HttpMethod.PATCH, "/account/user/activate",

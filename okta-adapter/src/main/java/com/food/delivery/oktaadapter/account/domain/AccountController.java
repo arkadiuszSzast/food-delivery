@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/account")
+@RequestMapping("/okta/account")
 public class AccountController {
 
 	private final AccountCreateService accountCreateService;

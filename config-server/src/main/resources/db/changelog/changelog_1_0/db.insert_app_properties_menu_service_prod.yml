@@ -254,7 +254,7 @@ databaseChangeLog:
                   value: ${ACTUATOR_PASSWORD}
               - column:
                   name: label
-            value: master
+                  value: master
         - insert:
             tableName: properties
             columns:
@@ -342,6 +342,24 @@ databaseChangeLog:
               - column:
                   name: value
                   value: 4000
+              - column:
+                  name: label
+                  value: master
+        - insert:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+                  value: menu-service
+              - column:
+                  name: profile
+                  value: prod
+              - column:
+                  name: KEY
+                  value: spring.jackson.serialization.FAIL_ON_EMPTY_BEANS
+              - column:
+                  name: value
+                  value: false
               - column:
                   name: label
                   value: master
