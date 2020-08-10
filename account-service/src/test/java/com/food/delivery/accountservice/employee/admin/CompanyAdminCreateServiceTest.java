@@ -59,7 +59,7 @@ class CompanyAdminCreateServiceTest {
 	@DisplayName("Should register company admin")
 	void shouldRegisterCompanyAdmin() {
 		//arrange
-		final var accountRest = new AccountRest(randomString(), randomString(), randomString());
+		final var accountRest = new AccountRest(randomString(), randomString(), randomString(), randomString());
 		final var oktaAccountRest = new OktaAccountRest(accountRest, randomString());
 		final var companyAdmin = getEmployee(accountRest, oktaAccountRest.getOktaId(), randomString());
 		when(oktaAdapterAccountClient.createCompanyAdmin(accountRest)).thenReturn(Mono.just(oktaAccountRest));
@@ -78,7 +78,7 @@ class CompanyAdminCreateServiceTest {
 	@DisplayName("Should not register company admin")
 	void shouldNotRegisterCompanyAdmin() {
 		//arrange
-		final var accountRest = new AccountRest(randomString(), randomString(), randomString());
+		final var accountRest = new AccountRest(randomString(), randomString(), randomString(), randomString());
 		final var oktaAccountRest = new OktaAccountRest(accountRest, randomString());
 		final var companyAdmin = getEmployee(accountRest, oktaAccountRest.getOktaId(), randomString());
 		when(oktaAdapterAccountClient.createCompanyAdmin(accountRest)).thenReturn(Mono.just(oktaAccountRest));
@@ -97,7 +97,7 @@ class CompanyAdminCreateServiceTest {
 		final var employeeEmail = randomString();
 		final var companyId = randomString();
 		final var companyName = randomString();
-		final var accountRest = new AccountRest(randomString(), randomString(), employeeEmail);
+		final var accountRest = new AccountRest(randomString(), randomString(), randomString(), employeeEmail);
 		final var employee = getEmployee(accountRest);
 		final var employeeRest = new EmployeeRest(accountRest, companyName, companyId);
 		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(accountRest.getEmail()));

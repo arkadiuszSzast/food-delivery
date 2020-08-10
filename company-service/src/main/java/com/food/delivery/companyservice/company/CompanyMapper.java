@@ -17,6 +17,12 @@ public class CompanyMapper {
 				.build();
 	}
 
+	public Company toDomain(CompanyRest companyRest, String companyAdminId) {
+		return modelMapper.map(companyRest, Company.CompanyBuilder.class)
+				.companyAdminId(companyAdminId)
+				.build();
+	}
+
 	public CompanyRest toRest(Company company) {
 		return modelMapper.map(company, CompanyRest.CompanyRestBuilder.class)
 				.build();

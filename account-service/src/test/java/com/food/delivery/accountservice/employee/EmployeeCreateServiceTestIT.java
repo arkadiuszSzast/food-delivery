@@ -40,12 +40,16 @@ class EmployeeCreateServiceTestIT {
 	void shouldCreateEmployee() {
 		//arrange
 		final var companyId = randomString();
-		final var accountRest = new AccountRest(randomString(), randomString(), randomString());
+		final var accountRest = new AccountRest(randomString(), randomString(), randomString(), randomString());
 		final var oktaAccountRest = new OktaAccountRest(accountRest, UUID.randomUUID().toString());
 		final var companyAdmin = employeeRepository.save(EmployeeProvider.getEmployee(companyId, randomString())).block();
 		final var employee = getEmployee(accountRest, companyId);
 		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(companyAdmin.getEmail()));
 		final var companyRest = new CompanyRest(companyId, randomString());
+		final var employeeRest = EmployeeRest.builder()
+				.accountRest(new AccountRest(accountRest.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmail()))
+				.companyId(employee.getCompanyId())
+				.build();
 		when(companyClient.getCompany(companyId)).thenReturn(Mono.just(companyRest));
 		when(oktaAdapterAccountClient.createEmployee(accountRest)).thenReturn(Mono.just(oktaAccountRest));
 
@@ -53,7 +57,7 @@ class EmployeeCreateServiceTestIT {
 		final var result = employeeCreateService.create(accountRest, jwtAuthenticationToken).block();
 
 		//assert
-		assertThat(result).isEqualToIgnoringGivenFields(employee, "id", "oktaId");
+		assertThat(result).usingRecursiveComparison().isEqualTo(employeeRest);
 	}
 
 	@Test
@@ -62,7 +66,7 @@ class EmployeeCreateServiceTestIT {
 		//arrange
 		final var companyId = randomString();
 		final var employeeEmail = randomString();
-		final var accountRest = new AccountRest(randomString(), randomString(), employeeEmail);
+		final var accountRest = new AccountRest(randomString(), randomString(), randomString(), employeeEmail);
 		final var oktaAccountRest = new OktaAccountRest(accountRest, UUID.randomUUID().toString());
 		final var companyAdmin = employeeRepository.save(EmployeeProvider.getEmployee(companyId, employeeEmail)).block();
 		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(companyAdmin.getEmail()));

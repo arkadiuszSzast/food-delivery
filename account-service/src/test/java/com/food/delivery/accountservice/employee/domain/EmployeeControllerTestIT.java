@@ -6,6 +6,7 @@ import com.food.delivery.accountservice.company.CompanyClient;
 import com.food.delivery.accountservice.company.CompanyRest;
 import com.food.delivery.accountservice.employee.EmployeeProvider;
 import com.food.delivery.accountservice.employee.EmployeeRepository;
+import com.food.delivery.accountservice.employee.EmployeeRest;
 import com.food.delivery.accountservice.employee.events.EmployeeActivateProducer;
 import com.food.delivery.accountservice.jwt.JwtServiceClient;
 import com.food.delivery.accountservice.support.AccountServiceIntegrationTest;
@@ -53,12 +54,16 @@ class EmployeeControllerTestIT {
 	void shouldCreateEmployee() {
 		//arrange
 		final var companyId = randomString();
-		final var accountRest = new AccountRest(randomString(), randomString(), randomString());
+		final var accountRest = new AccountRest(null, randomString(), randomString(), randomString());
 		final var oktaAccountRest = new OktaAccountRest(accountRest, UUID.randomUUID().toString());
 		final var companyAdmin = employeeRepository.save(EmployeeProvider.getEmployee(companyId, randomString())).block();
 		final var employee = getEmployee(accountRest, companyId);
 		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(companyAdmin.getEmail()));
 		final var companyRest = new CompanyRest(companyId, randomString());
+		final var employeeRest = EmployeeRest.builder()
+				.accountRest(new AccountRest(employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmail()))
+				.companyId(employee.getCompanyId())
+				.build();
 		when(companyClient.getCompany(companyId)).thenReturn(Mono.just(companyRest));
 		when(oktaAdapterAccountClient.createEmployee(accountRest)).thenReturn(Mono.just(oktaAccountRest));
 
@@ -66,7 +71,7 @@ class EmployeeControllerTestIT {
 		final var result = employeeController.create(accountRest, jwtAuthenticationToken).block();
 
 		//assert
-		assertThat(result).isEqualToIgnoringGivenFields(employee, "id", "oktaId");
+		assertThat(result).usingRecursiveComparison().ignoringFields("accountRest.id").isEqualTo(employeeRest);
 	}
 
 	@Test
@@ -75,7 +80,7 @@ class EmployeeControllerTestIT {
 	void shouldNotCreateEmployeeWhenNoAuthority() {
 		//arrange
 		final var companyId = randomString();
-		final var accountRest = new AccountRest(randomString(), randomString(), randomString());
+		final var accountRest = new AccountRest(randomString(), randomString(), randomString(), randomString());
 		final var companyAdmin = employeeRepository.save(EmployeeProvider.getEmployee(companyId, randomString())).block();
 		final var employee = getEmployee(accountRest, companyId);
 		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(companyAdmin.getEmail()));
@@ -92,7 +97,7 @@ class EmployeeControllerTestIT {
 	void shouldNotCreateEmployeeWhenEmailTaken() {
 		//arrange
 		final var companyId = randomString();
-		final var accountRest = new AccountRest(randomString(), randomString(), randomString());
+		final var accountRest = new AccountRest(randomString(), randomString(), randomString(), randomString());
 		final var oktaAccountRest = new OktaAccountRest(accountRest, UUID.randomUUID().toString());
 		final var companyAdmin = employeeRepository.save(EmployeeProvider.getEmployee(companyId, randomString())).block();
 		final var employee = getEmployee(accountRest, companyId);
@@ -115,12 +120,19 @@ class EmployeeControllerTestIT {
 		final var companyId = randomString();
 		final var employee = employeeRepository.save(EmployeeProvider.getEmployee(companyId, randomString())).block();
 		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(employee.getEmail()));
+		final var companyName = "companyName";
+		final var employeeRest = EmployeeRest.builder()
+				.accountRest(new AccountRest(employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmail()))
+				.companyId(employee.getCompanyId())
+				.companyName(companyName)
+				.build();
+		when(companyClient.getCompany(employee.getCompanyId())).thenReturn(Mono.just(new CompanyRest(employee.getCompanyId(), companyName)));
 
 		//act
 		final var result = employeeController.findMe(jwtAuthenticationToken).block();
 
 		//assert
-		assertThat(result).isEqualToComparingFieldByField(employee);
+		assertThat(result).usingRecursiveComparison().isEqualTo(employeeRest);
 	}
 
 	@Test

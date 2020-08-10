@@ -27,7 +27,7 @@ class UserMapperTest {
 	@DisplayName("Should map accountRest to domain object")
 	void shouldMapToDomainObject() {
 		//arrange
-		final var accountRest = new AccountRest(FIRST_NAME, LAST_NAME, EMAIL);
+		final var accountRest = new AccountRest(ID, FIRST_NAME, LAST_NAME, EMAIL);
 
 		//act
 		final var account = userMapper.toDomain(accountRest);
@@ -37,7 +37,7 @@ class UserMapperTest {
 				() -> assertThat(account.getEmail()).isEqualTo(EMAIL),
 				() -> assertThat(account.getFirstName()).isEqualTo(FIRST_NAME),
 				() -> assertThat(account.getLastName()).isEqualTo(LAST_NAME),
-				() -> assertThat(account.getId()).isNull()
+				() -> assertThat(account.getId()).isEqualTo(ID)
 		);
 	}
 
@@ -54,7 +54,8 @@ class UserMapperTest {
 		assertAll(
 				() -> assertThat(accountRest.getEmail()).isEqualTo(EMAIL),
 				() -> assertThat(accountRest.getFirstName()).isEqualTo(FIRST_NAME),
-				() -> assertThat(accountRest.getLastName()).isEqualTo(LAST_NAME)
+				() -> assertThat(accountRest.getLastName()).isEqualTo(LAST_NAME),
+				() -> assertThat(account.getId()).isEqualTo(ID)
 		);
 	}
 
@@ -62,7 +63,7 @@ class UserMapperTest {
 	@DisplayName("Should map oktaAccountRest to domain object")
 	void shouldMapToDomainObjectFromOktaRest() {
 		//arrange
-		final var accountRest = new AccountRest(FIRST_NAME, LAST_NAME, EMAIL);
+		final var accountRest = new AccountRest(ID, FIRST_NAME, LAST_NAME, EMAIL);
 		final var oktaAccountRest = new OktaAccountRest(accountRest, OKTA_ID);
 
 		//act
@@ -74,7 +75,7 @@ class UserMapperTest {
 				() -> assertThat(account.getFirstName()).isEqualTo(FIRST_NAME),
 				() -> assertThat(account.getLastName()).isEqualTo(LAST_NAME),
 				() -> assertThat(account.getOktaId()).isEqualTo(OKTA_ID),
-				() -> assertThat(account.getId()).isNull()
+				() -> assertThat(account.getId()).isEqualTo(ID)
 		);
 	}
 

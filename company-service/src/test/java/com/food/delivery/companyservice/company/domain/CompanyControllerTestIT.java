@@ -2,14 +2,20 @@ package com.food.delivery.companyservice.company.domain;
 
 import com.food.delivery.companyservice.account.Account;
 import com.food.delivery.companyservice.account.AccountClient;
+import com.food.delivery.companyservice.account.AccountRest;
+import com.food.delivery.companyservice.account.EmployeeRest;
 import com.food.delivery.companyservice.company.CompanyProvider;
+import com.food.delivery.companyservice.company.CompanyRepository;
+import com.food.delivery.companyservice.company.CompanyValidationException;
 import com.food.delivery.companyservice.company.model.CompanyRest;
 import com.food.delivery.companyservice.support.CompanyServiceIntegrationTest;
+import com.food.delivery.companyservice.utils.JwtProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.test.context.support.WithMockUser;
 import reactor.core.publisher.Mono;
 
@@ -30,6 +36,8 @@ class CompanyControllerTestIT {
 	private CompanyController companyController;
 	@Autowired
 	private CompanyProvider companyProvider;
+	@Autowired
+	private CompanyRepository companyRepository;
 
 	@Test
 	@DisplayName("Should return list of all companies")
@@ -75,11 +83,14 @@ class CompanyControllerTestIT {
 		final var surname = "surname";
 		final var email = "name@mail.com";
 		final var account = new Account(UUID.randomUUID().toString(), accountName, surname, email);
-		when(accountClient.findEmployeeMe()).thenReturn(Mono.just(account));
-		when(accountClient.assignCompany(any())).thenReturn(Mono.just(account));
+		final var employeeRest = new EmployeeRest(new AccountRest(account.getId(), accountName, surname, email), companyName, companyId);
+		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(email));
+
+		when(accountClient.findEmployeeByEmail(email)).thenReturn(Mono.just(employeeRest));
+		when(accountClient.assignCompany(any())).thenReturn(Mono.just(employeeRest));
 
 		//act
-		final var company = companyController.createCompany(companyRest).block();
+		final var company = companyController.createCompany(jwtAuthenticationToken, companyRest).block();
 
 		//assert
 		final var companies = companyController.findAll().collectList().block();
@@ -104,14 +115,14 @@ class CompanyControllerTestIT {
 		final var surname = "surname";
 		final var email = "name@mail.com";
 		final var account = new Account(UUID.randomUUID().toString(), accountName, surname, email);
-		when(accountClient.findEmployeeMe()).thenReturn(Mono.just(account));
+		final var employeeRest = new EmployeeRest(new AccountRest(account.getId(), accountName, surname, email), companyName, companyId);
+		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(email));
+		when(accountClient.findEmployeeByEmail(email)).thenReturn(Mono.just(employeeRest));
+		when(accountClient.assignCompany(companyId)).thenReturn(Mono.just(employeeRest));
 
-		//act
-		final var result = companyController.createCompany(companyRest).blockOptional();
-
-		//assert
-		assertThat(result).isEmpty();
-
+		//act && assert
+		assertThrows(CompanyValidationException.class,
+				() -> companyController.createCompany(jwtAuthenticationToken, companyRest).blockOptional());
 	}
 
 	@Test
@@ -126,11 +137,13 @@ class CompanyControllerTestIT {
 		final var surname = "surname";
 		final var email = "name@mail.com";
 		final var account = new Account(UUID.randomUUID().toString(), accountName, surname, email);
-		when(accountClient.findEmployeeMe()).thenReturn(Mono.just(account));
+		final var employeeRest = new EmployeeRest(new AccountRest(account.getId(), accountName, surname, email), companyName, companyId);
+		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(email));
+		when(accountClient.findEmployeeMe()).thenReturn(Mono.just(employeeRest));
 
 		//act && assert
 		assertThrows(AccessDeniedException.class,
-				() -> companyController.createCompany(companyRest).block());
+				() -> companyController.createCompany(jwtAuthenticationToken, companyRest).block());
 	}
 
 	@Test

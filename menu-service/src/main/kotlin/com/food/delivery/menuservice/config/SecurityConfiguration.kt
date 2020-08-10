@@ -3,6 +3,7 @@ package com.food.delivery.menuservice.config
 import com.food.delivery.menuservice.utils.properties.ActuatorProperties
 import com.okta.spring.boot.oauth.Okta
 import org.springframework.context.annotation.Bean
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.web.server.ServerHttpSecurity
@@ -22,11 +23,13 @@ class SecurityConfiguration(private val actuatorProperties: ActuatorProperties) 
 				.hasAuthority(actuatorProperties.getAuthorityName())
 				.and()
 				.httpBasic()
-		http
-				.securityMatcher(ServerWebExchangeMatchers.pathMatchers("/**"))
-				.csrf().disable()
-				.authorizeExchange()
-				.pathMatchers("/v3/api-docs", "/menu/test")
+        http
+                .securityMatcher(ServerWebExchangeMatchers.pathMatchers("/**"))
+                .csrf().disable()
+                .authorizeExchange()
+                .pathMatchers("/v3/api-docs")
+                .permitAll()
+                .pathMatchers(HttpMethod.GET, "/menu")
 				.permitAll()
 				.anyExchange().hasAnyAuthority("USER", "COMPANY_EMPLOYEE")
 				.and()

@@ -41,7 +41,7 @@ class UserCreateServiceTest {
 		final var lastName = "Doe";
 		final var email = "joe@mail.com";
 		final var oktaId = "oktaId";
-		final var accountRest = new AccountRest(firstName, lastName, email);
+		final var accountRest = new AccountRest(id, firstName, lastName, email);
 		final var oktaAccountRest = new OktaAccountRest(accountRest, oktaId);
 		final var account = new User(id, firstName, lastName, email, oktaId);
 		when(oktaAdapterAccountClient.createUser(accountRest)).thenReturn(Mono.just(oktaAccountRest));

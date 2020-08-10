@@ -76,7 +76,7 @@ class CompanyAdminControllerTestIT {
 	@DisplayName("Should create company admin account")
 	void shouldCreateCompanyAdmin() {
 		//arrange
-		final var accountRest = new AccountRest(randomString(), randomString(), randomString());
+		final var accountRest = new AccountRest(randomString(), randomString(), randomString(), randomString());
 		final var token = randomString();
 		final var oktaAccountRest = new OktaAccountRest(accountRest, randomString());
 		final var employee = getEmployee(accountRest);
@@ -98,7 +98,7 @@ class CompanyAdminControllerTestIT {
 	@DisplayName("Should not create company admin account when jwt is invalid")
 	void shouldNotCreateCompanyAdminWhenInvalidToken() {
 		//arrange
-		final var accountRest = new AccountRest(randomString(), randomString(), randomString());
+		final var accountRest = new AccountRest(randomString(), randomString(), randomString(), randomString());
 		final var token = randomString();
 		when(jwtServiceClient.validateCompanyAdminRegisterToken(token)).thenThrow(FeignException.class);
 
@@ -112,7 +112,7 @@ class CompanyAdminControllerTestIT {
 	@DisplayName("Should not create company admin account when email is taken")
 	void shouldNotCreateCompanyAdminWhenEmailTaken() {
 		//arrange
-		final var accountRest = new AccountRest(randomString(), randomString(), randomString());
+		final var accountRest = new AccountRest(randomString(), randomString(), randomString(), randomString());
 		final var token = randomString();
 		final var oktaAccountRest = new OktaAccountRest(accountRest, randomString());
 		final var employee = getEmployee(accountRest);
@@ -163,7 +163,7 @@ class CompanyAdminControllerTestIT {
 		//arrange
 		final var employeeEmail = randomString();
 		final var companyId = randomString();
-		final var accountRest = new AccountRest(randomString(), randomString(), employeeEmail);
+		final var accountRest = new AccountRest(randomString(), randomString(), randomString(), employeeEmail);
 		employeeRepository.save(getEmployee(accountRest)).block();
 		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(accountRest.getEmail()));
 
@@ -181,7 +181,7 @@ class CompanyAdminControllerTestIT {
 		//arrange
 		final var employeeEmail = randomString();
 		final var companyId = randomString();
-		final var accountRest = new AccountRest(randomString(), randomString(), employeeEmail);
+		final var accountRest = new AccountRest(randomString(), randomString(), randomString(), employeeEmail);
 		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(accountRest.getEmail()));
 
 		//act && assert

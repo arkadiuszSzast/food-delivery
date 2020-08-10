@@ -15,12 +15,17 @@ class AccountClientFallbackFactory implements FallbackFactory<AccountClient> {
 			}
 
 			@Override
-			public Mono<Account> findEmployeeMe() {
+			public Mono<EmployeeRest> findEmployeeMe() {
 				return Mono.empty();
 			}
 
 			@Override
-			public Mono<Account> assignCompany(String companyId) {
+			public Mono<EmployeeRest> findEmployeeByEmail(String email) {
+				return Mono.empty();
+			}
+
+			@Override
+			public Mono<EmployeeRest> assignCompany(String companyId) {
 				log.error("Failed to assign user to company with id: {}", companyId);
 				return Mono.empty();
 			}

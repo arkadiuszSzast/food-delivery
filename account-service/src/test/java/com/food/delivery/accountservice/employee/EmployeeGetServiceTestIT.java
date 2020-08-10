@@ -1,14 +1,20 @@
 package com.food.delivery.accountservice.employee;
 
+import com.food.delivery.accountservice.account.AccountRest;
+import com.food.delivery.accountservice.company.CompanyClient;
+import com.food.delivery.accountservice.company.CompanyRest;
 import com.food.delivery.accountservice.employee.domain.Employee;
 import com.food.delivery.accountservice.support.AccountServiceIntegrationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import reactor.core.publisher.Mono;
 
 import static com.food.delivery.accountservice.employee.EmployeeProvider.getEmployee;
 import static com.food.delivery.accountservice.utils.RandomStringProvider.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 
 @AccountServiceIntegrationTest
@@ -18,6 +24,8 @@ class EmployeeGetServiceTestIT {
 	private EmployeeRepository employeeRepository;
 	@Autowired
 	private EmployeeGetService employeeGetService;
+	@MockBean(name = "com.food.delivery.accountservice.company.CompanyClient")
+	private CompanyClient companyClient;
 
 	@Test
 	@DisplayName("Should return all employees")
@@ -50,12 +58,20 @@ class EmployeeGetServiceTestIT {
 	void shouldGetEmployeeByEmail() {
 		//arrange
 		final var employee = createEmployee();
+		final var companyName = "companyName";
+		final var employeeRest = EmployeeRest.builder()
+				.accountRest(new AccountRest(employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmail()))
+				.companyId(employee.getCompanyId())
+				.companyName(companyName)
+				.build();
+
+		when(companyClient.getCompany(employee.getCompanyId())).thenReturn(Mono.just(new CompanyRest(employee.getCompanyId(), companyName)));
 
 		//act
 		final var result = employeeGetService.findByEmail(employee.getEmail()).block();
 
 		//assert
-		assertThat(result).isEqualToComparingFieldByField(employee);
+		assertThat(result).usingRecursiveComparison().isEqualTo(employeeRest);
 	}
 
 	@Test

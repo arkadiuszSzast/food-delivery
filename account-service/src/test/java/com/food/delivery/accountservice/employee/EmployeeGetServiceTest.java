@@ -1,5 +1,8 @@
 package com.food.delivery.accountservice.employee;
 
+import com.food.delivery.accountservice.account.AccountRest;
+import com.food.delivery.accountservice.company.CompanyClient;
+import com.food.delivery.accountservice.company.CompanyRest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,6 +22,10 @@ class EmployeeGetServiceTest {
 
 	@Mock
 	private EmployeeRepository employeeRepository;
+	@Mock
+	private EmployeeMapper employeeMapper;
+	@Mock
+	private CompanyClient companyClient;
 	@InjectMocks
 	private EmployeeGetService employeeGetService;
 
@@ -57,13 +64,21 @@ class EmployeeGetServiceTest {
 	void shouldGetEmployeeByEmail() {
 		//arrange
 		final var employee = getEmployee();
+		final var companyName = "companyName";
+		final var employeeRest = EmployeeRest.builder()
+				.accountRest(new AccountRest(employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmail()))
+				.companyId(employee.getCompanyId())
+				.companyName(companyName)
+				.build();
 		when(employeeRepository.findByEmail(employee.getEmail())).thenReturn(Mono.just(employee));
+		when(companyClient.getCompany(employee.getCompanyId())).thenReturn(Mono.just(new CompanyRest(employee.getId(), companyName)));
+		when(employeeMapper.toRest(employee, companyName)).thenReturn(employeeRest);
 
 		//act
 		final var result = employeeGetService.findByEmail(employee.getEmail()).block();
 
 		//assert
-		assertThat(result).isEqualToComparingFieldByField(employee);
+		assertThat(result).isEqualToComparingFieldByField(employeeRest);
 	}
 
 	@Test

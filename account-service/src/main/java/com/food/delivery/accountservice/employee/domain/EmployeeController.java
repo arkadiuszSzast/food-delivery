@@ -5,6 +5,7 @@ import com.food.delivery.accountservice.account.AccountRest;
 import com.food.delivery.accountservice.employee.EmployeeActivateService;
 import com.food.delivery.accountservice.employee.EmployeeCreateService;
 import com.food.delivery.accountservice.employee.EmployeeGetService;
+import com.food.delivery.accountservice.employee.EmployeeRest;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,13 +24,18 @@ public class EmployeeController {
 
 	@PostMapping
 	@PreAuthorize("hasAuthority('COMPANY_ADMIN')")
-	public Mono<Employee> create(@RequestBody AccountRest employeeRest,
-								 @AuthenticationPrincipal JwtAuthenticationToken principal) {
+	public Mono<EmployeeRest> create(@RequestBody AccountRest employeeRest,
+									 @AuthenticationPrincipal JwtAuthenticationToken principal) {
 		return employeeCreateService.create(employeeRest, principal);
 	}
 
+	@GetMapping
+	public Mono<EmployeeRest> findByEmail(@RequestParam String email) {
+		return employeeGetService.findByEmail(email);
+	}
+
 	@GetMapping("/me")
-	public Mono<Employee> findMe(@AuthenticationPrincipal JwtAuthenticationToken principal) {
+	public Mono<EmployeeRest> findMe(@AuthenticationPrincipal JwtAuthenticationToken principal) {
 		return employeeGetService.findByEmail(principal.getName());
 	}
 

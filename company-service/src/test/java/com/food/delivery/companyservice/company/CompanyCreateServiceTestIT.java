@@ -2,12 +2,16 @@ package com.food.delivery.companyservice.company;
 
 import com.food.delivery.companyservice.account.Account;
 import com.food.delivery.companyservice.account.AccountClient;
+import com.food.delivery.companyservice.account.AccountRest;
+import com.food.delivery.companyservice.account.EmployeeRest;
 import com.food.delivery.companyservice.company.model.CompanyRest;
 import com.food.delivery.companyservice.support.CompanyServiceIntegrationTest;
+import com.food.delivery.companyservice.utils.JwtProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
@@ -41,10 +45,13 @@ class CompanyCreateServiceTestIT {
 		final var surname = "surname";
 		final var email = "name@mail.com";
 		final var account = new Account(UUID.randomUUID().toString(), accountName, surname, email);
-		when(accountClient.assignCompany(any())).thenReturn(Mono.just(account));
+		final var employeeRest = new EmployeeRest(new AccountRest(account.getId(), accountName, surname, email), companyName, companyId);
+		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(email));
+		when(accountClient.findEmployeeByEmail(email)).thenReturn(Mono.just(employeeRest));
+		when(accountClient.assignCompany(any())).thenReturn(Mono.just(employeeRest));
 
 		//act
-		final var company = companyCreateService.create(account, companyRest).block();
+		final var company = companyCreateService.create(jwtAuthenticationToken, companyRest).block();
 
 		//assert
 		final var companies = companyRepository.findAll()

@@ -23,9 +23,9 @@ class EmployeeMapperTestIT {
 	@DisplayName("Should map to domain form okta account rest")
 	void shouldMapToDomainFromOktaAccount() {
 		//arrange
-		final var accountRest = new AccountRest(randomString(), randomString(), randomString());
+		final var accountRest = new AccountRest(randomString(), randomString(), randomString(), randomString());
 		final var oktaAccountRest = new OktaAccountRest(accountRest, UUID.randomUUID().toString());
-		final var employee = new Employee(null, accountRest.getFirstName(), accountRest.getLastName(), accountRest.getEmail(),
+		final var employee = new Employee(accountRest.getId(), accountRest.getFirstName(), accountRest.getLastName(), accountRest.getEmail(),
 				oktaAccountRest.getOktaId(), null);
 
 		//act
@@ -40,9 +40,9 @@ class EmployeeMapperTestIT {
 	void shouldMapToDomainFromOktaAccountAndCompanyId() {
 		//arrange
 		final var companyId = randomString();
-		final var accountRest = new AccountRest(randomString(), randomString(), randomString());
+		final var accountRest = new AccountRest(randomString(), randomString(), randomString(), randomString());
 		final var oktaAccountRest = new OktaAccountRest(accountRest, UUID.randomUUID().toString());
-		final var employee = new Employee(null, accountRest.getFirstName(), accountRest.getLastName(), accountRest.getEmail(),
+		final var employee = new Employee(accountRest.getId(), accountRest.getFirstName(), accountRest.getLastName(), accountRest.getEmail(),
 				oktaAccountRest.getOktaId(), companyId);
 
 		//act
@@ -58,7 +58,7 @@ class EmployeeMapperTestIT {
 		//arrange
 		final var companyId = randomString();
 		final var employeeId = randomString();
-		final var accountRest = new AccountRest(randomString(), randomString(), randomString());
+		final var accountRest = new AccountRest(employeeId, randomString(), randomString(), randomString());
 		final var oktaAccountRest = new OktaAccountRest(accountRest, UUID.randomUUID().toString());
 		final var employee = new Employee(employeeId, accountRest.getFirstName(), accountRest.getLastName(), accountRest.getEmail(),
 				oktaAccountRest.getOktaId(), companyId);

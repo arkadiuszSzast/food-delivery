@@ -47,21 +47,26 @@ class EmployeeCreateServiceTest {
 		//arrange
 		final var companyId = randomString();
 		final var companyAdminEmail = randomString();
-		final var accountRest = new AccountRest(randomString(), randomString(), randomString());
+		final var accountRest = new AccountRest(randomString(), randomString(), randomString(), randomString());
 		final var oktaAccountRest = new OktaAccountRest(accountRest, UUID.randomUUID().toString());
 		final var employee = getEmployee(accountRest, companyId);
 		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(companyAdminEmail));
 		final var companyRest = new CompanyRest(companyId, randomString());
+		final var employeeRest = EmployeeRest.builder()
+				.accountRest(new AccountRest(employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmail()))
+				.companyId(employee.getCompanyId())
+				.build();
 		when(companyGetService.getCompany(companyAdminEmail)).thenReturn(Mono.just(companyRest));
 		when(employeeMapper.toDomain(oktaAccountRest, companyId)).thenReturn(employee);
 		when(employeeRepository.save(employee)).thenReturn(Mono.just(employee));
 		when(oktaAdapterAccountClient.createEmployee(accountRest)).thenReturn(Mono.just(oktaAccountRest));
+		when(employeeMapper.toRest(employee)).thenReturn(employeeRest);
 
 		//act
 		final var result = employeeCreateService.create(accountRest, jwtAuthenticationToken).block();
 
 		//assert
-		assertThat(result).isEqualToIgnoringGivenFields(employee, "id", "oktaId");
+		assertThat(result).usingRecursiveComparison().isEqualTo(employeeRest);
 	}
 
 	@Test
@@ -70,7 +75,7 @@ class EmployeeCreateServiceTest {
 		//arrange
 		final var companyId = randomString();
 		final var companyAdminEmail = randomString();
-		final var accountRest = new AccountRest(randomString(), randomString(), randomString());
+		final var accountRest = new AccountRest(randomString(), randomString(), randomString(), randomString());
 		final var oktaAccountRest = new OktaAccountRest(accountRest, UUID.randomUUID().toString());
 		final var employee = getEmployee(accountRest, companyId);
 		final var jwtAuthenticationToken = new JwtAuthenticationToken(JwtProvider.getJwtWithSubject(companyAdminEmail));

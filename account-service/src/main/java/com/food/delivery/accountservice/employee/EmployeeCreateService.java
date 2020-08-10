@@ -23,16 +23,17 @@ public class EmployeeCreateService {
 	private final EmployeeMapper employeeMapper;
 	private final CompanyGetService companyGetService;
 
-	public Mono<Employee> create(AccountRest accountRest, JwtAuthenticationToken principal) {
+	public Mono<EmployeeRest> create(AccountRest accountRest, JwtAuthenticationToken principal) {
 		return companyGetService.getCompany(principal.getName())
 				.flatMap(companyRest -> create(accountRest, companyRest));
 	}
 
-	private Mono<Employee> create(AccountRest accountRest, CompanyRest companyRest) {
+	private Mono<EmployeeRest> create(AccountRest accountRest, CompanyRest companyRest) {
 		return oktaAdapterAccountClient.createEmployee(accountRest)
 				.map(oktaAccountRest -> employeeMapper.toDomain(oktaAccountRest, companyRest.getId()))
 				.flatMap(employeeRepository::save)
-				.doOnNext(employee -> produceSendEmployeeActivateEmail(employee, companyRest.getName()));
+				.doOnNext(employee -> produceSendEmployeeActivateEmail(employee, companyRest.getName()))
+				.map(employeeMapper::toRest);
 	}
 
 	private void produceSendEmployeeActivateEmail(Employee employee, String companyName) {

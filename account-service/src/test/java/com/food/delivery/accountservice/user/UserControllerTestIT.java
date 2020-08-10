@@ -43,11 +43,12 @@ class UserControllerTestIT {
 	@DisplayName("Should create new account")
 	void shouldCreateNewAccount() {
 		//arrange
+		final var id = "id";
 		final var firstName = "Joe";
 		final var lastName = "Doe";
 		final var email = "joe@mail.com";
 		final var oktaId = "oktaId";
-		final var accountRest = new AccountRest(firstName, lastName, email);
+		final var accountRest = new AccountRest(id, firstName, lastName, email);
 		final var oktaAccountRest = new OktaAccountRest(accountRest, oktaId);
 		when(oktaAdapterAccountClient.createUser(accountRest)).thenReturn(Mono.just(oktaAccountRest));
 
@@ -66,7 +67,7 @@ class UserControllerTestIT {
 		final var lastName = "Doe";
 		final var email = "joe@mail.com";
 		final var oktaId = "oktaId";
-		final var accountRest = new AccountRest(firstName, lastName, email);
+		final var accountRest = new AccountRest(null, firstName, lastName, email);
 		final var oktaAccountRest = new OktaAccountRest(accountRest, oktaId);
 		when(oktaAdapterAccountClient.createUser(accountRest)).thenReturn(Mono.just(oktaAccountRest));
 
